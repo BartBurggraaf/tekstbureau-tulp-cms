@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CMS Architect | Admin Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-secondary": "#f7f9fa",
+                        "on-tertiary-fixed": "#2e4355",
+                        "surface-variant": "#dbe4e7",
+                        "outline": "#737c7f",
+                        "inverse-surface": "#0c0f10",
+                        "on-secondary-fixed": "#3d4041",
+                        "on-secondary-fixed-variant": "#595c5d",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-dim": "#d1dce0",
+                        "secondary-fixed-dim": "#d3d5d6",
+                        "secondary-dim": "#515355",
+                        "surface-container-highest": "#dbe4e7",
+                        "tertiary-fixed": "#d1e8ff",
+                        "tertiary-dim": "#405568",
+                        "on-surface": "#2b3437",
+                        "on-tertiary-fixed-variant": "#4a6073",
+                        "on-tertiary-container": "#405668",
+                        "background": "#f8f9fa",
+                        "surface-bright": "#f8f9fa",
+                        "primary-dim": "#005a6e",
+                        "secondary-fixed": "#e1e3e4",
+                        "surface-container-low": "#f1f4f6",
+                        "inverse-primary": "#a1e7ff",
+                        "secondary": "#5d5f61",
+                        "on-primary": "#edfaff",
+                        "inverse-on-surface": "#9b9d9e",
+                        "on-error-container": "#752121",
+                        "error": "#9f403d",
+                        "on-primary-fixed": "#004655",
+                        "primary-container": "#b2ebff",
+                        "surface": "#f8f9fa",
+                        "on-tertiary": "#f6f9ff",
+                        "on-primary-container": "#005a6d",
+                        "surface-container": "#eaeff1",
+                        "error-container": "#fe8983",
+                        "on-secondary-container": "#4f5253",
+                        "error-dim": "#4e0309",
+                        "on-primary-fixed-variant": "#0d6478",
+                        "primary": "#13677b",
+                        "on-background": "#2b3437",
+                        "outline-variant": "#abb3b7",
+                        "surface-container-high": "#e3e9ec",
+                        "on-surface-variant": "#586064",
+                        "surface-tint": "#13677b",
+                        "on-error": "#fff7f6",
+                        "primary-fixed": "#b2ebff",
+                        "tertiary": "#4c6175",
+                        "tertiary-container": "#d1e8ff",
+                        "tertiary-fixed-dim": "#c3daf0",
+                        "primary-fixed-dim": "#99dff6",
+                        "secondary-container": "#e1e3e4"
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; color: #2b3437; }
+        .font-headline { font-family: 'Manrope', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .tonal-shift { background-color: #f1f4f6; }
+        .glass-effect { background-color: rgba(255, 255, 255, 0.8); backdrop-filter: blur(24px); }
+        .primary-gradient { background: linear-gradient(135deg, #13677b 0%, #005a6e 100%); }
+    </style>
+</head>
+<body class="bg-background min-h-screen">
+<!-- SideNavBar Shell -->
+<aside class="fixed left-0 top-0 h-full z-40 bg-white dark:bg-slate-900 h-screen w-64 border-r-0 font-manrope text-sm font-medium tracking-tight">
+<div class="p-6">
+<div class="text-xl font-bold text-cyan-800 dark:text-cyan-200 mb-2">CMS Admin</div>
+<div class="text-xs text-slate-500 font-label tracking-widest uppercase mb-8">Management Portal</div>
+<button class="w-full primary-gradient text-on-primary py-3 px-4 rounded-lg flex items-center justify-center gap-2 mb-8 shadow-lg shadow-primary/20 scale-95 duration-150 active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>Create New</span>
+</button>
+<nav class="space-y-1">
+<!-- Dashboard Active -->
+<a class="flex items-center gap-3 border-l-4 border-cyan-700 bg-slate-50 dark:bg-slate-800 text-cyan-800 dark:text-cyan-200 px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 text-slate-500 dark:text-slate-400 px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span>Pages</span>
+</a>
+<a class="flex items-center gap-3 text-slate-500 dark:text-slate-400 px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="article">article</span>
+<span>Blog</span>
+</a>
+<a class="flex items-center gap-3 text-slate-500 dark:text-slate-400 px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="palette">palette</span>
+<span>Style</span>
+</a>
+<a class="flex items-center gap-3 text-slate-500 dark:text-slate-400 px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span>Users</span>
+</a>
+</nav>
+</div>
+<div class="absolute bottom-8 left-0 w-full px-6">
+<div class="flex items-center gap-3 p-3 rounded-xl bg-surface-container-low">
+<img alt="Admin User Avatar" class="w-10 h-10 rounded-full border-2 border-white shadow-sm" data-alt="portrait of a professional man in his 30s with a friendly expression and neutral office background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwpsy6vcgO4EC9FnnHuzAPSeuYjwQPzTNT4kXOMhyGVowsT4ZsNB3oW-mqSQJxo3Yj-rKvvyKYbxppc8vlPuzZWv04JZZB8g0S_npiUXr6UhxVWkKqg8PLXNMdDT9vvPKMVwbn2g5RZNoUH0muRKZhH9dQBhfacxZBDroxYaFLuazQRC7Ze6TojyxcyGJPCknv4OcDq2qYbdSwxUBUmI_IRRIQjGObyC_-sNP4xfVVSQqBPgoRmdAD5n5zKH3DcYlNw351bmIl5T4"/>
+<div>
+<p class="text-on-surface font-bold text-xs">Alexander J.</p>
+<p class="text-[10px] text-outline">Lead Editor</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="pl-64 min-h-screen">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center w-full pl-8 pr-8 py-4 bg-slate-50/80 dark:bg-slate-950/80 backdrop-blur-xl sticky top-0 z-30 shadow-sm dark:shadow-none">
+<div class="flex items-center gap-8 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span>
+<input class="w-full bg-surface-container-high border-none rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary transition-all" placeholder="Search resources..." type="text"/>
+</div>
+<nav class="hidden lg:flex items-center gap-6 font-manrope text-sm">
+<a class="text-slate-600 dark:text-slate-400 hover:text-cyan-600 dark:hover:text-cyan-300 transition-opacity opacity-80" href="#">Settings</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-cyan-600 dark:hover:text-cyan-300 transition-opacity opacity-80" href="#">Analytics</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-cyan-600 dark:hover:text-cyan-300 transition-opacity opacity-80" href="#">Help</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors text-slate-600">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors text-slate-600">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="h-8 w-px bg-surface-container-highest mx-2"></div>
+<img alt="User profile" class="w-8 h-8 rounded-full" data-alt="professional portrait of an executive male with clean modern lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7fdRwdyD05dm3JJ580bR19FesYDk9B1bQmIVQxhhheRnauR9cC-JY6hozbQs7N1HZsNark11TvAvkK5Ba_K8sX0YqgKoa9nYfhxK6ITxWBj__n9VJ57OVnzDKYTuP-YKuBAdzA13IxjSqH7tGeD_Uvr7aYfmAWWfYAXWQlmdcvMateaQ4Cw9aoEdDtuhSGqFrTiQRp2W7FckiHMwR0aNxgUWnKCOioIhX31OWHXzIYgcl5ifIwZqvxZTPf3I8wtFq1EQuqYLxiI4"/>
+</div>
+</header>
+<!-- Dashboard Canvas -->
+<div class="p-10 space-y-10">
+<!-- Header Section -->
+<section class="flex justify-between items-end">
+<div>
+<h1 class="text-3xl font-headline font-extrabold text-on-surface tracking-tight">Architect Dashboard</h1>
+<p class="text-on-surface-variant mt-1">Real-time performance and system overview</p>
+</div>
+<div class="flex gap-3">
+<div class="flex items-center gap-2 bg-white px-4 py-2 rounded-lg shadow-sm">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="text-xs font-label font-bold uppercase tracking-wider text-outline">System Online</span>
+</div>
+</div>
+</section>
+<!-- Metrics Bento Grid -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Total Pages -->
+<div class="bg-surface-container-lowest p-8 rounded-xl relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl">layers</span>
+</div>
+<p class="text-xs font-label uppercase tracking-widest text-outline mb-2">Total Pages</p>
+<div class="flex items-baseline gap-2">
+<span class="text-4xl font-headline font-bold text-on-surface">1,284</span>
+<span class="text-emerald-600 text-xs font-bold flex items-center">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span> 12%
+                        </span>
+</div>
+<div class="mt-6 h-1 w-full bg-surface-container-low rounded-full">
+<div class="h-full bg-primary w-3/4 rounded-full"></div>
+</div>
+</div>
+<!-- Blog Posts -->
+<div class="bg-surface-container-lowest p-8 rounded-xl relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl">edit_note</span>
+</div>
+<p class="text-xs font-label uppercase tracking-widest text-outline mb-2">Blog Posts</p>
+<div class="flex items-baseline gap-2">
+<span class="text-4xl font-headline font-bold text-on-surface">452</span>
+<span class="text-emerald-600 text-xs font-bold flex items-center">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span> 8%
+                        </span>
+</div>
+<div class="mt-6 h-1 w-full bg-surface-container-low rounded-full">
+<div class="h-full bg-tertiary w-1/2 rounded-full"></div>
+</div>
+</div>
+<!-- Active Users -->
+<div class="bg-surface-container-lowest p-8 rounded-xl relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl">group</span>
+</div>
+<p class="text-xs font-label uppercase tracking-widest text-outline mb-2">Active Users</p>
+<div class="flex items-baseline gap-2">
+<span class="text-4xl font-headline font-bold text-on-surface">32</span>
+<span class="text-error text-xs font-bold flex items-center">
+<span class="material-symbols-outlined text-[14px]">arrow_downward</span> 2%
+                        </span>
+</div>
+<div class="mt-6 flex -space-x-2">
+<img class="w-6 h-6 rounded-full border-2 border-white" data-alt="close up headshot of person" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAptPEFMjdnZlErzVmwJ0R38YkeeL_koqhi5tG1avWfdsieAEdj2U6J5nBp1_yhQsgqBidFu8lxQTWAYaXwy8ZqkyfAqMlLdpm29YkCPfnmdH1usvL4-41nUSXqRpBnjLXVY5BvCxrJYndW6j6hqBocQxf14AC2oCELiFUBW_tFuOoJuqZNsEZwhQ2b51w_vMWhxPVLzYUOk1AHtCZbb5f7eY1WtIpgFP6OFTOA9E5IhTLYzluTNwvogTMpx9mTKjSCA9ZHM4gyYFA"/>
+<img class="w-6 h-6 rounded-full border-2 border-white" data-alt="close up headshot of person" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1iTCBwQldODfLjDbqqF6ZIZ4rLoBIcJrtEmlwFvNMkZPoCoWK-9VxkZM3q-OcH_TULSM81rYseFBEJgtvx6HJTgdSHi2bBTLypfsdsPe9le2zMcT4klNx4kzAZ4aqZJdPwaODZ-3dy9NWXADGGdArwCfDw4xSbnjvwBZRhZZTADf0p1SWbrOSIikC-oDLInkwygLFCpvL85q9qIETqZBqOL0Jd9mJDlbC2M3-C4EVxWX0bJMaytmH-tyuSA3EuYF4vxQX45O8rUw"/>
+<img class="w-6 h-6 rounded-full border-2 border-white" data-alt="close up headshot of person" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7kzoxYgju0QCoRZezXALjdj0uo88-3BHxabw8Mo_CmiE9oSGgC_yMnaAc6R22DvCKrgFyFPm0EY8esuP1h8xfL-MzAX5xu37WUY8YBFHLGC23eRlmp1YhxNxKJ2R5iHQZpSsInq7nKC0lSySY5DY4BUTatB_0ZfgevPisKNVJVyESbDbXCc-OOGz1D-0G5z0fI89EZiWy7Of-3wyYphAvvDlqnUQtzclKewu6c8FkYgK3lWM9j1tnN9NPaV_tWZo-sEggqNVwcUo"/>
+<div class="w-6 h-6 rounded-full border-2 border-white bg-surface-container-high text-[10px] flex items-center justify-center font-bold">+29</div>
+</div>
+</div>
+</section>
+<!-- Main Content Area: Activity & Actions -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+<!-- Recent Activity Column -->
+<div class="lg:col-span-2 space-y-6">
+<div class="flex items-center justify-between">
+<h2 class="text-xl font-headline font-bold text-on-surface">Recent Activity</h2>
+<button class="text-xs font-label font-bold text-primary hover:underline">View All</button>
+</div>
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden">
+<!-- Activity Rows -->
+<div class="group px-6 py-5 border-b border-surface-container hover:bg-surface-container-low transition-colors flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">edit</span>
+</div>
+<div>
+<p class="text-sm font-semibold text-on-surface">Sarah Connor edited "Winter Collection 2024"</p>
+<p class="text-xs text-outline">Category: Pages • 14 minutes ago</p>
+</div>
+</div>
+<div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 hover:bg-white rounded-md text-outline"><span class="material-symbols-outlined text-[20px]">visibility</span></button>
+<button class="p-2 hover:bg-white rounded-md text-primary"><span class="material-symbols-outlined text-[20px]">history</span></button>
+</div>
+</div>
+<div class="group px-6 py-5 border-b border-surface-container hover:bg-surface-container-low transition-colors flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-tertiary/10 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">post_add</span>
+</div>
+<div>
+<p class="text-sm font-semibold text-on-surface">Markus R. published "The Future of Headless CMS"</p>
+<p class="text-xs text-outline">Category: Blog • 2 hours ago</p>
+</div>
+</div>
+<div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 hover:bg-white rounded-md text-outline"><span class="material-symbols-outlined text-[20px]">visibility</span></button>
+<button class="p-2 hover:bg-white rounded-md text-primary"><span class="material-symbols-outlined text-[20px]">share</span></button>
+</div>
+</div>
+<div class="group px-6 py-5 border-b border-surface-container hover:bg-surface-container-low transition-colors flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-600">
+<span class="material-symbols-outlined">delete</span>
+</div>
+<div>
+<p class="text-sm font-semibold text-on-surface">System purged 12 pending drafts</p>
+<p class="text-xs text-outline">Category: Maintenance • 5 hours ago</p>
+</div>
+</div>
+<div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 hover:bg-white rounded-md text-outline"><span class="material-symbols-outlined text-[20px]">info</span></button>
+</div>
+</div>
+<div class="group px-6 py-5 hover:bg-surface-container-low transition-colors flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-600">
+<span class="material-symbols-outlined">person_add</span>
+</div>
+<div>
+<p class="text-sm font-semibold text-on-surface">New User Registered: Elena Gilbert</p>
+<p class="text-xs text-outline">Category: Users • Yesterday</p>
+</div>
+</div>
+<div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 hover:bg-white rounded-md text-primary"><span class="material-symbols-outlined text-[20px]">verified</span></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Actions Column -->
+<div class="space-y-6">
+<h2 class="text-xl font-headline font-bold text-on-surface">Quick Actions</h2>
+<div class="space-y-4">
+<!-- Create New Page Card -->
+<div class="group bg-surface-container-lowest p-6 rounded-xl hover:shadow-xl hover:shadow-black/5 transition-all cursor-pointer">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-12 rounded-xl primary-gradient flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-2xl">add_box</span>
+</div>
+<div>
+<h3 class="font-bold text-on-surface">Create New Page</h3>
+<p class="text-xs text-outline">Draft a new architectural entry</p>
+</div>
+</div>
+<div class="h-10 w-full rounded-lg border-2 border-dashed border-surface-container flex items-center justify-center text-xs text-outline font-bold group-hover:border-primary group-hover:text-primary transition-colors">
+                                Use Page Template
+                            </div>
+</div>
+<!-- Quick Post Edit -->
+<div class="bg-surface-container-lowest p-6 rounded-xl space-y-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-outline">history_edu</span>
+</div>
+<h3 class="font-bold text-on-surface">Draft Recovery</h3>
+</div>
+<div class="p-3 bg-surface-container-low rounded-lg">
+<p class="text-xs font-bold text-on-surface truncate">"Untitled_Draft_2023_Oct_..."</p>
+<p class="text-[10px] text-outline mt-1 italic">Last edited 2 hours ago</p>
+</div>
+<button class="w-full bg-secondary-container text-on-secondary-container py-2 rounded-lg text-xs font-bold hover:bg-surface-container-high transition-colors">
+                                Resume Editing
+                            </button>
+</div>
+<!-- System Alerts -->
+<div class="p-6 rounded-xl bg-primary text-on-primary relative overflow-hidden">
+<div class="relative z-10">
+<h3 class="font-bold mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">info</span>
+                                    System Update
+                                </h3>
+<p class="text-xs opacity-90 leading-relaxed">Version 4.2.0 is scheduled for deployment tonight at 02:00 AM UTC.</p>
+<button class="mt-4 text-[10px] uppercase tracking-widest font-bold bg-white/20 px-3 py-1 rounded-full hover:bg-white/30 transition-colors">
+                                    View Release Notes
+                                </button>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-10">
+<span class="material-symbols-outlined text-8xl" style="font-variation-settings: 'FILL' 1;">terminal</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Bottom Data Visualization Section -->
+<section class="bg-surface-container-lowest p-8 rounded-xl">
+<div class="flex items-center justify-between mb-8">
+<div>
+<h2 class="text-xl font-headline font-bold text-on-surface">Traffic Overview</h2>
+<p class="text-xs text-outline">Site visitors across all managed pages</p>
+</div>
+<div class="flex gap-2">
+<button class="px-3 py-1 text-xs font-bold bg-surface-container rounded-md">Weekly</button>
+<button class="px-3 py-1 text-xs font-bold text-outline">Monthly</button>
+</div>
+</div>
+<div class="w-full h-48 flex items-end gap-2 md:gap-4 px-2">
+<div class="flex-1 bg-surface-container rounded-t-lg relative group h-24">
+<div class="absolute inset-0 bg-primary opacity-0 group-hover:opacity-100 transition-all rounded-t-lg h-1/2 bottom-0"></div>
+</div>
+<div class="flex-1 bg-surface-container rounded-t-lg relative group h-32">
+<div class="absolute inset-0 bg-primary opacity-0 group-hover:opacity-100 transition-all rounded-t-lg h-3/4 bottom-0"></div>
+</div>
+<div class="flex-1 bg-surface-container rounded-t-lg relative group h-40">
+<div class="absolute inset-0 bg-primary opacity-0 group-hover:opacity-100 transition-all rounded-t-lg h-full bottom-0"></div>
+</div>
+<div class="flex-1 bg-surface-container rounded-t-lg relative group h-28">
+<div class="absolute inset-0 bg-primary opacity-0 group-hover:opacity-100 transition-all rounded-t-lg h-1/3 bottom-0"></div>
+</div>
+<div class="flex-1 bg-surface-container rounded-t-lg relative group h-36">
+<div class="absolute inset-0 bg-primary opacity-0 group-hover:opacity-100 transition-all rounded-t-lg h-2/3 bottom-0"></div>
+</div>
+<div class="flex-1 bg-surface-container rounded-t-lg relative group h-20">
+<div class="absolute inset-0 bg-primary opacity-0 group-hover:opacity-100 transition-all rounded-t-lg h-1/4 bottom-0"></div>
+</div>
+<div class="flex-1 bg-surface-container rounded-t-lg relative group h-44">
+<div class="absolute inset-0 bg-primary opacity-0 group-hover:opacity-100 transition-all rounded-t-lg h-5/6 bottom-0"></div>
+</div>
+</div>
+<div class="flex justify-between mt-4 px-2">
+<span class="text-[10px] text-outline font-bold uppercase tracking-widest">Mon</span>
+<span class="text-[10px] text-outline font-bold uppercase tracking-widest">Tue</span>
+<span class="text-[10px] text-outline font-bold uppercase tracking-widest">Wed</span>
+<span class="text-[10px] text-outline font-bold uppercase tracking-widest">Thu</span>
+<span class="text-[10px] text-outline font-bold uppercase tracking-widest">Fri</span>
+<span class="text-[10px] text-outline font-bold uppercase tracking-widest">Sat</span>
+<span class="text-[10px] text-outline font-bold uppercase tracking-widest">Sun</span>
+</div>
+</section>
+</div>
+</main>
+</body></html>

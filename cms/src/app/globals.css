@@ -1,0 +1,102 @@
+@import "tailwindcss";
+
+/**
+ * Theme tokens — injected at runtime by layout.tsx from config/theme.ts
+ * The --t-* custom properties are set on <html> by the root layout.
+ * Tailwind @theme maps utility classes to these variables so the entire
+ * design system updates when the config changes.
+ */
+@theme {
+  /* Colors */
+  --color-primary:                   var(--t-primary);
+  --color-primary-dim:               var(--t-primaryDim);
+  --color-primary-fixed:             var(--t-primaryFixed);
+  --color-primary-fixed-dim:         var(--t-primaryFixedDim);
+  --color-on-primary:                var(--t-onPrimary);
+  --color-on-primary-fixed:          var(--t-onPrimaryFixed);
+  --color-on-primary-fixed-variant:  var(--t-onPrimaryFixedVariant);
+  --color-primary-container:         var(--t-primaryContainer);
+  --color-on-primary-container:      var(--t-onPrimaryContainer);
+
+  --color-secondary:                 var(--t-secondary);
+  --color-secondary-dim:             var(--t-secondaryDim);
+  --color-secondary-fixed:           var(--t-secondaryFixed);
+  --color-secondary-fixed-dim:       var(--t-secondaryFixedDim);
+  --color-on-secondary:              var(--t-onSecondary);
+  --color-on-secondary-fixed:        var(--t-onSecondaryFixed);
+  --color-on-secondary-fixed-variant:var(--t-onSecondaryFixedVariant);
+  --color-secondary-container:       var(--t-secondaryContainer);
+  --color-on-secondary-container:    var(--t-onSecondaryContainer);
+
+  --color-tertiary:                  var(--t-tertiary);
+  --color-tertiary-dim:              var(--t-tertiaryDim);
+  --color-tertiary-fixed:            var(--t-tertiaryFixed);
+  --color-tertiary-fixed-dim:        var(--t-tertiaryFixedDim);
+  --color-on-tertiary:               var(--t-onTertiary);
+  --color-on-tertiary-fixed:         var(--t-onTertiaryFixed);
+  --color-on-tertiary-fixed-variant: var(--t-onTertiaryFixedVariant);
+  --color-tertiary-container:        var(--t-tertiaryContainer);
+  --color-on-tertiary-container:     var(--t-onTertiaryContainer);
+
+  --color-error:                     var(--t-error);
+  --color-error-dim:                 var(--t-errorDim);
+  --color-error-container:           var(--t-errorContainer);
+  --color-on-error:                  var(--t-onError);
+  --color-on-error-container:        var(--t-onErrorContainer);
+
+  --color-surface:                   var(--t-surface);
+  --color-surface-bright:            var(--t-surfaceBright);
+  --color-surface-dim:               var(--t-surfaceDim);
+  --color-surface-variant:           var(--t-surfaceVariant);
+  --color-surface-tint:              var(--t-surfaceTint);
+  --color-surface-container-lowest:  var(--t-surfaceContainerLowest);
+  --color-surface-container-low:     var(--t-surfaceContainerLow);
+  --color-surface-container:         var(--t-surfaceContainer);
+  --color-surface-container-high:    var(--t-surfaceContainerHigh);
+  --color-surface-container-highest: var(--t-surfaceContainerHighest);
+  --color-inverse-surface:           var(--t-inverseSurface);
+
+  --color-on-surface:                var(--t-onSurface);
+  --color-on-surface-variant:        var(--t-onSurfaceVariant);
+  --color-on-background:             var(--t-onBackground);
+  --color-background:                var(--t-background);
+
+  --color-outline:                   var(--t-outline);
+  --color-outline-variant:           var(--t-outlineVariant);
+  --color-inverse-on-surface:        var(--t-inverseOnSurface);
+  --color-inverse-primary:           var(--t-inversePrimary);
+
+  /* Fonts */
+  --font-headline: var(--t-fontHeadline), sans-serif;
+  --font-body:     var(--t-fontBody), sans-serif;
+  --font-label:    var(--t-fontBody), sans-serif;
+
+  /* Radii */
+  --radius-sm:   var(--t-radiusSm);
+  --radius-md:   var(--t-radiusMd);
+  --radius-lg:   var(--t-radiusLg);
+  --radius-full: var(--t-radiusFull);
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--t-background);
+  color: var(--t-onSurface);
+}
+
+.font-headline {
+  font-family: var(--font-headline);
+}
+
+.primary-gradient {
+  background: linear-gradient(135deg, var(--t-primary) 0%, var(--t-primaryDim) 100%);
+}
+
+.glass-effect {
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(24px);
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}

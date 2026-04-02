@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CMS Blog Posts Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-secondary": "#f7f9fa",
+              "on-tertiary-fixed": "#2e4355",
+              "surface-variant": "#dbe4e7",
+              "outline": "#737c7f",
+              "inverse-surface": "#0c0f10",
+              "on-secondary-fixed": "#3d4041",
+              "on-secondary-fixed-variant": "#595c5d",
+              "surface-container-lowest": "#ffffff",
+              "surface-dim": "#d1dce0",
+              "secondary-fixed-dim": "#d3d5d6",
+              "secondary-dim": "#515355",
+              "surface-container-highest": "#dbe4e7",
+              "tertiary-fixed": "#d1e8ff",
+              "tertiary-dim": "#405568",
+              "on-surface": "#2b3437",
+              "on-tertiary-fixed-variant": "#4a6073",
+              "on-tertiary-container": "#405668",
+              "background": "#f8f9fa",
+              "surface-bright": "#f8f9fa",
+              "primary-dim": "#005a6e",
+              "secondary-fixed": "#e1e3e4",
+              "surface-container-low": "#f1f4f6",
+              "inverse-primary": "#a1e7ff",
+              "secondary": "#5d5f61",
+              "on-primary": "#edfaff",
+              "inverse-on-surface": "#9b9d9e",
+              "on-error-container": "#752121",
+              "error": "#9f403d",
+              "on-primary-fixed": "#004655",
+              "primary-container": "#b2ebff",
+              "surface": "#f8f9fa",
+              "on-tertiary": "#f6f9ff",
+              "on-primary-container": "#005a6d",
+              "surface-container": "#eaeff1",
+              "error-container": "#fe8983",
+              "on-secondary-container": "#4f5253",
+              "error-dim": "#4e0309",
+              "on-primary-fixed-variant": "#0d6478",
+              "primary": "#13677b",
+              "on-background": "#2b3437",
+              "outline-variant": "#abb3b7",
+              "surface-container-high": "#e3e9ec",
+              "on-surface-variant": "#586064",
+              "surface-tint": "#13677b",
+              "on-error": "#fff7f6",
+              "primary-fixed": "#b2ebff",
+              "tertiary": "#4c6175",
+              "tertiary-container": "#d1e8ff",
+              "tertiary-fixed-dim": "#c3daf0",
+              "primary-fixed-dim": "#99dff6",
+              "secondary-container": "#e1e3e4"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3 { font-family: 'Manrope', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .tonal-shift { transition: background-color 0.2s ease; }
+        .tonal-lift { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- SideNavBar Anchor -->
+<aside class="fixed left-0 top-0 h-full z-40 h-screen w-64 border-r-0 bg-white dark:bg-slate-900 tonal-shift bg-slate-50 dark:bg-slate-800/50">
+<div class="flex flex-col h-full">
+<!-- Brand Section -->
+<div class="px-6 py-8">
+<div class="text-xl font-bold text-cyan-800 dark:text-cyan-200 tracking-tight font-headline">CMS Admin</div>
+<div class="text-xs text-slate-500 font-medium">Management Portal</div>
+</div>
+<!-- Navigation -->
+<nav class="flex-1 space-y-1 px-2">
+<a class="flex items-center gap-3 text-slate-500 dark:text-slate-400 px-4 py-3 font-manrope text-sm font-medium tracking-tight hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                    Dashboard
+                </a>
+<a class="flex items-center gap-3 text-slate-500 dark:text-slate-400 px-4 py-3 font-manrope text-sm font-medium tracking-tight hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors" href="#">
+<span class="material-symbols-outlined">description</span>
+                    Pages
+                </a>
+<a class="flex items-center gap-3 border-l-4 border-cyan-700 bg-slate-50 dark:bg-slate-800 text-cyan-800 dark:text-cyan-200 px-4 py-3 font-manrope text-sm font-medium tracking-tight" href="#">
+<span class="material-symbols-outlined">article</span>
+                    Blog
+                </a>
+<a class="flex items-center gap-3 text-slate-500 dark:text-slate-400 px-4 py-3 font-manrope text-sm font-medium tracking-tight hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors" href="#">
+<span class="material-symbols-outlined">palette</span>
+                    Style
+                </a>
+<a class="flex items-center gap-3 text-slate-500 dark:text-slate-400 px-4 py-3 font-manrope text-sm font-medium tracking-tight hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+                    Users
+                </a>
+</nav>
+<!-- User Footer -->
+<div class="p-4 border-t border-surface-container mt-auto">
+<div class="flex items-center gap-3">
+<img alt="Admin User Avatar" class="w-10 h-10 rounded-full" data-alt="Close-up professional headshot of a smiling man in a modern office environment with soft natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFci7KBSsq8WrLCsh8n3MW90zb8oAOk0UQCNZpsZnJgCkdv7zHeMqCV7OBwDH9007gx0sl0w5wRg3vg6IgpvYK-l5hAJkHFgw3NgD7-eh72WnHvrq3xXjcH_ThS1PCHvQuQ5avEv-StxBViLwT1h0I4b6P9_F_dtR34JfbECWzax6yIRgJ-cCCSzkqdPE6G-R2PyTvlBWsMNW85MQsEkf5g3TK76DHlkqbuNVh-_SdZ7nJdcwsccO-xQbwvpzfiwixyHzr4aIisOE"/>
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-on-surface">Alex Rivera</span>
+<span class="text-xs text-on-surface-variant">System Admin</span>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="pl-64 min-h-screen">
+<!-- TopNavBar Anchor -->
+<header class="flex justify-between items-center w-full pl-8 pr-8 py-4 bg-slate-50/80 dark:bg-slate-950/80 backdrop-blur-xl shadow-sm dark:shadow-none sticky top-0 z-30">
+<div class="flex items-center gap-6">
+<div class="relative group">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline text-lg">search</span>
+<input class="pl-10 pr-4 py-2 w-72 bg-surface-container-high border-none rounded-lg text-sm focus:ring-2 focus:ring-primary transition-all" placeholder="Search blog posts..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden md:flex items-center gap-6 font-manrope text-sm">
+<a class="text-slate-600 dark:text-slate-400 hover:text-cyan-600 transition-opacity opacity-80" href="#">Settings</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-cyan-600 transition-opacity opacity-80" href="#">Analytics</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-cyan-600 transition-opacity opacity-80" href="#">Help</a>
+</nav>
+<div class="flex items-center gap-3">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">settings</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<div class="px-10 py-10 space-y-10">
+<!-- Page Header Section -->
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<h1 class="text-4xl font-extrabold text-on-surface tracking-tight leading-none">Blog Posts</h1>
+<p class="text-on-surface-variant mt-2 font-medium">Manage your editorial content, authors, and publishing schedule.</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative">
+<select class="appearance-none bg-surface-container-high border-none rounded-lg pl-4 pr-10 py-3 text-sm font-medium text-on-surface focus:ring-2 focus:ring-primary cursor-pointer">
+<option>All Categories</option>
+<option>Technology</option>
+<option>Design</option>
+<option>Marketing</option>
+<option>Case Studies</option>
+</select>
+<span class="absolute right-3 top-1/2 -translate-y-1/2 material-symbols-outlined pointer-events-none text-outline">expand_more</span>
+</div>
+<button class="bg-gradient-to-r from-primary to-primary-dim text-on-primary px-6 py-3 rounded-lg flex items-center gap-2 font-semibold shadow-sm hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined">add</span>
+                        New Post
+                    </button>
+</div>
+</section>
+<!-- Table Card -->
+<section class="bg-surface-container-lowest rounded-xl overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full border-collapse">
+<thead>
+<tr class="bg-surface-container-low">
+<th class="px-6 py-4 text-left">
+<span class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Post Title</span>
+</th>
+<th class="px-6 py-4 text-left">
+<span class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Author</span>
+</th>
+<th class="px-6 py-4 text-left">
+<span class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Category</span>
+</th>
+<th class="px-6 py-4 text-left">
+<span class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Status</span>
+</th>
+<th class="px-6 py-4 text-left">
+<span class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Date</span>
+</th>
+<th class="px-6 py-4 text-right">
+<span class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Actions</span>
+</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low tonal-shift group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-surface-container overflow-hidden flex-shrink-0">
+<img alt="Blog thumbnail" class="w-full h-full object-cover" data-alt="A futuristic computer setup with neon lighting and sleek hardware against a dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdpN3vuXsCoEbM5g_EpIGoBvVqNtFOvonxon3Lark-R1G0jZiEuhbXwmlKy8vsnRxVENZG0m9uhqibdtCbF1oRY9BX82C3WZIFJSQq_nMrGjUieDrsPJxbiQTbgmlDFSj7vAJoMDF0dKCehHdKC2YhYW5bdEgEvsdPQt8Nn7UUqKu06lf88833nybwbheHODbNEYOUTDozbUqq4O830WCq0j0OTy-Qf740SWho8wZY3D66aoiGs2rqQo6fmiBXG3qMBgekMSoAwDw"/>
+</div>
+<div>
+<div class="font-bold text-on-surface">The Future of AI Architecture</div>
+<div class="text-xs text-on-surface-variant">/blog/ai-future-2024</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-primary-fixed overflow-hidden">
+<img alt="Author" class="w-full h-full object-cover" data-alt="Close-up of a young man with glasses and a stylish haircut in a bright creative studio" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEuBXgnbXZLsngx0ehZkFJBROmcihFabNFCyVgWZ2r7bNzEASSJQ_jJowf25F3FWX8GlmWaYrE7eHhZVMNMNpluQd2sNLb9e8nrvz63t-SobQluwKSOnbPQPW-mJCRWcT-UiNDYgCQHlyq0SunQJpY29ACMicOy9B_YhHANsgCxCCT5tmJGTT0k4ZvL-fcLUQvATm_OhJkAHWByzufI71B-QeR_iM3hZooVTI6VxHGYzZa9aO4E4M5iWOkkZi0y71HsCn-Rqxlt9c"/>
+</div>
+<span class="text-sm font-medium text-on-surface">James Chen</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 bg-secondary-fixed-dim text-on-secondary-fixed text-[11px] font-bold uppercase tracking-wider rounded-full">Technology</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-1.5 text-primary">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span class="text-sm font-semibold">Published</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm text-on-surface-variant">Oct 12, 2023</span>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="p-2 rounded-lg text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="p-2 rounded-lg text-outline hover:text-error transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low tonal-shift group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-surface-container overflow-hidden flex-shrink-0">
+<img alt="Blog thumbnail" class="w-full h-full object-cover" data-alt="A minimalist designer workspace with a clean desk, a modern lamp, and an open notebook" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7RYYdTP3XAMrkHal08865phMgVBeN9bOjWHxL0NJLKWd2afcQ6RHlmhFn4tiKNYZOWxeW74z7u6Zuh65t_I16BEjgDSxdZ7PC72Vi_DhGl2lvti81_iizcdVzQNgehpGog4BbUm1QcD33D6nk1qzr7DYAg8aKFYCJ0Yi95miYXjXObSDo3ex-dIQmSjsLyC741HnA7hlGwcRrrEBvsTGP1nYF1sCEZcUU9rzvX58ruupWq0O6Ozbeq9PsgoWI1KGSGrCCBBjo4SY"/>
+</div>
+<div>
+<div class="font-bold text-on-surface">Minimalism in Design Systems</div>
+<div class="text-xs text-on-surface-variant">/blog/minimalist-design</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-tertiary-fixed overflow-hidden">
+<img alt="Author" class="w-full h-full object-cover" data-alt="Professional headshot of a woman with curly hair and a friendly expression in soft natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8DybB2E7YsYDR3XjnQV8yTp3Q--aLzGJ4XO7ioiZA0gxPPZoi-N3wOmXtRG4eTK8btGEzpPoxJtf6kZIgLeFlNc6YXBDypeZW01daoc1_G54R26bzc70pNHmoIyLTpNLJA5_jcdkQ8MVy2-KCbUlqCwR7sS5M44gFU6u6fvdveOdNJ-wNaNjV7_oLglZUMDGLz3b68RmhnRvq2DAhN72YhT-XipdOCOoEjzzqtwqVDSLpDxD4kKWxn4lrQzgtTc-TUB6vKMEsAas"/>
+</div>
+<span class="text-sm font-medium text-on-surface">Sarah Jenkins</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 bg-tertiary-fixed text-on-tertiary-container text-[11px] font-bold uppercase tracking-wider rounded-full">Design</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-1.5 text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+<span class="text-sm font-semibold">Draft</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm text-on-surface-variant">Nov 01, 2023</span>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="p-2 rounded-lg text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="p-2 rounded-lg text-outline hover:text-error transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low tonal-shift group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-surface-container overflow-hidden flex-shrink-0">
+<img alt="Blog thumbnail" class="w-full h-full object-cover" data-alt="Clean desk with high-end laptop showing marketing analytics charts and graphs in bright daylight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZ6aS1YRjidHgEVzuseFLop_9hJac941szr73sAeHqqxyuJk3r02KyfaiMYAfDzKVkQDaDmCYHoQ8vJOUqsSiRoV7LGd1U3TdddUvp8mzskwbFcN-XRfpUqGXeUhiFSvb94-0jEJ5VnDRWBvxILC9p01WU_UCIO-_WQfkTM6s6gBsljxjtF-jk-gTBAOWafTm3nBRFv1RhVwqwPwec6fPQ2lgBP8N2RiQwcTE5RTFIa-2HR6xfXiRjmH_CxC1zMGmfjlcNyMXxmuI"/>
+</div>
+<div>
+<div class="font-bold text-on-surface">Scaling SaaS Marketing</div>
+<div class="text-xs text-on-surface-variant">/blog/saas-scaling</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-secondary-fixed overflow-hidden">
+<img alt="Author" class="w-full h-full object-cover" data-alt="Portrait of a confident businessman in a tailored suit in an urban outdoor setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfnMH3zPGh27PyyIRCciJt2UksJAbYnjFPuARj1Spmq0Yjb6IjL-T_X4mK3Zcm4zMMqK6Y7TF3FS30Kv7R28Zj2FiFlWK5MmFEwNqN_3oK9p-p4USr06PTXOwoJINuoACtf8U6aeXb8-eTiOUOtIFgCBletSV77_szUm1j_sbtp1yNVHW5ThikbTAjueswyhHkbRJLdfRMgMfXY3-46jJgixks4uUUwC06PFKTav1CrfOtVqbCPevOqsio3-fNPN_MtUG2cEJocQk"/>
+</div>
+<span class="text-sm font-medium text-on-surface">Robert Fox</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 bg-surface-container-high text-on-surface-variant text-[11px] font-bold uppercase tracking-wider rounded-full">Marketing</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-1.5 text-primary">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="text-sm font-semibold">Published</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm text-on-surface-variant">Sep 28, 2023</span>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="p-2 rounded-lg text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="p-2 rounded-lg text-outline hover:text-error transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Section -->
+<div class="px-6 py-6 border-t border-surface-container flex items-center justify-between">
+<span class="text-sm text-on-surface-variant">Showing <span class="font-bold text-on-surface">1-10</span> of <span class="font-bold text-on-surface">42</span> posts</span>
+<div class="flex items-center gap-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-lg bg-surface-container-low text-outline hover:bg-surface-container hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg bg-primary text-on-primary font-bold shadow-sm">1</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg bg-surface-container-low text-on-surface-variant hover:bg-surface-container transition-colors">2</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg bg-surface-container-low text-on-surface-variant hover:bg-surface-container transition-colors">3</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg bg-surface-container-low text-outline hover:bg-surface-container hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Bottom Contextual Widget Grid -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Most Viewed Bento Card -->
+<div class="md:col-span-2 bg-surface-container-low p-8 rounded-xl relative overflow-hidden flex flex-col justify-between">
+<div class="relative z-10">
+<h3 class="text-xl font-bold text-on-surface tracking-tight mb-2">Editor's Analytics</h3>
+<p class="text-on-surface-variant text-sm mb-6 max-w-md">Your posts have reached 12.4k readers this week. James Chen is your top performing author.</p>
+<div class="flex gap-4">
+<div class="bg-surface-container-lowest p-4 rounded-lg flex-1 shadow-sm">
+<div class="text-xs font-bold text-primary uppercase tracking-widest mb-1">Views</div>
+<div class="text-2xl font-extrabold">24,592</div>
+<div class="text-[10px] text-primary font-semibold mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">trending_up</span> +12% vs last month
+                                </div>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-lg flex-1 shadow-sm">
+<div class="text-xs font-bold text-tertiary uppercase tracking-widest mb-1">Avg. Read</div>
+<div class="text-2xl font-extrabold">4:32m</div>
+<div class="text-[10px] text-tertiary font-semibold mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">schedule</span> Target met
+                                </div>
+</div>
+</div>
+</div>
+<div class="absolute -right-10 -bottom-10 w-48 h-48 bg-primary/5 rounded-full blur-3xl"></div>
+</div>
+<!-- Quick Publish Card -->
+<div class="bg-primary text-on-primary p-8 rounded-xl flex flex-col justify-between">
+<div>
+<span class="material-symbols-outlined text-3xl mb-4">bolt</span>
+<h3 class="text-xl font-bold tracking-tight">Drafts Ready</h3>
+<p class="text-on-primary/80 text-sm mt-2 font-medium">You have 4 drafts waiting for review. Keep your publishing streak going!</p>
+</div>
+<button class="bg-white/10 backdrop-blur-md text-on-primary font-bold py-3 rounded-lg mt-6 hover:bg-white/20 transition-colors">
+                        Review Now
+                    </button>
+</div>
+</section>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Media Library | Metric Foundry</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-container-low": "#f1f4f6",
+            "surface-variant": "#dbe4e7",
+            "secondary": "#5d5f61",
+            "on-background": "#2b3437",
+            "error": "#9f403d",
+            "on-primary-container": "#005a6d",
+            "primary-dim": "#005a6e",
+            "on-error-container": "#752121",
+            "primary-fixed-dim": "#99dff6",
+            "on-surface-variant": "#586064",
+            "on-primary-fixed": "#004655",
+            "secondary-fixed": "#e1e3e4",
+            "secondary-dim": "#515355",
+            "on-secondary": "#f7f9fa",
+            "surface-bright": "#f8f9fa",
+            "error-dim": "#4e0309",
+            "on-secondary-fixed": "#3d4041",
+            "on-surface": "#2b3437",
+            "tertiary-fixed-dim": "#c3daf0",
+            "on-tertiary-fixed-variant": "#4a6073",
+            "outline-variant": "#abb3b7",
+            "surface-tint": "#13677b",
+            "on-tertiary-fixed": "#2e4355",
+            "secondary-container": "#e1e3e4",
+            "on-secondary-fixed-variant": "#595c5d",
+            "on-secondary-container": "#4f5253",
+            "on-primary-fixed-variant": "#0d6478",
+            "on-primary": "#edfaff",
+            "on-error": "#fff7f6",
+            "background": "#f8f9fa",
+            "tertiary-dim": "#405568",
+            "surface": "#f8f9fa",
+            "tertiary-fixed": "#d1e8ff",
+            "surface-container-highest": "#dbe4e7",
+            "inverse-primary": "#a1e7ff",
+            "surface-dim": "#d1dce0",
+            "surface-container": "#eaeff1",
+            "inverse-on-surface": "#9b9d9e",
+            "on-tertiary-container": "#405668",
+            "inverse-surface": "#0c0f10",
+            "outline": "#737c7f",
+            "tertiary-container": "#d1e8ff",
+            "surface-container-lowest": "#ffffff",
+            "primary": "#13677b",
+            "surface-container-high": "#e3e9ec",
+            "on-tertiary": "#f6f9ff",
+            "secondary-fixed-dim": "#d3d5d6",
+            "tertiary": "#4c6175",
+            "primary-fixed": "#b2ebff",
+            "primary-container": "#b2ebff",
+            "error-container": "#fe8983"
+          },
+          fontFamily: {
+            "headline": ["Manrope"],
+            "body": ["Inter"],
+            "label": ["Inter"]
+          },
+          borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      font-size: 20px;
+    }
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, .font-headline { font-family: 'Manrope', sans-serif; }
+  </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-screen w-64 bg-white dark:bg-slate-900 flex flex-col h-full py-6 z-50">
+<div class="px-6 mb-10 flex items-center gap-3">
+<div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="architecture">architecture</span>
+</div>
+<div>
+<div class="text-lg font-extrabold text-slate-900 dark:text-white leading-tight">Metric Foundry</div>
+<div class="text-xs text-slate-500">CMS Admin</div>
+</div>
+</div>
+<div class="px-4 mb-6">
+<button class="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-primary-dim text-on-primary py-2.5 rounded-md font-semibold text-sm shadow-sm hover:opacity-90 transition-all">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+        New Entry
+      </button>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-6 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<!-- Active Item: Media Library -->
+<a class="flex items-center gap-3 px-6 py-3 border-l-4 border-cyan-700 dark:border-cyan-400 text-slate-900 dark:text-white bg-slate-50 dark:bg-slate-800/40" href="#">
+<span class="material-symbols-outlined" data-icon="perm_media" style="font-variation-settings: 'FILL' 1;">perm_media</span>
+<span class="text-sm font-semibold">Media Library</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="text-sm font-medium">Form Submissions</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="search_check">search_check</span>
+<span class="text-sm font-medium">SEO Settings</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="text-sm font-medium">Activity Log</span>
+</a>
+</nav>
+<div class="mt-auto border-t-0 pt-4">
+<a class="flex items-center gap-3 px-6 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-50 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-50 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="text-sm font-medium">Logout</span>
+</a>
+</div>
+</aside>
+<!-- TopNavBar -->
+<header class="flex justify-between items-center px-8 py-3 w-full ml-64 sticky top-0 z-40 bg-slate-50/80 dark:bg-slate-950/80 backdrop-blur-xl transition-colors">
+<div class="flex items-center bg-surface-container-high rounded-full px-4 py-1.5 w-96">
+<span class="material-symbols-outlined text-outline" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full font-body placeholder:text-outline ml-2" placeholder="Search files..." type="text"/>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4">
+<button class="text-slate-500 dark:text-slate-400 hover:text-cyan-600 transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-slate-500 dark:text-slate-400 hover:text-cyan-600 transition-colors">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<button class="text-slate-500 dark:text-slate-400 hover:text-cyan-600 transition-colors">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+<div class="h-8 w-[1px] bg-surface-variant"></div>
+<div class="flex items-center gap-3">
+<div class="text-right">
+<p class="text-xs font-bold text-slate-900 leading-none">Alex Architect</p>
+<p class="text-[10px] text-slate-500 uppercase tracking-wider mt-0.5">Admin</p>
+</div>
+<img alt="Admin profile" class="w-8 h-8 rounded-full border border-surface-variant" data-alt="professional male portrait with clean lighting and neutral grey background for a corporate profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlD_nztpFcbCE6-FMTvL15BiAgjccG9E2R6PvOcntm9i35pBSWhS3GWSKzEapOolSikOQ7XAdEGinFtooIGoVRzbGoYpX775zwhyEgR7Wrae4O9YGN22onPs026Anqnonj1y1jUQhRsdsZ3xJZE2SmQ58qVlXrIXmBN9x0evEzOeLUW9QtAbhNC7d86rIBv4ZI7ydwXTRBO5tBOQnqgZBmfOzwUAjYiAKTrfW5GKejpGjszjYBxC5O-DM-mhe3dHt2t8HDvcFazWk"/>
+</div>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="ml-64 p-10 flex flex-col min-h-[calc(100vh-64px)] bg-surface-container-low">
+<!-- Editorial Header Section -->
+<div class="flex justify-between items-end mb-10">
+<div>
+<h1 class="text-4xl font-extrabold tracking-tight text-on-surface mb-2 font-headline">Media Library</h1>
+<p class="text-on-surface-variant font-body">Manage your assets across projects with architectural precision.</p>
+</div>
+<div class="flex gap-3">
+<div class="flex bg-surface-container-highest p-1 rounded-lg">
+<button class="px-4 py-1.5 bg-surface-container-lowest text-primary rounded-md text-xs font-bold shadow-sm">Grid</button>
+<button class="px-4 py-1.5 text-on-surface-variant text-xs font-bold">List</button>
+</div>
+<button class="flex items-center gap-2 px-6 py-2 bg-gradient-to-br from-primary to-primary-dim text-on-primary rounded-lg font-semibold text-sm transition-transform active:scale-95">
+<span class="material-symbols-outlined" data-icon="upload">upload</span>
+          Upload File
+        </button>
+</div>
+</div>
+<!-- Filters & Main Area -->
+<div class="flex gap-10 flex-1">
+<!-- Content Grid -->
+<div class="flex-1">
+<!-- Tonal Filter Bar -->
+<div class="flex items-center gap-6 mb-8 text-sm font-label uppercase tracking-widest text-on-surface-variant border-b border-transparent">
+<button class="pb-2 border-b-2 border-primary text-primary font-bold">All Assets</button>
+<button class="pb-2 border-b-2 border-transparent hover:text-primary transition-all">Images</button>
+<button class="pb-2 border-b-2 border-transparent hover:text-primary transition-all">Videos</button>
+<button class="pb-2 border-b-2 border-transparent hover:text-primary transition-all">Documents</button>
+<div class="flex-1"></div>
+<div class="flex items-center gap-2 text-xs font-bold text-outline">
+<span>Sort by:</span>
+<button class="flex items-center gap-1 text-on-surface">Recent <span class="material-symbols-outlined text-[16px]" data-icon="expand_more">expand_more</span></button>
+</div>
+</div>
+<!-- Bento-style Media Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+<!-- Selected Image Card -->
+<div class="group relative aspect-square bg-surface-container-lowest rounded-xl overflow-hidden ring-4 ring-primary transition-all">
+<img class="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-500" data-alt="architectural low angle shot of a modern glass skyscraper reflecting the sky with sharp lines and high contrast" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCz5L5ZvmBrd3YvT2V3Qu3wMjv9abZPBhrAeeOmCa4GBNbul4eogONbfot7jlB_OPsd2dJfsvvP7aPJEiTygYI2xWFHZK0Vyzz1v2i8RiYGzAsy_upNNpfT2ZHdgivx9-0kCrqrfTS0fZ7XtAqlj4oFSs3kKSxgq6WJnyanxXlez6uKEP3l2Pq_0wQpWRlbcCRJhC_LsxRELMp8KYTQQYHGceXFjlWI_Dlq_0vqbVy6JUUX6OuE_m6gaR939IJAg2GN5QAvnFbQ2DQ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="absolute bottom-3 left-3 text-white text-[10px] font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
+              building_hero_01.jpg
+            </div>
+<div class="absolute top-3 right-3 opacity-100">
+<span class="material-symbols-outlined text-primary bg-white rounded-full p-1" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="group relative aspect-square bg-surface-container-lowest rounded-xl overflow-hidden hover:shadow-xl transition-all border-none">
+<img class="w-full h-full object-cover" data-alt="modern brutalist interior with raw concrete walls and large floor to ceiling windows showing greenery outside" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYxIinYeshqvRgSwPh1qswvh6hdCE2QZbeWnt5srhGzezbccjrCDZAOtLb_QiJMrQbBos64kbzOMFbGZGCvVXg51kx6BZylcrAsWdRRk5bNrmcGl0CeHizXA3vPk3o8Ki_4lNXduKmZL4M07kfCpVJdAQg6jkPCuejMOogAt26m6LhyONrOj0_HfQhhu9fON1b5DTgOCcFLUpiELh7Ry4SdZGLW-4gHZOt3eOe7wOnyjStojZuwLbgCeZFUKy9AMJBu9A6KMay9Lk"/>
+<div class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="bg-white/80 backdrop-blur-md p-1.5 rounded-lg text-on-surface">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Card 3 (Video) -->
+<div class="group relative aspect-square bg-surface-container-lowest rounded-xl overflow-hidden hover:shadow-xl transition-all">
+<div class="absolute inset-0 flex items-center justify-center bg-surface-container-highest/50">
+<span class="material-symbols-outlined text-4xl text-primary" data-icon="play_circle">play_circle</span>
+</div>
+<img class="w-full h-full object-cover opacity-60" data-alt="cinematic slow motion shot of water ripples in a dark minimalist pool with soft blue light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBU3YT_Um3TrkFFJkBDaAMWlSep54jV_LBavn4_bPgAqAXr0TaQuc5IdwzHLOBRiHt2CuDv-OtO2HgYxKgtf4u9kEpazre3xapIcth27bqmzizM8qEjyVavQrVydjFFy9st_AYwEZCOA51iv6ZE2zx74SJ0GPVygHuZRHndkgww65Vd4c1zyWvIj0yTZrCvoGpLE1e4RCpfVuocvM65ddKn3QdS2ne3GTrJh7G7UDVENHyIDi0J_EtYYMIfXc7K3FPNhFBjY3N-I2A"/>
+<div class="absolute bottom-3 right-3 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-md font-bold">0:24</div>
+</div>
+<!-- Card 4 -->
+<div class="group relative aspect-square bg-surface-container-lowest rounded-xl overflow-hidden hover:shadow-xl transition-all">
+<img class="w-full h-full object-cover" data-alt="architectural model made of wood and white cardstock sitting on a large drafting table with tools" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdICSfxmiH-Fs2lP9rcF4uNiuhj9eB0Z198G9oemmY28XvxDfNLw2XPxaIAXtbGTdphUXETSDun4c94sLIxWjAme1y7DiMj3zhgs9WJWlgbAoCis563y1zrGw38Rp5SWi35xIKps4a2JabH7i0cWo-bHIDO6BC6LYGZ3ym-jzCv6vhO33JZjDJq_B2tt0vK-wPCEcN_R1bVonwcMuH8wPi7O6qpumpp68AiUtUcJBVDxg0PhUznATnwRqvdmnv0TpdO0ZT6mRPBf8"/>
+</div>
+<!-- Card 5 (Document) -->
+<div class="group relative aspect-square bg-surface-container-lowest rounded-xl flex flex-col items-center justify-center p-6 border-none hover:shadow-xl transition-all">
+<span class="material-symbols-outlined text-5xl text-on-surface-variant mb-4" data-icon="description">description</span>
+<p class="text-xs font-bold text-center text-on-surface line-clamp-2">Site_Safety_Protocols_2024.pdf</p>
+<p class="text-[10px] text-outline mt-2 uppercase tracking-widest">1.2 MB</p>
+</div>
+<!-- Card 6 -->
+<div class="group relative aspect-square bg-surface-container-lowest rounded-xl overflow-hidden hover:shadow-xl transition-all">
+<img class="w-full h-full object-cover" data-alt="minimalist white office space with clean desks and designer chairs with bright morning sunlight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTaOmZUahNwFoFbq9_m0Y4AFbnjvXRXFfh6B5l0FaDP60K3Hw3W42oR8yCWAOWXQ4dSTYNMDWbXsvOEMwhVysdm-sd-ELd9thwaf5nIBzCcdIkTFrJ7bpI3ptzsotu7_apOoWuqKwfc05lBM-pbG9oAl2tQp19CKMI7-xCkIQMNTlD7EWEw0CIjzKbirOwcXGgpNEff06v-R7pl0PIUehyqMDxRL5wBYsfTlnNiXff_8x4A4KoEQeQkWE6AXk3yANIvv4lWy444_0"/>
+</div>
+<!-- Card 7 -->
+<div class="group relative aspect-square bg-surface-container-lowest rounded-xl overflow-hidden hover:shadow-xl transition-all">
+<img class="w-full h-full object-cover" data-alt="corporate meeting room with long table and large screen displaying data charts" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXa-CEl8YvUMP8UmHw1AzZWqbDbOLY6SAWPQhRoiVXGTbygjSnTQCJZLNfAAyZczVtOZj55ee12CDiE8PlTpdUNlbQQwdd-qZVw5Po01ivNz2hhrgzmrWXA0Wnvk8KTxPAtpxAcV47JN1kjGi-U2VktXj-fllsL8k4-57GGeaBqOddGlMoIaHiKP47976NFExfIXFfayy-iPEo-2SMe66DJJMVSlQhkdgomp0piFgXoOX-TafbiTmqye-Y24RRSoSxoM31Wb09f3A"/>
+</div>
+<!-- Card 8 -->
+<div class="group relative aspect-square bg-surface-container-lowest rounded-xl overflow-hidden hover:shadow-xl transition-all">
+<img class="w-full h-full object-cover" data-alt="dynamic shot of office workers in motion in a modern open plan office space" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzCPnc0krXss4-A5CJw47tBNvibJl4TYzLIDABJCtbn3xvnqiKB_umcuRPhthArDGBGCIOH018yzMbOY1h1b9XIytTZs75hJoVu12phoQ3TsckbMrBZ-FZ7bS-anHgKI5yFt3CpM7hXlWYj1udhWC2hv-03egI44nwHwHaONlZuqiJKZE4h4B8qPZwPm0Jy9uZGu420GNq-rDRpgbhANMDjbMmSG56ZZEUc0uq07cIIWfA0wJgOeYFFzWZImDs62-ACR7Ve0YvCcg"/>
+</div>
+</div>
+</div>
+<!-- Detail Sidebar (Architectural Style) -->
+<aside class="w-80 flex flex-col gap-6">
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-sm font-bold uppercase tracking-widest text-on-surface">Asset Details</h3>
+<button class="text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+<div class="rounded-lg overflow-hidden bg-surface-container-high mb-6">
+<img class="w-full h-40 object-cover" data-alt="architectural low angle shot of a modern glass skyscraper reflecting the sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxUWERL75dVM9pOOTIm3VrM1AUjrj1HNkETiCB9R5AwsS5zKEodmkVjRVIKxppLpDj-oBQ8NvtJdlXTqWgJZtr7CZa67ni_3TIvIGwebbjBrwbL0r9aTKhdBDF2w4QJ8OkISAPjfafPUXoWphRtsk9ohRaWzaTbO8bPTsTiJtG3VHjltrupOYMDXOa9RLzxU6TCRYU3RRJ9MMCblEaLsJZtJustB8GmQbKrW5Jnp-67Ryn-WWTMuh_jocBs7RL3LkJcxnpif45GFY"/>
+</div>
+<div class="space-y-5">
+<div>
+<label class="text-[10px] font-bold text-outline uppercase tracking-widest block mb-1">File Name</label>
+<p class="text-sm font-semibold text-on-surface truncate">building_hero_01.jpg</p>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="text-[10px] font-bold text-outline uppercase tracking-widest block mb-1">Size</label>
+<p class="text-sm font-semibold text-on-surface">2.4 MB</p>
+</div>
+<div>
+<label class="text-[10px] font-bold text-outline uppercase tracking-widest block mb-1">Dimensions</label>
+<p class="text-sm font-semibold text-on-surface">3200 x 2400</p>
+</div>
+</div>
+<div>
+<label class="text-[10px] font-bold text-outline uppercase tracking-widest block mb-1">Alt Text</label>
+<textarea class="w-full bg-surface-container-high border-none rounded-lg text-sm p-3 focus:ring-2 focus:ring-primary min-h-[80px]" placeholder="Describe this image for accessibility...">Modern skyscraper glass facade reflecting a bright blue sky at golden hour.</textarea>
+</div>
+<div>
+<label class="text-[10px] font-bold text-outline uppercase tracking-widest block mb-1">Uploaded By</label>
+<div class="flex items-center gap-2 mt-1">
+<div class="w-6 h-6 rounded-full bg-tertiary-container flex items-center justify-center text-[10px] font-bold text-on-tertiary-container">AA</div>
+<p class="text-sm font-medium">Alex Architect</p>
+</div>
+</div>
+<div class="pt-4 flex gap-3">
+<button class="flex-1 py-2 text-xs font-bold border border-outline-variant/30 rounded-lg hover:bg-surface-container-high transition-colors">Download</button>
+<button class="flex-1 py-2 text-xs font-bold bg-primary text-on-primary rounded-lg shadow-sm">Edit Asset</button>
+</div>
+</div>
+</div>
+<!-- System Usage Card (Glassmorphism inspired) -->
+<div class="bg-primary/5 border border-primary/10 rounded-xl p-6">
+<h4 class="text-xs font-bold text-primary uppercase tracking-widest mb-4">Storage Usage</h4>
+<div class="w-full h-1.5 bg-primary-fixed rounded-full overflow-hidden mb-3">
+<div class="h-full bg-primary w-[65%]"></div>
+</div>
+<p class="text-xs text-on-surface-variant font-medium">6.5 GB of 10 GB used</p>
+</div>
+</aside>
+</div>
+</main>
+</body></html>

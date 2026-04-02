@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Activity Log | Metric Foundry</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-low": "#f1f4f6",
+              "surface-variant": "#dbe4e7",
+              "secondary": "#5d5f61",
+              "on-background": "#2b3437",
+              "error": "#9f403d",
+              "on-primary-container": "#005a6d",
+              "primary-dim": "#005a6e",
+              "on-error-container": "#752121",
+              "primary-fixed-dim": "#99dff6",
+              "on-surface-variant": "#586064",
+              "on-primary-fixed": "#004655",
+              "secondary-fixed": "#e1e3e4",
+              "secondary-dim": "#515355",
+              "on-secondary": "#f7f9fa",
+              "surface-bright": "#f8f9fa",
+              "error-dim": "#4e0309",
+              "on-secondary-fixed": "#3d4041",
+              "on-surface": "#2b3437",
+              "tertiary-fixed-dim": "#c3daf0",
+              "on-tertiary-fixed-variant": "#4a6073",
+              "outline-variant": "#abb3b7",
+              "surface-tint": "#13677b",
+              "on-tertiary-fixed": "#2e4355",
+              "secondary-container": "#e1e3e4",
+              "on-secondary-fixed-variant": "#595c5d",
+              "on-secondary-container": "#4f5253",
+              "on-primary-fixed-variant": "#0d6478",
+              "on-primary": "#edfaff",
+              "on-error": "#fff7f6",
+              "background": "#f8f9fa",
+              "tertiary-dim": "#405568",
+              "surface": "#f8f9fa",
+              "tertiary-fixed": "#d1e8ff",
+              "surface-container-highest": "#dbe4e7",
+              "inverse-primary": "#a1e7ff",
+              "surface-dim": "#d1dce0",
+              "surface-container": "#eaeff1",
+              "inverse-on-surface": "#9b9d9e",
+              "on-tertiary-container": "#405668",
+              "inverse-surface": "#0c0f10",
+              "outline": "#737c7f",
+              "tertiary-container": "#d1e8ff",
+              "surface-container-lowest": "#ffffff",
+              "primary": "#13677b",
+              "surface-container-high": "#e3e9ec",
+              "on-tertiary": "#f6f9ff",
+              "secondary-fixed-dim": "#d3d5d6",
+              "tertiary": "#4c6175",
+              "primary-fixed": "#b2ebff",
+              "primary-container": "#b2ebff",
+              "error-container": "#fe8983"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3 { font-family: 'Manrope', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- SideNavBar Component -->
+<aside class="fixed left-0 top-0 h-screen w-64 bg-white dark:bg-slate-900 flex flex-col h-full py-6 z-50">
+<div class="px-8 mb-10">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">architecture</span>
+</div>
+<div>
+<h1 class="text-lg font-extrabold text-slate-900 dark:text-white leading-tight">Metric Foundry</h1>
+<p class="text-[10px] uppercase tracking-widest text-slate-500 font-bold">CMS Admin</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center px-8 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-all group" href="#">
+<span class="material-symbols-outlined mr-4 group-hover:text-cyan-600">dashboard</span>
+<span class="font-medium text-sm">Dashboard</span>
+</a>
+<a class="flex items-center px-8 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-all group" href="#">
+<span class="material-symbols-outlined mr-4 group-hover:text-cyan-600">perm_media</span>
+<span class="font-medium text-sm">Media Library</span>
+</a>
+<a class="flex items-center px-8 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-all group" href="#">
+<span class="material-symbols-outlined mr-4 group-hover:text-cyan-600">description</span>
+<span class="font-medium text-sm">Form Submissions</span>
+</a>
+<a class="flex items-center px-8 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-all group" href="#">
+<span class="material-symbols-outlined mr-4 group-hover:text-cyan-600">search_check</span>
+<span class="font-medium text-sm">SEO Settings</span>
+</a>
+<!-- Active Tab: Activity Log -->
+<a class="flex items-center px-8 py-3 border-l-4 border-cyan-700 dark:border-cyan-400 text-slate-900 dark:text-white bg-slate-50 dark:bg-slate-800/40 group" href="#">
+<span class="material-symbols-outlined mr-4 text-cyan-700 dark:text-cyan-400">history</span>
+<span class="font-semibold text-sm">Activity Log</span>
+</a>
+</nav>
+<div class="px-8 mt-auto pt-6 space-y-4">
+<button class="w-full py-2.5 bg-primary text-white rounded-md font-semibold text-sm shadow-sm hover:opacity-90 transition-opacity">
+                New Entry
+            </button>
+<div class="space-y-1">
+<a class="flex items-center py-2 text-slate-500 hover:text-cyan-700 transition-colors text-sm" href="#">
+<span class="material-symbols-outlined mr-3 text-lg">settings</span> Settings
+                </a>
+<a class="flex items-center py-2 text-slate-500 hover:text-error transition-colors text-sm" href="#">
+<span class="material-symbols-outlined mr-3 text-lg">logout</span> Logout
+                </a>
+</div>
+</div>
+</aside>
+<!-- TopNavBar Component -->
+<header class="w-full sticky top-0 z-40 bg-slate-50/80 dark:bg-slate-950/80 backdrop-blur-xl flex justify-between items-center px-8 py-3 ml-64 w-[calc(100%-16rem)]">
+<div class="flex items-center gap-6">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-high border-none rounded-lg text-sm focus:ring-2 focus:ring-primary w-64 transition-all" placeholder="Search activities..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-500 hover:text-cyan-700 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-slate-500 hover:text-cyan-700 transition-colors">
+<span class="material-symbols-outlined">help</span>
+</button>
+<button class="p-2 text-slate-500 hover:text-cyan-700 transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="h-8 w-8 rounded-full overflow-hidden ml-2 border border-surface-variant">
+<img alt="Admin profile" class="w-full h-full object-cover" data-alt="close-up portrait of a professional woman with a friendly smile, clean studio background, minimalist corporate style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFgCraSBC_n8J1602-55T4LBu1blJohX6ibqnUzkNWXbvUQWhqk0zc7atT0UE9pqO-E4skjH8NG8RYYMCsSZv6qW2DYzk-jgqfiOxb97NMa6-yM4qHYgOu4lB5HFcr5qpTSnUiV0lnpLSh-Q2v9w-V6YQny4ANGkEbg8rFiERZO5Eih48SwtHwbN9kDh3kuYAttDrwUL2dlLJlyS-JGrWk549knaxGuae_2X-05M5aPXpzp6SO0isPj-eDVzBJ2XHY3RVygrkewnk"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 p-10 min-h-screen">
+<div class="max-w-6xl mx-auto">
+<!-- Page Header -->
+<div class="flex justify-between items-end mb-12">
+<div>
+<h2 class="text-3xl font-extrabold tracking-tight text-on-surface mb-2">Activity Log</h2>
+<p class="text-on-surface-variant max-w-lg">Track every system change with granular precision. Filter, audit, and maintain full transparency across your digital ecosystem.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-surface-container-lowest text-on-surface rounded-lg text-sm font-semibold shadow-sm hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-sm">filter_list</span> Filter
+                    </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-surface-container-lowest text-on-surface rounded-lg text-sm font-semibold shadow-sm hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-sm">download</span> Export
+                    </button>
+</div>
+</div>
+<!-- Dashboard Bento Grid Logic: Summary Tiles -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+<div class="bg-surface-container-lowest p-6 rounded-xl transition-all hover:translate-y-[-2px]">
+<p class="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-1">Total Logs</p>
+<h3 class="text-2xl font-extrabold text-on-surface">12,482</h3>
+<div class="mt-2 flex items-center text-xs text-cyan-600 font-medium">
+<span class="material-symbols-outlined text-xs mr-1">trending_up</span> +12% from yesterday
+                    </div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl transition-all hover:translate-y-[-2px]">
+<p class="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-1">Critical Updates</p>
+<h3 class="text-2xl font-extrabold text-on-surface">14</h3>
+<div class="mt-2 flex items-center text-xs text-error font-medium">
+<span class="material-symbols-outlined text-xs mr-1">warning</span> Requires review
+                    </div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl transition-all hover:translate-y-[-2px]">
+<p class="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-1">Active Users</p>
+<h3 class="text-2xl font-extrabold text-on-surface">8</h3>
+<div class="mt-2 flex items-center text-xs text-on-surface-variant font-medium">
+<span class="material-symbols-outlined text-xs mr-1">person</span> Currently online
+                    </div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl transition-all hover:translate-y-[-2px]">
+<p class="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-1">Sync Status</p>
+<div class="flex items-center gap-2 mt-2">
+<div class="w-2 h-2 rounded-full bg-cyan-500 animate-pulse"></div>
+<h3 class="text-lg font-bold text-on-surface">Live Syncing</h3>
+</div>
+</div>
+</div>
+<!-- Activity Timeline Container -->
+<div class="bg-surface-container-low rounded-xl p-8 relative">
+<!-- Vertical Timeline Line -->
+<div class="absolute left-[3.25rem] top-10 bottom-10 w-px bg-outline-variant/30"></div>
+<div class="space-y-12">
+<!-- Date Group -->
+<div>
+<div class="flex items-center mb-8 relative z-10">
+<div class="bg-surface-container-highest text-on-surface-variant text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">Today — Oct 24, 2023</div>
+</div>
+<!-- Entry 1 -->
+<div class="flex gap-6 items-start relative z-10">
+<div class="w-10 h-10 rounded-full border-4 border-surface-container-low overflow-hidden bg-white shrink-0">
+<img alt="Sarah J." class="w-full h-full object-cover" data-alt="professional headshot of a woman with glasses, neutral expression, warm lighting, office background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEHFfgjVw22_b60xJyICUbgkEqlw4HtITzRpVLGX-3idHBBv-TL3l4fjuzFeCNv92hEgkr7shLzG3CnBcPKD4vxH1-z359p22WUHQTVOfD7nJMVFXgm07vX1mEjPVj-WqGEHk4jaZZxZwnniRMoJt9nvd2yaRQqTrOfSG3hGEz6npSwG7vA6UXdAt4uQE3x9QHWEd25L7ZHIqwpifibx8nMdf3s3lb5C97lqDvO-rfShMICQkRg6lCqqN7PN4nzD1ZNs6yUh7nkT4"/>
+</div>
+<div class="flex-1 bg-surface-container-lowest p-5 rounded-xl shadow-sm hover:shadow-md transition-shadow group cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<div>
+<span class="font-bold text-on-surface">Sarah edited Homepage</span>
+<p class="text-sm text-on-surface-variant mt-1">Updated hero section copy and primary CTA link in the main index.html file.</p>
+</div>
+<span class="bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-tighter px-2 py-1 rounded">Success</span>
+</div>
+<div class="flex items-center justify-between mt-4">
+<div class="flex items-center gap-4 text-[11px] text-on-surface-variant">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">schedule</span> 10:42 AM</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">terminal</span> Content Update</span>
+</div>
+<button class="text-primary text-[11px] font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">View Diff</button>
+</div>
+</div>
+</div>
+<!-- Entry 2 -->
+<div class="mt-8 flex gap-6 items-start relative z-10">
+<div class="w-10 h-10 rounded-full border-4 border-surface-container-low overflow-hidden bg-white shrink-0">
+<img alt="Marcus V." class="w-full h-full object-cover" data-alt="portrait of a young man with beard, tech professional style, soft natural lighting, minimalist setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuARk54AKXo4H-YRls9ZEVow1HDDjlvIMnk9MCj1iBSosH8E7b_U0TgIlO2jch_z6HF9l2DEeGA7sjwDHtXzVxjQJPjHp75BkBKo7YnlnOvJK1Gw68_e-L19xOqI7Lt4MGqo1gXSoxvJS3gemNC4i3g9io-OuwK5H45MAZZ2_i5moq-_DS7TpN9Ja9M7SUyl31L3Oj1N-GHMMnbPApABNOCuyG99evci26UM3_U1R2dXQoXspTlTrjQA4nnwt2YeSq-jcq_Kh6CnxS8"/>
+</div>
+<div class="flex-1 bg-surface-container-lowest p-5 rounded-xl shadow-sm hover:shadow-md transition-shadow group cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<div>
+<span class="font-bold text-on-surface">Marcus V. purged System Cache</span>
+<p class="text-sm text-on-surface-variant mt-1">Global cache invalidation for production environment triggered manually.</p>
+</div>
+<span class="bg-secondary-container text-on-secondary-container text-[10px] font-bold uppercase tracking-tighter px-2 py-1 rounded">System</span>
+</div>
+<div class="flex items-center justify-between mt-4">
+<div class="flex items-center gap-4 text-[11px] text-on-surface-variant">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">schedule</span> 09:15 AM</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">settings_suggest</span> Maintenance</span>
+</div>
+<button class="text-primary text-[11px] font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Logs</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Date Group 2 -->
+<div>
+<div class="flex items-center mb-8 relative z-10">
+<div class="bg-surface-container-highest text-on-surface-variant text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">Yesterday — Oct 23, 2023</div>
+</div>
+<!-- Entry 3 (Critical) -->
+<div class="flex gap-6 items-start relative z-10">
+<div class="w-10 h-10 rounded-full border-4 border-surface-container-low overflow-hidden bg-white shrink-0">
+<img alt="Elena K." class="w-full h-full object-cover" data-alt="woman in professional attire, creative studio lighting, bright and modern aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBr3ug6bO1ZXuF0AmaDeYRQvJvdOQhz_iIINscBRSNnz15BIffD_ATWTemDb5BAhmirgoJ6W87bDjhaU9FQawPUAKrXRUUqkfpRooy0A1cOo3DuzpP8z_lI71Vi1PMyw623CXbDJc6vvqKOX06sFvK2Qym3VFrHaUtwK19jlVUfu_yWyBLt7ju7y30GCW6iFgDRVdTb5e0j-wyHGbWbj2HGmGoO3A4cVwY6R9IeRU5yX1kUbDVFvfualrW84gNZRZIGbxGGANWdgm4"/>
+</div>
+<div class="flex-1 bg-surface-container-lowest p-5 rounded-xl shadow-sm border-l-4 border-error hover:shadow-md transition-shadow group cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<div>
+<span class="font-bold text-on-surface">Elena K. modified SEO Settings</span>
+<p class="text-sm text-on-surface-variant mt-1">Changes detected in global meta descriptions. Potential conflict with existing keywords.</p>
+</div>
+<span class="bg-error-container text-on-error-container text-[10px] font-bold uppercase tracking-tighter px-2 py-1 rounded">Attention</span>
+</div>
+<div class="flex items-center justify-between mt-4">
+<div class="flex items-center gap-4 text-[11px] text-on-surface-variant">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">schedule</span> 04:30 PM</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">search_check</span> SEO</span>
+</div>
+<button class="text-error text-[11px] font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Undo Change</button>
+</div>
+</div>
+</div>
+<!-- Entry 4 -->
+<div class="mt-8 flex gap-6 items-start relative z-10">
+<div class="w-10 h-10 rounded-full border-4 border-surface-container-low overflow-hidden bg-white shrink-0">
+<img alt="System Bot" class="w-full h-full object-cover" data-alt="abstract metallic core with blue glowing light, futuristic server hardware visualization, high tech aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNy7ijOHgl4dkVaiR_BSqQNBjVw1wD2c5LSM6I5hdCvUuNcFWYTbd5gD8L2fsB_4OKV57pxNPYaewx52mLq_SFVJ_asirMlda8_Uv54jylsJlAIDSflW6DRFXOgdddMx4k5xTWIDJdq5uylvh-cwsYGDRwu6GYiZtrb4-7agaOr7YStwzHOk0X-tjtMRgiHSYXcZq1ukCOjgwVPOjsz7JePu38nPuYTNX9zgjFdyL16M7xD5HfKsY5ykkScOfRpBbO1JhJMU3fZFs"/>
+</div>
+<div class="flex-1 bg-surface-container-lowest p-5 rounded-xl shadow-sm hover:shadow-md transition-shadow group cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<div>
+<span class="font-bold text-on-surface">Automated Backup Completed</span>
+<p class="text-sm text-on-surface-variant mt-1">Scheduled database snapshot stored at AWS-East-1 instance. Integrity verified.</p>
+</div>
+<span class="bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-tighter px-2 py-1 rounded">Verified</span>
+</div>
+<div class="flex items-center justify-between mt-4">
+<div class="flex items-center gap-4 text-[11px] text-on-surface-variant">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">schedule</span> 03:00 AM</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">cloud_done</span> Backup</span>
+</div>
+<button class="text-primary text-[11px] font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Download Report</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Load More Button -->
+<div class="mt-12 flex justify-center">
+<button class="px-8 py-3 bg-white text-on-surface border border-outline-variant/20 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-surface-container-high transition-colors shadow-sm">
+                        Load Older Activities
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Filter Widget (Glassmorphism) -->
+<div class="fixed bottom-10 right-10 bg-surface-container-lowest/80 backdrop-blur-xl p-4 rounded-full shadow-2xl border border-white/20 flex gap-2 items-center z-50">
+<div class="flex -space-x-3 mr-4">
+<img alt="User" class="w-8 h-8 rounded-full border-2 border-white" data-alt="face of a diverse professional person in small circular avatar style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtHYcG-wrJY9TM2xVUkzzI3NsmDPuQSaHkIMsCg56PM2JKuFYIASSf2mvYO7La6H0qb2rdcLDCizzSP-A0BdavoyHJiMa6_rnWUnHm5lx7JunfPmAV5VxLuIEhn3jsUnHgjXWV6YA0EvAOtfWjt4vRtm9Lx0WR877dY_XWPbeCnBOGqoOEfmjeCdJv_vr1Q-RSavXEQD9hKv_31pfCHJoudsEubwv4ssrkKhjW9XQ0jgkviqnoIFAljlgu6iiUeF0eRq-19SAhCmw"/>
+<img alt="User" class="w-8 h-8 rounded-full border-2 border-white" data-alt="face of a diverse professional person in small circular avatar style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-rRewnTg2upipN_Y_3T5o6MuJM81nvc-2XbA-Bjm5WZIsvv5QNhcECpOXjyCLuD631_FwNknyOM2I3ZItsPMbGKLNwiKpf3_6NbLp9zt0HCn8PLovqF1X0z3rmT4L5KK4-7vmpsCb0Z0s85LdisLuYBY8iORUTIyiWD1fPsNOB84BBGOCjj-5kDAYYR6Qv6r5GKJFB_jjCbS218OwfCDKPhazB83LOMlDBuqncdsepOZ2E_Pes0LA22hTCQF5-EjF6Orhkx7IU20"/>
+<img alt="User" class="w-8 h-8 rounded-full border-2 border-white" data-alt="face of a diverse professional person in small circular avatar style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDId6_4FBVG5YvxnlVHxQbOlH9LcX1hQd5Lcd01owuzfIppT2qn6jGMCtT6AiCkJQbzYva8RtjcbM92WSFNA0VC_OlSSBlF-dx2O8kpAlkYVU4C4B3FjCepDeBwI-5StuY4s_6XwwoVglT-f-yhvAMAc-zLqNdz25xslEndQdVei-_XsBjHTqrL1u341jDVHn_bRiuNHeeEjoM4QwKX1O6wYCpDginFPD3srteSI11rnKsnKCzZfpNY2uFRIyzvv6ZpDDKacCHdVE"/>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-slate-100 flex items-center justify-center text-[10px] font-bold">+5</div>
+</div>
+<div class="h-6 w-px bg-outline-variant/30 mx-2"></div>
+<button class="p-2 bg-primary text-white rounded-full hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-sm">tune</span>
+</button>
+</div>
+</body></html>

@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Form Submissions | Metric Foundry</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-container-low": "#f1f4f6",
+                        "surface-variant": "#dbe4e7",
+                        "secondary": "#5d5f61",
+                        "on-background": "#2b3437",
+                        "error": "#9f403d",
+                        "on-primary-container": "#005a6d",
+                        "primary-dim": "#005a6e",
+                        "on-error-container": "#752121",
+                        "primary-fixed-dim": "#99dff6",
+                        "on-surface-variant": "#586064",
+                        "on-primary-fixed": "#004655",
+                        "secondary-fixed": "#e1e3e4",
+                        "secondary-dim": "#515355",
+                        "on-secondary": "#f7f9fa",
+                        "surface-bright": "#f8f9fa",
+                        "error-dim": "#4e0309",
+                        "on-secondary-fixed": "#3d4041",
+                        "on-surface": "#2b3437",
+                        "tertiary-fixed-dim": "#c3daf0",
+                        "on-tertiary-fixed-variant": "#4a6073",
+                        "outline-variant": "#abb3b7",
+                        "surface-tint": "#13677b",
+                        "on-tertiary-fixed": "#2e4355",
+                        "secondary-container": "#e1e3e4",
+                        "on-secondary-fixed-variant": "#595c5d",
+                        "on-secondary-container": "#4f5253",
+                        "on-primary-fixed-variant": "#0d6478",
+                        "on-primary": "#edfaff",
+                        "on-error": "#fff7f6",
+                        "background": "#f8f9fa",
+                        "tertiary-dim": "#405568",
+                        "surface": "#f8f9fa",
+                        "tertiary-fixed": "#d1e8ff",
+                        "surface-container-highest": "#dbe4e7",
+                        "inverse-primary": "#a1e7ff",
+                        "surface-dim": "#d1dce0",
+                        "surface-container": "#eaeff1",
+                        "inverse-on-surface": "#9b9d9e",
+                        "on-tertiary-container": "#405668",
+                        "inverse-surface": "#0c0f10",
+                        "outline": "#737c7f",
+                        "tertiary-container": "#d1e8ff",
+                        "surface-container-lowest": "#ffffff",
+                        "primary": "#13677b",
+                        "surface-container-high": "#e3e9ec",
+                        "on-tertiary": "#f6f9ff",
+                        "secondary-fixed-dim": "#d3d5d6",
+                        "tertiary": "#4c6175",
+                        "primary-fixed": "#b2ebff",
+                        "primary-container": "#b2ebff",
+                        "error-container": "#fe8983"
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3 { font-family: 'Manrope', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-screen w-64 bg-white dark:bg-slate-900 flex flex-col h-full py-6 font-manrope z-50">
+<div class="px-6 mb-10 flex items-center gap-3">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-sm" data-icon="architecture">architecture</span>
+</div>
+<div>
+<h2 class="text-lg font-extrabold text-slate-900 dark:text-white leading-tight">Metric Foundry</h2>
+<p class="text-xs text-slate-500">CMS Admin</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center px-6 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-all" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="dashboard">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center px-6 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-all" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="perm_media">perm_media</span>
+<span class="text-sm font-medium">Media Library</span>
+</a>
+<!-- Active State: Form Submissions -->
+<a class="flex items-center px-6 py-3 border-l-4 border-cyan-700 dark:border-cyan-400 text-slate-900 dark:text-white bg-slate-50 dark:bg-slate-800/40" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="description">description</span>
+<span class="text-sm font-semibold">Form Submissions</span>
+</a>
+<a class="flex items-center px-6 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-all" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="search_check">search_check</span>
+<span class="text-sm font-medium">SEO Settings</span>
+</a>
+<a class="flex items-center px-6 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-all" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="history">history</span>
+<span class="text-sm font-medium">Activity Log</span>
+</a>
+</nav>
+<div class="mt-auto px-6 space-y-1 border-t border-surface-container pt-6">
+<a class="flex items-center py-2 text-slate-500 dark:text-slate-400 hover:text-cyan-700 transition-colors" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="settings">settings</span>
+<span class="text-sm">Settings</span>
+</a>
+<a class="flex items-center py-2 text-slate-500 dark:text-slate-400 hover:text-cyan-700 transition-colors" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="logout">logout</span>
+<span class="text-sm">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 min-h-screen bg-surface-container-low">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center px-10 py-4 w-full sticky top-0 z-40 bg-slate-50/80 dark:bg-slate-950/80 backdrop-blur-xl font-manrope">
+<div class="flex items-center flex-1 max-w-xl">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg" data-icon="search">search</span>
+<input class="w-full bg-surface-container-high border-none rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary" placeholder="Search inquiries..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6 ml-10">
+<div class="flex items-center gap-4">
+<button class="text-slate-500 hover:text-cyan-700 transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-slate-500 hover:text-cyan-700 transition-colors">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<button class="text-slate-500 hover:text-cyan-700 transition-colors">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+<div class="h-8 w-[1px] bg-surface-variant"></div>
+<div class="flex items-center gap-3">
+<img alt="Admin profile" class="w-9 h-9 rounded-full object-cover" data-alt="professional male portrait with clean-cut appearance in a bright office setting, soft natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOfbvKC9fa1ML_YUxYBgELuYO26CEhDGxU6zJWkX-uhYLGhHcIdtoJisuADJekUE3OUa1bOZYNkrZzAewT8sDJeecjLX3YCEAd4tJTROTOY4lyIOU2ZPCk_WseDVSVyoYv0QZN6az4769LZ-y9ZDfFh2RX_9hRC9lD77wQnVzTPUK4pkuG4p3lWn34DVOmsPo66rm0S1HbBz8ywO0_vmb_734jL2A-bburlRLcITGQatnmPkdItsLb-csf-wn4BptiIrzvUenybds"/>
+<span class="text-sm font-semibold text-slate-900">Admin</span>
+</div>
+</div>
+</header>
+<div class="p-10">
+<!-- Header Section -->
+<div class="mb-10 flex justify-between items-end">
+<div>
+<h1 class="text-3xl font-extrabold tracking-tight text-on-surface mb-2">Form Submissions</h1>
+<p class="text-on-surface-variant max-w-lg">Manage and respond to all inquiries received through your website's contact forms from a centralized interface.</p>
+</div>
+<button class="bg-gradient-to-r from-primary to-primary-dim text-on-primary px-6 py-2.5 rounded-md font-semibold text-sm flex items-center gap-2 shadow-lg shadow-primary/10 transition-transform active:scale-95">
+<span class="material-symbols-outlined text-lg" data-icon="export_notes">export_notes</span>
+                    Export Submissions
+                </button>
+</div>
+<!-- Dashboard Analytics Chips (Tonal Layering) -->
+<div class="grid grid-cols-4 gap-6 mb-10">
+<div class="bg-surface-container-lowest p-6 rounded-xl">
+<p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Total Submissions</p>
+<div class="flex items-center justify-between">
+<span class="text-3xl font-bold text-on-surface">1,284</span>
+<span class="text-xs bg-primary-container text-on-primary-container px-2 py-1 rounded-full font-medium">+12%</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl">
+<p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Unread Inquiries</p>
+<div class="flex items-center justify-between">
+<span class="text-3xl font-bold text-error">42</span>
+<div class="w-2 h-2 rounded-full bg-error animate-pulse"></div>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl">
+<p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Response Rate</p>
+<div class="flex items-center justify-between">
+<span class="text-3xl font-bold text-on-surface">94.2%</span>
+<span class="text-xs text-on-surface-variant">Avg: 4h</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl">
+<p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Top Subject</p>
+<div class="flex items-center justify-between">
+<span class="text-3xl font-bold text-on-surface truncate">Pricing</span>
+<span class="material-symbols-outlined text-primary" data-icon="trending_up">trending_up</span>
+</div>
+</div>
+</div>
+<!-- Content Canvas (Precise Architect Layout) -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden">
+<div class="p-6 flex items-center justify-between bg-surface-container/30">
+<div class="flex items-center gap-4">
+<span class="text-sm font-bold text-on-surface">Filter by:</span>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-primary text-on-primary text-xs font-medium rounded-full cursor-pointer">All</span>
+<span class="px-3 py-1 bg-surface-container-high text-on-surface-variant text-xs font-medium rounded-full hover:bg-surface-variant transition-colors cursor-pointer">New</span>
+<span class="px-3 py-1 bg-surface-container-high text-on-surface-variant text-xs font-medium rounded-full hover:bg-surface-variant transition-colors cursor-pointer">Replied</span>
+</div>
+</div>
+<button class="text-primary text-sm font-semibold flex items-center gap-1 hover:underline">
+<span class="material-symbols-outlined text-sm" data-icon="filter_list">filter_list</span>
+                        Advanced Filters
+                    </button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/50">
+<th class="px-8 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest">Name</th>
+<th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest">Subject</th>
+<th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest text-center">Date</th>
+<th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest">Status</th>
+<th class="px-8 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container">
+<!-- Entry 1 -->
+<tr class="hover:bg-surface-container-low/30 transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed font-bold text-sm">JS</div>
+<div>
+<p class="text-sm font-semibold text-on-surface">Julianne Smith</p>
+<p class="text-xs text-on-surface-variant">j.smith@agency.io</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<p class="text-sm font-medium text-on-surface">Partnership Opportunity for Q3</p>
+<p class="text-xs text-on-surface-variant truncate max-w-xs">Interested in integrating your API with our platform...</p>
+</td>
+<td class="px-6 py-5 text-center">
+<p class="text-sm text-on-surface">Oct 24, 2023</p>
+<p class="text-[10px] text-on-surface-variant">10:42 AM</p>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-error-container/30 text-on-error-container">
+<span class="w-1.5 h-1.5 rounded-full bg-error mr-1.5"></span>
+                                        New
+                                    </span>
+</td>
+<td class="px-8 py-5 text-right">
+<div class="flex justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-primary transition-colors" title="Quick View">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-on-surface-variant transition-colors" title="Reply">
+<span class="material-symbols-outlined" data-icon="reply">reply</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Entry 2 -->
+<tr class="hover:bg-surface-container-low/30 transition-colors group bg-surface-container-low/10">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed font-bold text-sm">MR</div>
+<div>
+<p class="text-sm font-semibold text-on-surface">Marcus Reed</p>
+<p class="text-xs text-on-surface-variant">marcus.r@techcorp.com</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<p class="text-sm font-medium text-on-surface">Bulk Licensing Inquiry</p>
+<p class="text-xs text-on-surface-variant truncate max-w-xs">We need a quote for 50+ seats for our design team...</p>
+</td>
+<td class="px-6 py-5 text-center">
+<p class="text-sm text-on-surface">Oct 23, 2023</p>
+<p class="text-[10px] text-on-surface-variant">03:15 PM</p>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary-container text-on-secondary-container">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary mr-1.5"></span>
+                                        Read
+                                    </span>
+</td>
+<td class="px-8 py-5 text-right">
+<div class="flex justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined" data-icon="reply">reply</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Entry 3 -->
+<tr class="hover:bg-surface-container-low/30 transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed-dim flex items-center justify-center text-on-secondary-fixed font-bold text-sm">EL</div>
+<div>
+<p class="text-sm font-semibold text-on-surface">Elena Lopez</p>
+<p class="text-xs text-on-surface-variant">elena@creative-loft.es</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<p class="text-sm font-medium text-on-surface">Feedback on UI Kits</p>
+<p class="text-xs text-on-surface-variant truncate max-w-xs">Really loving the new components, but had a suggestion...</p>
+</td>
+<td class="px-6 py-5 text-center">
+<p class="text-sm text-on-surface">Oct 22, 2023</p>
+<p class="text-[10px] text-on-surface-variant">11:02 AM</p>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-container/30 text-on-primary-container">
+<span class="w-1.5 h-1.5 rounded-full bg-primary mr-1.5"></span>
+                                        Replied
+                                    </span>
+</td>
+<td class="px-8 py-5 text-right">
+<div class="flex justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined" data-icon="reply">reply</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Entry 4 -->
+<tr class="hover:bg-surface-container-low/30 transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-tertiary-fixed-dim flex items-center justify-center text-on-tertiary-fixed font-bold text-sm">DW</div>
+<div>
+<p class="text-sm font-semibold text-on-surface">David Wong</p>
+<p class="text-xs text-on-surface-variant">david.w@startup.co</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<p class="text-sm font-medium text-on-surface">Bug Report: Dashboard Mobile View</p>
+<p class="text-xs text-on-surface-variant truncate max-w-xs">Noticing some overflow issues on iPhone 14 Pro...</p>
+</td>
+<td class="px-6 py-5 text-center">
+<p class="text-sm text-on-surface">Oct 22, 2023</p>
+<p class="text-[10px] text-on-surface-variant">09:40 AM</p>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-error-container/30 text-on-error-container">
+<span class="w-1.5 h-1.5 rounded-full bg-error mr-1.5"></span>
+                                        New
+                                    </span>
+</td>
+<td class="px-8 py-5 text-right">
+<div class="flex justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined" data-icon="reply">reply</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-6 flex items-center justify-between bg-surface-container/10 border-t border-surface-container">
+<span class="text-xs font-medium text-on-surface-variant">Showing 1-10 of 42 unread inquiries</span>
+<div class="flex items-center gap-2">
+<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-surface-container hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg bg-primary text-on-primary text-xs font-bold">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-surface-container text-xs font-medium hover:bg-surface-container-high transition-colors text-on-surface">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-surface-container text-xs font-medium hover:bg-surface-container-high transition-colors text-on-surface">3</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-surface-container hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- FAB for Quick Entry (Suppressed per logic, but as an Admin Entry component, here is the context-aware "New Response" instead) -->
+</main>
+<!-- Quick View Slide-over (Simulated Glassmorphism) -->
+<div class="fixed inset-y-0 right-0 w-1/3 bg-white/80 backdrop-blur-2xl shadow-2xl z-50 border-l border-surface-container-high transform translate-x-full transition-transform duration-300 pointer-events-none">
+<div class="p-8 h-full flex flex-col">
+<div class="flex items-center justify-between mb-8">
+<h3 class="text-xl font-bold text-on-surface">Inquiry Detail</h3>
+<button class="p-2 rounded-full hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<div class="space-y-6 flex-1">
+<div class="bg-surface-container-low p-4 rounded-lg">
+<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1">From</p>
+<p class="text-sm font-semibold text-on-surface">Julianne Smith (j.smith@agency.io)</p>
+</div>
+<div class="bg-surface-container-low p-4 rounded-lg">
+<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1">Subject</p>
+<p class="text-sm font-semibold text-on-surface">Partnership Opportunity for Q3</p>
+</div>
+<div class="flex-1">
+<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-2">Message</p>
+<div class="text-sm text-on-surface-variant leading-relaxed space-y-3">
+<p>Hi Team,</p>
+<p>I've been following Metric Foundry for a while now and I'm really impressed with the new precision-focused UI design system. We are looking to upgrade our client-facing dashboards and think your engine would be the perfect fit.</p>
+<p>Would you be open to a 15-minute call next week to discuss volume licensing and API integration capabilities?</p>
+<p>Best regards,<br/>Julianne</p>
+</div>
+</div>
+</div>
+<div class="pt-6 border-t border-surface-container">
+<div class="flex gap-4">
+<button class="flex-1 bg-primary text-on-primary py-3 rounded-lg font-semibold text-sm hover:brightness-110 transition-all">Quick Reply</button>
+<button class="flex-1 border border-primary text-primary py-3 rounded-lg font-semibold text-sm hover:bg-primary/5 transition-all">Mark as Resolved</button>
+</div>
+</div>
+</div>
+</div>
+</body></html>
