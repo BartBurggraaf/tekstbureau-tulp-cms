@@ -1,14 +1,21 @@
 /**
- * SITE CONFIG — edit this per client
+ * SITE CONFIG — edit this per client, or override via .env.local
  * Controls the name, features shown in the sidebar, and meta info.
+ *
+ * ENV VAR OVERRIDES (set in .env.local to avoid editing this file):
+ *   NEXT_PUBLIC_CMS_NAME      — sidebar name & browser tab title
+ *   NEXT_PUBLIC_CMS_TAGLINE   — subtitle under the name
+ *   NEXT_PUBLIC_CMS_DOMAIN    — client domain for SEO previews
  */
+const e = (key: string, fallback: string) => process.env[key] ?? fallback
+
 export const site = {
   /** Displayed in the sidebar header and browser tab */
-  name: 'CMS Admin',
-  tagline: 'Management Portal',
+  name: e('NEXT_PUBLIC_CMS_NAME', 'CMS Admin'),
+  tagline: e('NEXT_PUBLIC_CMS_TAGLINE', 'Management Portal'),
 
   /** Client domain (used for SEO previews etc.) */
-  domain: 'example.com',
+  domain: e('NEXT_PUBLIC_CMS_DOMAIN', 'example.com'),
 
   /** Toggle modules on/off per client */
   features: {
@@ -33,6 +40,7 @@ export const site = {
     { key: 'style',     label: 'Style',     icon: 'palette',      href: '/style' },
     { key: 'users',     label: 'Users',     icon: 'group',        href: '/users' },
     { key: 'activity',  label: 'Activity',  icon: 'history',      href: '/activity' },
+    { key: 'manual',    label: 'Manual',    icon: 'menu_book',    href: '/manual' },
   ],
 }
 

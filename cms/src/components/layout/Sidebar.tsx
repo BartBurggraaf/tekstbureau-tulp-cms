@@ -11,8 +11,9 @@ export default function Sidebar() {
   const router   = useRouter()
   const supabase = createClient()
 
+  const alwaysVisible = ['dashboard', 'manual']
   const enabledNav = site.nav.filter(
-    item => item.key === 'dashboard' || site.features[item.key as keyof typeof site.features]
+    item => alwaysVisible.includes(item.key) || site.features[item.key as keyof typeof site.features]
   )
 
   async function handleSignOut() {

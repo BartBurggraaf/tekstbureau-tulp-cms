@@ -1,13 +1,23 @@
 /**
- * THEME CONFIG — edit this per client
+ * THEME CONFIG — edit this per client, or override via .env.local
  * All visual tokens live here. Swap colors, fonts, radii, logo.
  * Nothing in src/ needs to change for a full rebrand.
+ *
+ * ENV VAR OVERRIDES (set in .env.local to avoid editing this file):
+ *   NEXT_PUBLIC_BRAND_PRIMARY          — primary brand color hex
+ *   NEXT_PUBLIC_BRAND_PRIMARY_DIM      — darker shade of primary
+ *   NEXT_PUBLIC_BRAND_ON_PRIMARY       — text color on primary bg
+ *   NEXT_PUBLIC_BRAND_FONT_HEADLINE    — Google Font name for headlines
+ *   NEXT_PUBLIC_BRAND_FONT_BODY        — Google Font name for body text
+ *   NEXT_PUBLIC_BRAND_LOGO             — path to logo in /public
  */
+const e = (key: string, fallback: string) => process.env[key] ?? fallback
+
 export const theme = {
   /** Brand colors — swap these for each client */
   colors: {
-    primary:                '#13677b',
-    primaryDim:             '#005a6e',
+    primary:                e('NEXT_PUBLIC_BRAND_PRIMARY', '#13677b'),
+    primaryDim:             e('NEXT_PUBLIC_BRAND_PRIMARY_DIM', '#005a6e'),
     primaryFixed:           '#b2ebff',
     primaryFixedDim:        '#99dff6',
     onPrimary:              '#edfaff',
@@ -67,8 +77,8 @@ export const theme = {
 
   /** Fonts — use any Google Font name, or a system font */
   fonts: {
-    headline: 'Manrope',
-    body:     'Inter',
+    headline: e('NEXT_PUBLIC_BRAND_FONT_HEADLINE', 'Manrope'),
+    body:     e('NEXT_PUBLIC_BRAND_FONT_BODY', 'Inter'),
   },
 
   /** Border radii */
@@ -83,7 +93,7 @@ export const theme = {
   sidebarWidth: '16rem',
 
   /** Logo path (place file in /public) */
-  logo: '/logo.svg',
+  logo: e('NEXT_PUBLIC_BRAND_LOGO', '/logo.svg'),
 }
 
 export type Theme = typeof theme

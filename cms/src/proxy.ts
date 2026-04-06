@@ -26,7 +26,7 @@ export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   // Public routes — always accessible
-  if (pathname.startsWith('/login')) {
+  if (pathname.startsWith('/manual') || pathname.startsWith('/login')) {
     if (user) {
       return NextResponse.redirect(new URL('/dashboard', request.url))
     }

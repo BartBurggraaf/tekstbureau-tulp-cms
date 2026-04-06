@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh repo:*)",
+      "Bash(where gh:*)",
+      "Bash(winget list:*)",
+      "Skill(update-config)",
+      "Skill(update-config:*)",
+      "Read(//c/Users/bburg/.claude/**)"
+    ]
+  }
+}
