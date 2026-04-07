@@ -1,0 +1,85 @@
+name: Sync from Veltra upstream
+
+# This workflow lives in CLIENT repos (copied from Veltra-CMS-Base).
+# It checks weekly if the base repo has new commits and opens a PR automatically.
+#
+# Setup in each client repo:
+#   1. Copy this file to .github/workflows/upstream-sync.yml
+#   2. No secrets needed — uses GITHUB_TOKEN (automatic)
+#
+# The PR will be created from branch "veltra-update" targeting main.
+# Review it, merge it, done.
+
+on:
+  schedule:
+    - cron: '0 8 * * 1'   # Every Monday at 08:00 UTC
+  workflow_dispatch:        # Also triggerable manually from GitHub Actions tab
+
+jobs:
+  sync:
+    name: Check for Veltra updates
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Add Veltra upstream
+        run: git remote add upstream https://github.com/BartBurggraaf/Veltra-CMS-Base.git || true
+
+      - name: Fetch upstream
+        run: git fetch upstream main
+
+      - name: Check if there are new commits
+        id: check
+        run: |
+          BEHIND=$(git rev-list HEAD..upstream/main --count)
+          echo "behind=$BEHIND" >> $GITHUB_OUTPUT
+          echo "Upstream is $BEHIND commits ahead"
+
+      - name: Create update branch and PR
+        if: steps.check.outputs.behind != '0'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BRANCH="veltra-update-$(date +%Y%m%d)"
+
+          # Delete old update branch if it exists
+          git push origin --delete "$BRANCH" 2>/dev/null || true
+
+          # Create branch from upstream
+          git checkout -b "$BRANCH"
+          git merge upstream/main --no-edit --allow-unrelated-histories || true
+
+          # Push branch
+          git push origin "$BRANCH"
+
+          # Create PR
+          gh pr create \
+            --title "Veltra CMS update — $(date +%Y-%m-%d)" \
+            --body "$(cat <<'PRBODY'
+## Veltra CMS upstream update
+
+This PR was created automatically by the weekly sync workflow.
+
+**What to do:**
+1. Review the changes below
+2. Check that your \`.env.local\` values are still correct (they are not committed, so no conflicts there)
+3. If there are conflicts in \`config/site.ts\` or \`config/theme.ts\`, resolve them by keeping your client values
+4. Merge when ready
+
+**Source:** https://github.com/BartBurggraaf/Veltra-CMS-Base
+PRBODY
+)" \
+            --base main \
+            --head "$BRANCH"

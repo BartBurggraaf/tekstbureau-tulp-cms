@@ -69,11 +69,13 @@ function Callout({ type = 'info', children }: { type?: 'info' | 'warn' | 'tip'; 
 
 const nav = [
   { id: 'overview',     label: 'Overview' },
+  { id: 'workflow',     label: 'Full Workflow' },
   { id: 'quickstart',   label: 'Quick Start' },
   { id: 'configuration',label: 'Configuration' },
   { id: 'theme',        label: 'Theme & Branding' },
   { id: 'database',     label: 'Database' },
   { id: 'deployment',   label: 'Deployment' },
+  { id: 'updates',      label: 'Updating Veltra' },
   { id: 'ai-prompt',    label: 'AI Setup Prompt' },
 ]
 
@@ -175,6 +177,229 @@ After setup I should be able to log in at http://localhost:3000 with the admin c
             <Callout type="tip">
               All modules are individually toggleable in <code className="text-xs font-mono bg-surface-container px-1 rounded">config/site.ts</code>. Disable any module your client doesn&apos;t need.
             </Callout>
+          </Section>
+
+          {/* Full Workflow */}
+          <Section id="workflow" icon="account_tree" title="Full Workflow — Customer to Live Website">
+            <p className="text-sm text-on-surface-variant leading-relaxed">
+              This is the end-to-end process for taking a new client from first conversation to a live website with Veltra CMS as the backend. Each phase tells you what tool to use and where AI can do the heavy lifting.
+            </p>
+
+            {/* Phase overview */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {[
+                { phase: '1', label: 'Customer Brief',    icon: 'person',         color: 'bg-tertiary/10 text-tertiary' },
+                { phase: '2', label: 'Design in Stitch',  icon: 'brush',          color: 'bg-primary/10 text-primary' },
+                { phase: '3', label: 'CMS Setup',         icon: 'database',       color: 'bg-primary/10 text-primary' },
+                { phase: '4', label: 'Frontend Build',    icon: 'code',           color: 'bg-tertiary/10 text-tertiary' },
+                { phase: '5', label: 'Deploy',            icon: 'cloud_upload',   color: 'bg-tertiary/10 text-tertiary' },
+                { phase: '6', label: 'Handoff & Updates', icon: 'handshake',      color: 'bg-tertiary/10 text-tertiary' },
+              ].map(({ phase, label, icon, color }) => (
+                <div key={phase} className={`rounded-xl p-4 flex items-center gap-3 ${color.split(' ')[0]}`}>
+                  <span className={`material-symbols-outlined text-[20px] ${color.split(' ')[1]}`}>{icon}</span>
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-outline">Phase {phase}</p>
+                    <p className="text-sm font-semibold text-on-surface">{label}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Phase 1 */}
+            <div className="bg-surface-container-lowest border border-surface-container-high rounded-xl overflow-hidden">
+              <div className="px-5 py-4 border-b border-surface-container-high flex items-center gap-3">
+                <span className="text-xs font-bold text-outline bg-surface-container px-2 py-0.5 rounded-full">Phase 1</span>
+                <p className="font-semibold text-on-surface text-sm">Customer Brief</p>
+                <span className="ml-auto text-xs text-outline">Tool: You + customer</span>
+              </div>
+              <div className="p-5 space-y-3 text-sm text-on-surface-variant">
+                <p>Gather everything before touching any tool. The more you collect here, the less back-and-forth later.</p>
+                <div className="space-y-1.5">
+                  {[
+                    'Brand colors (primary, secondary, background) — hex values preferred',
+                    'Logo file (SVG or high-res PNG)',
+                    'Headline and body font preferences (or "use your judgement")',
+                    'Site pages needed (Home, About, Services, Contact, etc.)',
+                    'Content modules needed (blog, forms, media gallery)',
+                    'Existing domain or new domain needed',
+                    'Admin users — who will manage content and what roles',
+                    'Any existing content to migrate',
+                  ].map(item => (
+                    <div key={item} className="flex gap-2">
+                      <span className="material-symbols-outlined text-[14px] text-primary flex-shrink-0 mt-0.5">check_circle</span>
+                      <span className="text-xs">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Phase 2 */}
+            <div className="bg-surface-container-lowest border border-surface-container-high rounded-xl overflow-hidden">
+              <div className="px-5 py-4 border-b border-surface-container-high flex items-center gap-3">
+                <span className="text-xs font-bold text-outline bg-surface-container px-2 py-0.5 rounded-full">Phase 2</span>
+                <p className="font-semibold text-on-surface text-sm">Design in Stitch</p>
+                <span className="ml-auto text-xs font-bold text-primary">AI: Stitch agent</span>
+              </div>
+              <div className="p-5 space-y-3 text-sm text-on-surface-variant">
+                <p>Use <strong className="text-on-surface">Stitch</strong> (claude.ai/new → &quot;Design a website&quot;) to generate the visual design from the brief. Stitch outputs HTML + screenshots that Claude Code can read directly.</p>
+                <div className="space-y-3">
+                  <Step n={1} title="Open Stitch and describe the project">
+                    <p>Paste your brief. Include brand colors, fonts, pages needed, and tone. The more detail, the better the first output.</p>
+                    <Code>{`Design a website for [client name], a [type of business].
+Brand color: #e63946 (primary), #f1faee (background)
+Font: Playfair Display headlines, DM Sans body
+Pages: Home, Services, About, Contact
+Tone: Professional, modern, approachable
+Include: hero section, services grid, contact form`}</Code>
+                  </Step>
+                  <Step n={2} title="Iterate until approved">
+                    <p>Refine with follow-up prompts. When the client approves, export each screen.</p>
+                  </Step>
+                  <Step n={3} title="Save the output">
+                    <p>For each screen, save the HTML and take a screenshot. Store them in a <code className="font-mono text-xs bg-surface-container px-1 rounded">stitch_designs/</code> folder in your project — this is exactly how this CMS repo is structured.</p>
+                  </Step>
+                </div>
+                <Callout type="tip">
+                  Stitch exports are HTML files that Claude Code can read directly as design references. You don&apos;t need to manually translate them — Claude Code reads the Stitch output and builds components that match.
+                </Callout>
+              </div>
+            </div>
+
+            {/* Phase 3 */}
+            <div className="bg-surface-container-lowest border border-surface-container-high rounded-xl overflow-hidden">
+              <div className="px-5 py-4 border-b border-surface-container-high flex items-center gap-3">
+                <span className="text-xs font-bold text-outline bg-surface-container px-2 py-0.5 rounded-full">Phase 3</span>
+                <p className="font-semibold text-on-surface text-sm">CMS Setup</p>
+                <span className="ml-auto text-xs font-bold text-primary">AI: Claude Code</span>
+              </div>
+              <div className="p-5 space-y-3 text-sm text-on-surface-variant">
+                <p>Use the AI Setup Prompt at the bottom of this page. Open <strong className="text-on-surface">Claude Code</strong> in your project folder and paste the prompt with your client&apos;s details filled in.</p>
+                <div className="space-y-3">
+                  <Step n={1} title="Open Claude Code in your terminal">
+                    <Code>{`cd your-project-folder
+claude`}</Code>
+                  </Step>
+                  <Step n={2} title="Paste the AI Setup Prompt">
+                    <p>Fill in the client details from Phase 1 and paste. Claude Code will clone the repo, configure <code className="font-mono text-xs">`.env.local`</code>, run the migration, and create the admin user automatically.</p>
+                  </Step>
+                  <Step n={3} title="Verify the CMS is running">
+                    <p>Log in at <strong>http://localhost:3000</strong> and confirm all modules load correctly.</p>
+                  </Step>
+                </div>
+                <Callout type="info">
+                  After setup, add the GitHub repo secrets and enable branch protection (see Deployment section) so the CI pipeline is active from day one.
+                </Callout>
+              </div>
+            </div>
+
+            {/* Phase 4 */}
+            <div className="bg-surface-container-lowest border border-surface-container-high rounded-xl overflow-hidden">
+              <div className="px-5 py-4 border-b border-surface-container-high flex items-center gap-3">
+                <span className="text-xs font-bold text-outline bg-surface-container px-2 py-0.5 rounded-full">Phase 4</span>
+                <p className="font-semibold text-on-surface text-sm">Frontend Build</p>
+                <span className="ml-auto text-xs font-bold text-primary">AI: Claude Code</span>
+              </div>
+              <div className="p-5 space-y-3 text-sm text-on-surface-variant">
+                <p>Build the client-facing website (separate from the CMS) using Claude Code with the Stitch designs as reference. The website reads content from Supabase — the same database the CMS manages.</p>
+                <div className="space-y-3">
+                  <Step n={1} title="Create a new Next.js frontend project">
+                    <Code>{`# In a new folder alongside the cms/
+npx create-next-app@latest website --typescript --tailwind --app`}</Code>
+                  </Step>
+                  <Step n={2} title="Give Claude Code the Stitch designs">
+                    <p>Point Claude Code at your <code className="font-mono text-xs bg-surface-container px-1 rounded">stitch_designs/</code> folder. It will read the HTML files as visual references and build matching components.</p>
+                    <Code>{`# Example prompt in Claude Code:
+Read the Stitch design in stitch_designs/home/code.html and
+build a matching Home page component in Next.js + Tailwind.
+Use the Supabase client to fetch pages from the database.`}</Code>
+                  </Step>
+                  <Step n={3} title="Connect to the CMS database">
+                    <p>The frontend reads from the same Supabase project. Use the same <code className="font-mono text-xs">NEXT_PUBLIC_SUPABASE_URL</code> and <code className="font-mono text-xs">NEXT_PUBLIC_SUPABASE_ANON_KEY</code>.</p>
+                  </Step>
+                  <Step n={4} title="Run tests">
+                    <Code>{`cd cms && npm run test:e2e`}</Code>
+                    <p>Always run the CMS E2E tests after building frontend changes that touch shared database schemas.</p>
+                  </Step>
+                </div>
+                <Callout type="tip">
+                  Keep Claude Code&apos;s context focused: one component at a time, one Stitch design at a time. Large context leads to less precise output.
+                </Callout>
+              </div>
+            </div>
+
+            {/* Phase 5 */}
+            <div className="bg-surface-container-lowest border border-surface-container-high rounded-xl overflow-hidden">
+              <div className="px-5 py-4 border-b border-surface-container-high flex items-center gap-3">
+                <span className="text-xs font-bold text-outline bg-surface-container px-2 py-0.5 rounded-full">Phase 5</span>
+                <p className="font-semibold text-on-surface text-sm">Deploy</p>
+                <span className="ml-auto text-xs text-outline">Tool: Vercel + Supabase</span>
+              </div>
+              <div className="p-5 space-y-3 text-sm text-on-surface-variant">
+                <div className="space-y-3">
+                  <Step n={1} title="Deploy the CMS to Vercel">
+                    <p>Import the CMS repo into Vercel. Set root directory to <code className="font-mono text-xs">cms/</code>. Add all env vars from <code className="font-mono text-xs">.env.local</code> in Vercel settings.</p>
+                  </Step>
+                  <Step n={2} title="Deploy the frontend to Vercel">
+                    <p>Import the frontend repo separately. Connect to the same Supabase project env vars.</p>
+                  </Step>
+                  <Step n={3} title="Connect the domain">
+                    <p>In Vercel → your frontend project → Domains, add the client&apos;s domain. The CMS can live on a subdomain like <code className="font-mono text-xs">admin.clientdomain.com</code>.</p>
+                  </Step>
+                  <Step n={4} title="Set up the upstream sync workflow">
+                    <p>Copy <code className="font-mono text-xs">.github/workflows/upstream-sync.yml</code> from the Veltra base into the client&apos;s CMS repo. This enables automated update PRs (see Updating Veltra section).</p>
+                  </Step>
+                </div>
+              </div>
+            </div>
+
+            {/* Phase 6 */}
+            <div className="bg-surface-container-lowest border border-surface-container-high rounded-xl overflow-hidden">
+              <div className="px-5 py-4 border-b border-surface-container-high flex items-center gap-3">
+                <span className="text-xs font-bold text-outline bg-surface-container px-2 py-0.5 rounded-full">Phase 6</span>
+                <p className="font-semibold text-on-surface text-sm">Handoff & Ongoing</p>
+                <span className="ml-auto text-xs text-outline">Tool: CMS + you</span>
+              </div>
+              <div className="p-5 space-y-3 text-sm text-on-surface-variant">
+                <div className="space-y-3">
+                  <Step n={1} title="Create client accounts">
+                    <p>In the CMS → Users, create accounts for the client team. Give content editors the <code className="font-mono text-xs">editor</code> role, not <code className="font-mono text-xs">admin</code>.</p>
+                  </Step>
+                  <Step n={2} title="Enter initial content">
+                    <p>Either you enter it or the client does. Pages, blog posts, SEO settings, and media can all be managed without touching code.</p>
+                  </Step>
+                  <Step n={3} title="Hand over the CMS URL">
+                    <p>Send the client their CMS URL (<code className="font-mono text-xs">admin.theirdomain.com</code>) and their login credentials.</p>
+                  </Step>
+                  <Step n={4} title="Veltra updates come in automatically">
+                    <p>Every Monday, the upstream sync workflow checks for new Veltra commits. If there are any, it opens a PR in the client&apos;s repo. You review and merge — no manual work per client needed.</p>
+                  </Step>
+                </div>
+              </div>
+            </div>
+
+            {/* Where to use agents summary */}
+            <div className="bg-primary/5 border border-primary/20 rounded-xl p-5 space-y-4">
+              <div className="flex items-center gap-2">
+                <span className="material-symbols-outlined text-primary text-[18px]">smart_toy</span>
+                <p className="font-semibold text-on-surface text-sm">Where AI does the work</p>
+              </div>
+              <div className="space-y-3">
+                {[
+                  { agent: 'Stitch (claude.ai)',    when: 'Phase 2 — Generate all visual designs from the brief. Iterate until client approves.' },
+                  { agent: 'Claude Code',           when: 'Phase 3 — Set up the CMS (paste the AI Setup Prompt). Fully automated.' },
+                  { agent: 'Claude Code',           when: 'Phase 4 — Build frontend components from Stitch designs. Read stitch_designs/ and generate matching Next.js components.' },
+                  { agent: 'Claude Code',           when: 'Phase 4 — Write and run tests after each feature. Use /test or ask it to run the test suite.' },
+                  { agent: 'GitHub Actions (CI)',   when: 'Phase 5+ — Automated: runs tests on every push, blocks broken merges.' },
+                  { agent: 'upstream-sync workflow',when: 'Phase 6 — Automated: opens a PR every Monday if Veltra has new updates.' },
+                ].map(({ agent, when }) => (
+                  <div key={when} className="flex gap-3 text-sm">
+                    <span className="font-mono text-xs font-bold text-primary w-44 flex-shrink-0 leading-5">{agent}</span>
+                    <span className="text-on-surface-variant">{when}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </Section>
 
           {/* Quick Start */}
@@ -347,6 +572,72 @@ git push`}</Code>
               <div className="bg-surface-container-lowest border border-surface-container-high rounded-xl p-5">
                 <p className="font-semibold text-on-surface text-sm mb-2">Multi-client setup</p>
                 <p className="text-sm text-on-surface-variant">For each client: create a new Supabase project, clone the repo, configure <code className="font-mono text-xs">.env.local</code> with their credentials and brand, run <code className="font-mono text-xs">npm run setup</code>, deploy. Each client gets a fully isolated CMS with their own database and branding.</p>
+              </div>
+            </div>
+          </Section>
+
+          {/* Updating Veltra */}
+          <Section id="updates" icon="update" title="Updating Veltra Across All Client Sites">
+            <p className="text-sm text-on-surface-variant leading-relaxed">
+              Each client CMS is a full clone of Veltra-CMS-Base with its own GitHub repo. Updates to the base (bug fixes, new features, security patches) propagate to all clients automatically — without you touching each one.
+            </p>
+
+            <div className="bg-surface-container-lowest border border-surface-container-high rounded-xl p-5 space-y-3">
+              <p className="font-semibold text-on-surface text-sm">How it works</p>
+              <div className="space-y-2 text-sm text-on-surface-variant">
+                <p>Each client repo has a file at <code className="font-mono text-xs bg-surface-container px-1 rounded">.github/workflows/upstream-sync.yml</code>. Every Monday it:</p>
+                <ol className="space-y-1 list-decimal list-inside pl-1">
+                  <li>Checks how many commits the Veltra base is ahead of the client repo</li>
+                  <li>If there are new commits, creates a branch <code className="font-mono text-xs">veltra-update-YYYYMMDD</code></li>
+                  <li>Merges the upstream commits into it</li>
+                  <li>Opens a pull request automatically with a description of what changed</li>
+                </ol>
+                <p>You review the PR, confirm there are no config conflicts, and merge. Vercel deploys automatically.</p>
+              </div>
+            </div>
+
+            <div className="bg-surface-container-lowest border border-surface-container-high rounded-xl overflow-hidden">
+              <div className="px-5 py-4 border-b border-surface-container-high">
+                <p className="font-semibold text-on-surface text-sm">Setup for each new client repo</p>
+                <p className="text-xs text-outline mt-0.5">One-time — do this after cloning Veltra for the client</p>
+              </div>
+              <div className="p-5 space-y-3">
+                <Step n={1} title="Copy the sync workflow into the client repo">
+                  <p>The file is already in Veltra-CMS-Base at <code className="font-mono text-xs bg-surface-container px-1 rounded">.github/workflows/upstream-sync.yml</code>. When you clone Veltra, it comes with it automatically.</p>
+                </Step>
+                <Step n={2} title="Add the upstream remote (local only)">
+                  <Code>{`git remote add upstream https://github.com/BartBurggraaf/Veltra-CMS-Base.git`}</Code>
+                  <p>This is only needed if you want to pull updates manually.</p>
+                </Step>
+                <Step n={3} title="Push the client repo to their GitHub">
+                  <Code>{`git remote set-url origin https://github.com/YourOrg/client-name-cms.git
+git push -u origin main`}</Code>
+                </Step>
+                <Step n={4} title="The workflow activates automatically">
+                  <p>GitHub Actions picks up the workflow file on first push. It will run every Monday and on any manual trigger from the Actions tab.</p>
+                </Step>
+              </div>
+            </div>
+
+            <div className="bg-surface-container-lowest border border-surface-container-high rounded-xl p-5 space-y-3">
+              <p className="font-semibold text-on-surface text-sm">Manual update (any time)</p>
+              <p className="text-sm text-on-surface-variant">If you want to pull an update immediately without waiting for Monday:</p>
+              <Code>{`# In the client repo
+git fetch upstream
+git merge upstream/main --no-edit
+git push`}</Code>
+              <Callout type="tip">
+                Since all client customization lives in <code className="font-mono text-xs">.env.local</code> (not committed), merges are almost always conflict-free. The only files that could conflict are <code className="font-mono text-xs">config/site.ts</code> or <code className="font-mono text-xs">config/theme.ts</code> if you edited them directly instead of using env vars.
+              </Callout>
+            </div>
+
+            <div className="bg-surface-container-lowest border border-surface-container-high rounded-xl p-5 space-y-2">
+              <p className="font-semibold text-on-surface text-sm">Publishing a Veltra update</p>
+              <p className="text-sm text-on-surface-variant">When you improve the base CMS (new feature, bug fix, security patch):</p>
+              <div className="space-y-1.5 text-sm text-on-surface-variant">
+                <div className="flex gap-2"><span className="font-bold text-primary w-6 flex-shrink-0">1.</span><span>Make the change in <code className="font-mono text-xs">Veltra-CMS-Base</code></span></div>
+                <div className="flex gap-2"><span className="font-bold text-primary w-6 flex-shrink-0">2.</span><span>Push to <code className="font-mono text-xs">main</code> — CI runs and must pass</span></div>
+                <div className="flex gap-2"><span className="font-bold text-primary w-6 flex-shrink-0">3.</span><span>All client repos will pick it up automatically next Monday, or you can trigger the sync workflow manually from their GitHub Actions tab</span></div>
               </div>
             </div>
           </Section>
