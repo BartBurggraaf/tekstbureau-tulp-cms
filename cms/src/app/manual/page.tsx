@@ -359,6 +359,40 @@ git push`}</Code>
             <Callout type="tip">
               This prompt works best in <strong>Claude Code</strong> — it will clone the repo, create <code className="font-mono text-xs">.env.local</code>, run the setup script, and start the dev server for you.
             </Callout>
+
+            <div className="bg-surface-container-lowest border border-surface-container-high rounded-xl overflow-hidden">
+              <div className="px-5 py-4 border-b border-surface-container-high flex items-center gap-2">
+                <span className="material-symbols-outlined text-[18px] text-error">checklist</span>
+                <p className="font-semibold text-on-surface text-sm">Before you run the prompt — collect these first</p>
+              </div>
+              <div className="p-5 space-y-3">
+                <p className="text-sm text-on-surface-variant">Have the following ready before pasting the prompt. The AI will ask for them.</p>
+                <div className="space-y-2">
+                  {[
+                    { item: 'Supabase project URL', where: 'supabase.com → your project → Project Settings → API → Project URL' },
+                    { item: 'Supabase anon key',    where: 'Project Settings → API → Project API keys → anon / public' },
+                    { item: 'Supabase service role key', where: 'Project Settings → API → Project API keys → service_role (secret)' },
+                    { item: 'Supabase personal access token', where: 'supabase.com/dashboard/account/tokens → Generate new token' },
+                    { item: 'Primary brand color (hex)', where: 'Your design file or brand guide, e.g. #e63946' },
+                    { item: 'Headline & body font names', where: 'Your design file — must be exact Google Fonts names, e.g. "Playfair Display"' },
+                    { item: 'Logo file (SVG or PNG)', where: 'Your brand assets — will be placed in /public/logo.svg' },
+                    { item: 'Admin email & password', where: 'Choose credentials for your first admin account' },
+                  ].map(({ item, where }) => (
+                    <div key={item} className="flex gap-3 text-sm">
+                      <span className="material-symbols-outlined text-[16px] text-primary flex-shrink-0 mt-0.5">check_circle</span>
+                      <div>
+                        <p className="font-semibold text-on-surface">{item}</p>
+                        <p className="text-xs text-outline">{where}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <Callout type="warn">
+                  Keep the service role key and access token private — they grant full database access. Never share them or commit them to git.
+                </Callout>
+              </div>
+            </div>
+
             <Code>{aiPrompt}</Code>
           </Section>
 

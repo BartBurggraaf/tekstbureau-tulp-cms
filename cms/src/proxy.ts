@@ -25,8 +25,13 @@ export async function proxy(request: NextRequest) {
 
   const { pathname } = request.nextUrl
 
-  // Public routes — always accessible
-  if (pathname.startsWith('/manual') || pathname.startsWith('/login')) {
+  // Manual — always accessible, regardless of auth
+  if (pathname.startsWith('/manual')) {
+    return supabaseResponse
+  }
+
+  // Login — redirect to dashboard if already logged in
+  if (pathname.startsWith('/login')) {
     if (user) {
       return NextResponse.redirect(new URL('/dashboard', request.url))
     }
