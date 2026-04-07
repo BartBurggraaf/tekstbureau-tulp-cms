@@ -76,26 +76,36 @@ async function main() {
     auth: { autoRefreshToken: false, persistSession: false }
   })
 
-  // 1. Run migration SQL
+  // 1. Run migration SQL via Supabase Management API
   console.log('\n📦  Running database migration…')
   const sql = readFileSync(
     resolve(process.cwd(), 'supabase/migrations/001_init.sql'),
     'utf-8'
   )
 
-  let sqlError: unknown = null
-  try {
-    const result = await supabase.rpc('exec_sql', { sql })
-    sqlError = result.error
-  } catch {
-    sqlError = new Error('RPC not available')
-  }
-  // RPC exec_sql may not exist — fall back to individual statements via REST
-  if (sqlError) {
-    console.warn('   Note: could not run via RPC. Run the migration manually in the Supabase SQL editor.')
+  const accessToken = process.env.SUPABASE_ACCESS_TOKEN
+  const projectRef  = supabaseUrl.match(/https:\/\/([^.]+)\.supabase\.co/)?.[1]
+
+  if (!accessToken || !projectRef) {
+    console.warn('   Note: SUPABASE_ACCESS_TOKEN not set — skipping automatic migration.')
+    console.warn('   Add it to .env.local or run the SQL manually in the Supabase dashboard.')
     console.warn('   File: supabase/migrations/001_init.sql\n')
   } else {
-    console.log('   ✅  Migration complete.')
+    const res = await fetch(`https://api.supabase.com/v1/projects/${projectRef}/database/query`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ query: sql }),
+    })
+    if (!res.ok) {
+      const body = await res.text()
+      console.warn('   ⚠️  Migration failed:', body)
+      console.warn('   You may need to run it manually in the Supabase SQL editor.\n')
+    } else {
+      console.log('   ✅  Migration complete.')
+    }
   }
 
   // 2. Create first admin user

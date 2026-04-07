@@ -6,7 +6,14 @@
       "Bash(winget list:*)",
       "Skill(update-config)",
       "Skill(update-config:*)",
-      "Read(//c/Users/bburg/.claude/**)"
+      "Read(//c/Users/bburg/.claude/**)",
+      "mcp__github__search_repositories",
+      "Bash(ls e:/Burgt-CMS-base/cms/.env*)",
+      "Read(//c/Users/bburg/**)",
+      "mcp__supabase__list_projects",
+      "mcp__supabase__apply_migration",
+      "Bash(npx playwright:*)",
+      "Bash(npx vitest:*)"
     ]
   }
 }
