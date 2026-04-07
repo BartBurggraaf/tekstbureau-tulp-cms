@@ -29,10 +29,15 @@ create table profiles (
 );
 
 -- Auto-create profile when a user signs up
+-- Note: `set search_path = public` is required for security definer functions in Supabase.
+-- Without it, the function runs with an empty search_path and cannot resolve the
+-- `profiles` table by unqualified name, causing "relation does not exist" on user creation.
 create or replace function handle_new_user()
-returns trigger language plpgsql security definer as $$
+returns trigger language plpgsql security definer
+set search_path = public
+as $$
 begin
-  insert into profiles (id, display_name)
+  insert into public.profiles (id, display_name)
   values (new.id, coalesce(new.raw_user_meta_data->>'display_name', new.email));
   return new;
 end;
