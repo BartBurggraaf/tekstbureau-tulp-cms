@@ -1,28 +1,12 @@
-import { describe, it, expect, beforeAll } from 'vitest'
+import { describe, it, expect } from 'vitest'
 
 /**
  * Supabase connectivity tests
- * Requires NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY
- * to be set in the environment (loaded from .env.local by vitest setup).
+ * In CI: env vars are injected via GitHub Actions secrets.
+ * Locally: env vars are loaded from .env.local via vitest.config.ts envFile.
  */
 
-function loadEnv() {
-  const fs = require('fs')
-  const path = require('path')
-  try {
-    const file = fs.readFileSync(path.resolve(process.cwd(), '.env.local'), 'utf-8')
-    for (const line of file.split('\n')) {
-      const [key, ...rest] = line.split('=')
-      if (key?.trim() && rest.length) {
-        process.env[key.trim()] = rest.join('=').trim().replace(/^["']|["']$/g, '')
-      }
-    }
-  } catch { /* ignore */ }
-}
-
 describe('Supabase connection', () => {
-  beforeAll(() => loadEnv())
-
   it('has SUPABASE_URL env var set', () => {
     expect(process.env.NEXT_PUBLIC_SUPABASE_URL).toBeTruthy()
     expect(process.env.NEXT_PUBLIC_SUPABASE_URL).toMatch(/^https:\/\/.+\.supabase\.co$/)
@@ -39,7 +23,6 @@ describe('Supabase connection', () => {
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
     )
-    // unauthenticated query — RLS will return empty, but no connection error
     const { error } = await supabase.from('profiles').select('id').limit(1)
     expect(error).toBeNull()
   })
