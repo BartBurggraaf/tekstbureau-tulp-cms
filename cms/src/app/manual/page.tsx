@@ -92,16 +92,12 @@ Please help me:
    - NEXT_PUBLIC_SUPABASE_ANON_KEY
    - SUPABASE_SERVICE_ROLE_KEY
    - SUPABASE_ACCESS_TOKEN  (personal access token from supabase.com/dashboard/account/tokens)
-   - NEXT_PUBLIC_CMS_NAME   (my project name)
-   - NEXT_PUBLIC_CMS_TAGLINE
-   - NEXT_PUBLIC_CMS_DOMAIN
-   - NEXT_PUBLIC_BRAND_PRIMARY       (my primary brand color, hex)
-   - NEXT_PUBLIC_BRAND_PRIMARY_DIM   (darker shade, hex)
-   - NEXT_PUBLIC_BRAND_ON_PRIMARY    (text color on primary bg, hex)
-   - NEXT_PUBLIC_BRAND_FONT_HEADLINE (Google Font name)
-   - NEXT_PUBLIC_BRAND_FONT_BODY     (Google Font name)
-   - NEXT_PUBLIC_BRAND_LOGO          (path to logo in /public, e.g. /logo.svg)
-3. Run \`npm run setup\` inside the cms folder — this applies the database migration and creates the first admin user
+3. Edit \`config/brand.ts\` with the client's brand settings:
+   - name, tagline, domain
+   - primary, primaryDim, onPrimary (hex colors)
+   - fontHeadline, fontBody (Google Font names)
+   - logo (path in /public, e.g. /logo.svg)
+4. Run \`npm run setup\` inside the cms folder — this applies the database migration and creates the first admin user
 4. Run \`npm run dev\` to start the CMS at http://localhost:3000
 
 My project details:
@@ -430,38 +426,40 @@ npm run setup`}</Code>
 
           {/* Configuration */}
           <Section id="configuration" icon="tune" title="Configuration">
-            <p className="text-sm text-on-surface-variant">There are two ways to configure the CMS per project. Use whichever fits your workflow.</p>
+            <p className="text-sm text-on-surface-variant">Brand identity lives in <code className="font-mono text-xs bg-surface-container px-1.5 py-0.5 rounded">config/brand.ts</code> — this is the only file you need to edit per client. Secrets stay in <code className="font-mono text-xs bg-surface-container px-1.5 py-0.5 rounded">.env.local</code>.</p>
 
             <div className="bg-surface-container-lowest border border-surface-container-high rounded-xl overflow-hidden">
               <div className="px-5 py-4 border-b border-surface-container-high">
-                <p className="font-semibold text-on-surface text-sm">Option A — Environment variables (recommended)</p>
-                <p className="text-xs text-outline mt-0.5">No source file changes. Just set vars in <code className="font-mono">.env.local</code>.</p>
+                <p className="font-semibold text-on-surface text-sm">config/brand.ts — edit and commit</p>
+                <p className="text-xs text-outline mt-0.5">All brand identity in one file. Versioned in git alongside the project.</p>
               </div>
               <div className="p-5">
-                <Code>{`# Identity
-NEXT_PUBLIC_CMS_NAME=Acme Admin
-NEXT_PUBLIC_CMS_TAGLINE=Content Portal
-NEXT_PUBLIC_CMS_DOMAIN=acme.com
+                <Code>{`export const brand = {
+  name:    'Acme Admin',
+  tagline: 'Content Portal',
+  domain:  'acme.com',
 
-# Brand
-NEXT_PUBLIC_BRAND_PRIMARY=#e63946
-NEXT_PUBLIC_BRAND_PRIMARY_DIM=#c1121f
-NEXT_PUBLIC_BRAND_ON_PRIMARY=#ffffff
-NEXT_PUBLIC_BRAND_FONT_HEADLINE=Playfair Display
-NEXT_PUBLIC_BRAND_FONT_BODY=DM Sans
-NEXT_PUBLIC_BRAND_LOGO=/logo.svg`}</Code>
+  primary:    '#e63946',
+  primaryDim: '#c1121f',
+  onPrimary:  '#ffffff',
+
+  fontHeadline: 'Playfair Display',
+  fontBody:     'DM Sans',
+
+  logo: '/logo.svg',
+}`}</Code>
               </div>
             </div>
 
             <div className="bg-surface-container-lowest border border-surface-container-high rounded-xl overflow-hidden">
               <div className="px-5 py-4 border-b border-surface-container-high">
-                <p className="font-semibold text-on-surface text-sm">Option B — Edit config files directly</p>
-                <p className="text-xs text-outline mt-0.5">For full control over all theme tokens.</p>
+                <p className="font-semibold text-on-surface text-sm">Full theme control — config/theme.ts</p>
+                <p className="text-xs text-outline mt-0.5">For full control over the entire color palette, radii, and sidebar width.</p>
               </div>
               <div className="p-5 space-y-3">
-                <p className="text-sm text-on-surface-variant"><code className="font-mono text-xs bg-surface-container px-1.5 py-0.5 rounded">config/site.ts</code> — name, tagline, domain, which modules are enabled, nav order</p>
-                <p className="text-sm text-on-surface-variant"><code className="font-mono text-xs bg-surface-container px-1.5 py-0.5 rounded">config/theme.ts</code> — full color palette, fonts, radii, sidebar width, logo</p>
-                <Callout type="warn">When using Option B, these files will differ from the base repo. Be careful when pulling updates.</Callout>
+                <p className="text-sm text-on-surface-variant"><code className="font-mono text-xs bg-surface-container px-1.5 py-0.5 rounded">config/site.ts</code> — which modules are enabled, nav order</p>
+                <p className="text-sm text-on-surface-variant"><code className="font-mono text-xs bg-surface-container px-1.5 py-0.5 rounded">config/theme.ts</code> — full color palette, radii, sidebar width (imports from brand.ts)</p>
+                <Callout type="warn">Editing theme.ts directly means those changes may conflict when pulling Veltra updates. Only do this for clients that need a fully custom palette.</Callout>
               </div>
             </div>
 
@@ -489,13 +487,13 @@ NEXT_PUBLIC_BRAND_LOGO=/logo.svg`}</Code>
 
             <div className="bg-surface-container-lowest border border-surface-container-high rounded-xl p-5 space-y-3">
               <p className="font-semibold text-on-surface text-sm">Sharing styles from a parent project</p>
-              <p className="text-sm text-on-surface-variant">If your main website already has a defined color palette, copy the values into <code className="font-mono text-xs bg-surface-container px-1.5 py-0.5 rounded">.env.local</code> using the <code className="font-mono text-xs">NEXT_PUBLIC_BRAND_*</code> vars. The CMS will immediately adopt your brand without any code changes.</p>
+              <p className="text-sm text-on-surface-variant">If your main website already has a defined color palette, copy the hex values into <code className="font-mono text-xs bg-surface-container px-1.5 py-0.5 rounded">config/brand.ts</code>. The CMS will immediately adopt your brand — commit the file and you&apos;re done.</p>
               <p className="text-sm text-on-surface-variant">Fonts must be available on <strong>Google Fonts</strong>. The CMS loads them automatically by name — just provide the font family name exactly as it appears on fonts.google.com.</p>
             </div>
 
             <div className="bg-surface-container-lowest border border-surface-container-high rounded-xl p-5 space-y-2">
               <p className="font-semibold text-on-surface text-sm">Logo</p>
-              <p className="text-sm text-on-surface-variant">Place your logo file in the <code className="font-mono text-xs bg-surface-container px-1.5 py-0.5 rounded">public/</code> folder and set <code className="font-mono text-xs">NEXT_PUBLIC_BRAND_LOGO=/your-logo.svg</code>. SVG recommended for best quality. If no logo is set or the file is not found, only the site name is shown.</p>
+              <p className="text-sm text-on-surface-variant">Place your logo file in the <code className="font-mono text-xs bg-surface-container px-1.5 py-0.5 rounded">public/</code> folder and set <code className="font-mono text-xs">logo: &apos;/your-logo.svg&apos;</code> in <code className="font-mono text-xs bg-surface-container px-1.5 py-0.5 rounded">config/brand.ts</code>. SVG recommended for best quality. If no logo is set or the file is not found, only the site name is shown.</p>
             </div>
 
             <Callout type="tip">
@@ -571,7 +569,7 @@ git push`}</Code>
 
               <div className="bg-surface-container-lowest border border-surface-container-high rounded-xl p-5">
                 <p className="font-semibold text-on-surface text-sm mb-2">Multi-client setup</p>
-                <p className="text-sm text-on-surface-variant">For each client: create a new Supabase project, clone the repo, configure <code className="font-mono text-xs">.env.local</code> with their credentials and brand, run <code className="font-mono text-xs">npm run setup</code>, deploy. Each client gets a fully isolated CMS with their own database and branding.</p>
+                <p className="text-sm text-on-surface-variant">For each client: create a new Supabase project, clone the repo, fill <code className="font-mono text-xs">.env.local</code> with credentials, edit <code className="font-mono text-xs">config/brand.ts</code> with their brand, run <code className="font-mono text-xs">npm run setup</code>, deploy. Each client gets a fully isolated CMS with their own database and branding.</p>
               </div>
             </div>
           </Section>
@@ -627,7 +625,7 @@ git fetch upstream
 git merge upstream/main --no-edit
 git push`}</Code>
               <Callout type="tip">
-                Since all client customization lives in <code className="font-mono text-xs">.env.local</code> (not committed), merges are almost always conflict-free. The only files that could conflict are <code className="font-mono text-xs">config/site.ts</code> or <code className="font-mono text-xs">config/theme.ts</code> if you edited them directly instead of using env vars.
+                Merges are almost always conflict-free. The only file that could conflict is <code className="font-mono text-xs">config/brand.ts</code> — but since it&apos;s intentionally client-specific, conflicts are easy to resolve (keep your values).
               </Callout>
             </div>
 

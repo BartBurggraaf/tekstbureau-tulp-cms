@@ -1,21 +1,18 @@
 /**
- * SITE CONFIG — edit this per client, or override via .env.local
- * Controls the name, features shown in the sidebar, and meta info.
+ * SITE CONFIG — controls the name, features shown in the sidebar, and meta info.
+ * Brand identity (name, tagline, domain) comes from config/brand.ts.
  *
- * ENV VAR OVERRIDES (set in .env.local to avoid editing this file):
- *   NEXT_PUBLIC_CMS_NAME      — sidebar name & browser tab title
- *   NEXT_PUBLIC_CMS_TAGLINE   — subtitle under the name
- *   NEXT_PUBLIC_CMS_DOMAIN    — client domain for SEO previews
+ * To rebrand a client: edit config/brand.ts and commit. Done.
  */
-const e = (key: string, fallback: string) => process.env[key] ?? fallback
+import { brand } from './brand'
 
 export const site = {
   /** Displayed in the sidebar header and browser tab */
-  name: e('NEXT_PUBLIC_CMS_NAME', 'CMS Admin'),
-  tagline: e('NEXT_PUBLIC_CMS_TAGLINE', 'Management Portal'),
+  name:    brand.name,
+  tagline: brand.tagline,
 
   /** Client domain (used for SEO previews etc.) */
-  domain: e('NEXT_PUBLIC_CMS_DOMAIN', 'example.com'),
+  domain:  brand.domain,
 
   /** Toggle modules on/off per client */
   features: {

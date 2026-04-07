@@ -1,26 +1,19 @@
 /**
- * THEME CONFIG — edit this per client, or override via .env.local
- * All visual tokens live here. Swap colors, fonts, radii, logo.
- * Nothing in src/ needs to change for a full rebrand.
+ * THEME CONFIG — full visual token set.
+ * Brand-specific values (primary color, fonts, logo) come from config/brand.ts.
+ * Everything else (neutral palette, radii, surfaces) lives here.
  *
- * ENV VAR OVERRIDES (set in .env.local to avoid editing this file):
- *   NEXT_PUBLIC_BRAND_PRIMARY          — primary brand color hex
- *   NEXT_PUBLIC_BRAND_PRIMARY_DIM      — darker shade of primary
- *   NEXT_PUBLIC_BRAND_ON_PRIMARY       — text color on primary bg
- *   NEXT_PUBLIC_BRAND_FONT_HEADLINE    — Google Font name for headlines
- *   NEXT_PUBLIC_BRAND_FONT_BODY        — Google Font name for body text
- *   NEXT_PUBLIC_BRAND_LOGO             — path to logo in /public
+ * To rebrand a client: edit config/brand.ts and commit. Done.
  */
-const e = (key: string, fallback: string) => process.env[key] ?? fallback
+import { brand } from './brand'
 
 export const theme = {
-  /** Brand colors — swap these for each client */
   colors: {
-    primary:                e('NEXT_PUBLIC_BRAND_PRIMARY', '#13677b'),
-    primaryDim:             e('NEXT_PUBLIC_BRAND_PRIMARY_DIM', '#005a6e'),
+    primary:                brand.primary,
+    primaryDim:             brand.primaryDim,
     primaryFixed:           '#b2ebff',
     primaryFixedDim:        '#99dff6',
-    onPrimary:              '#edfaff',
+    onPrimary:              brand.onPrimary,
     onPrimaryFixed:         '#004655',
     onPrimaryFixedVariant:  '#0d6478',
     primaryContainer:       '#b2ebff',
@@ -56,7 +49,7 @@ export const theme = {
     surfaceBright:          '#f8f9fa',
     surfaceDim:             '#d1dce0',
     surfaceVariant:         '#dbe4e7',
-    surfaceTint:            '#13677b',
+    surfaceTint:            brand.primary,
     surfaceContainerLowest: '#ffffff',
     surfaceContainerLow:    '#f1f4f6',
     surfaceContainer:       '#eaeff1',
@@ -75,13 +68,11 @@ export const theme = {
     inversePrimary:         '#a1e7ff',
   },
 
-  /** Fonts — use any Google Font name, or a system font */
   fonts: {
-    headline: e('NEXT_PUBLIC_BRAND_FONT_HEADLINE', 'Manrope'),
-    body:     e('NEXT_PUBLIC_BRAND_FONT_BODY', 'Inter'),
+    headline: brand.fontHeadline,
+    body:     brand.fontBody,
   },
 
-  /** Border radii */
   radius: {
     sm:   '0.125rem',
     md:   '0.25rem',
@@ -89,11 +80,9 @@ export const theme = {
     full: '0.75rem',
   },
 
-  /** Sidebar width */
   sidebarWidth: '16rem',
 
-  /** Logo path (place file in /public) */
-  logo: e('NEXT_PUBLIC_BRAND_LOGO', '/logo.svg'),
+  logo: brand.logo,
 }
 
 export type Theme = typeof theme
