@@ -11,7 +11,7 @@ export const brand = {
   tagline: 'Meer klanten door tekst en SEO',
 
   /** Client domain — used for SEO previews */
-  domain: 'tekstbureautulp.nl',
+  domain: 'example.com',
 
   /** Primary brand color family */
   primary:    '#529237',
