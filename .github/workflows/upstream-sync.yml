@@ -1,14 +1,14 @@
 name: Sync from Veltra upstream
 
 # This workflow lives in CLIENT repos (copied from Veltra-CMS-Base).
-# It checks weekly if the base repo has new commits and opens a PR automatically.
+# It pulls upstream changes every Monday and handles them automatically:
+#
+#   Clean merge  → pushed directly to main, no review needed
+#   Conflicts    → PR opened so you can resolve manually
 #
 # Setup in each client repo:
 #   1. Copy this file to .github/workflows/upstream-sync.yml
 #   2. No secrets needed — uses GITHUB_TOKEN (automatic)
-#
-# The PR will be created from branch "veltra-update" targeting main.
-# Review it, merge it, done.
 
 on:
   schedule:
@@ -17,7 +17,7 @@ on:
 
 jobs:
   sync:
-    name: Check for Veltra updates
+    name: Sync from Veltra upstream
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -40,46 +40,65 @@ jobs:
       - name: Fetch upstream
         run: git fetch upstream main
 
-      - name: Check if there are new commits
+      - name: Check if behind
         id: check
         run: |
           BEHIND=$(git rev-list HEAD..upstream/main --count)
           echo "behind=$BEHIND" >> $GITHUB_OUTPUT
-          echo "Upstream is $BEHIND commits ahead"
+          echo "Upstream is $BEHIND commit(s) ahead"
 
-      - name: Create update branch and PR
+      - name: Attempt merge
+        id: merge
         if: steps.check.outputs.behind != '0'
+        run: |
+          git merge upstream/main --no-edit
+        continue-on-error: true
+
+      - name: Push directly to main (clean merge)
+        if: steps.check.outputs.behind != '0' && steps.merge.outcome == 'success'
+        run: |
+          git push origin main
+          echo "Clean merge pushed directly to main."
+
+      - name: Abort failed merge and open conflict PR
+        if: steps.check.outputs.behind != '0' && steps.merge.outcome == 'failure'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          git merge --abort
+
           BRANCH="veltra-update-$(date +%Y%m%d)"
-
-          # Delete old update branch if it exists
           git push origin --delete "$BRANCH" 2>/dev/null || true
-
-          # Create branch from upstream
           git checkout -b "$BRANCH"
-          git merge upstream/main --no-edit --allow-unrelated-histories || true
 
-          # Push branch
+          # Re-apply the merge to capture conflict markers in the branch
+          git merge upstream/main --no-edit || true
+          git add -A
+          git commit -m "Veltra update — resolve merge conflicts before merging"
           git push origin "$BRANCH"
 
-          # Create PR
+          # Write PR body using echo to avoid YAML heredoc/merge-key conflicts
+          {
+            echo "## Veltra CMS upstream update — action required"
+            echo ""
+            echo "The weekly sync detected new commits but the merge produced conflicts."
+            echo "This is rare — it means a file was edited in both this repo and the base."
+            echo ""
+            echo "**Most likely cause:** \`config/brand.ts\` or \`config/theme.ts\` was changed in the base in a way that overlaps with local edits."
+            echo ""
+            echo "**How to resolve:**"
+            echo "1. Check out this branch locally and open the conflicted files"
+            echo "2. Look for conflict markers and keep your client-specific values"
+            echo "3. Commit and push — this PR will update automatically"
+            echo "4. Merge when ready"
+            echo ""
+            echo "**Source:** https://github.com/BartBurggraaf/Veltra-CMS-Base"
+          } > /tmp/pr-body.md
+
           gh pr create \
-            --title "Veltra CMS update — $(date +%Y-%m-%d)" \
-            --body "$(cat <<'PRBODY'
-## Veltra CMS upstream update
-
-This PR was created automatically by the weekly sync workflow.
-
-**What to do:**
-1. Review the changes below
-2. Check that your \`.env.local\` values are still correct (they are not committed, so no conflicts there)
-3. If there are conflicts in \`config/site.ts\` or \`config/theme.ts\`, resolve them by keeping your client values
-4. Merge when ready
-
-**Source:** https://github.com/BartBurggraaf/Veltra-CMS-Base
-PRBODY
-)" \
+            --title "Veltra update — conflicts need manual resolution" \
+            --body-file /tmp/pr-body.md \
             --base main \
             --head "$BRANCH"
+
+          echo "Conflicts detected — PR opened for manual resolution."
