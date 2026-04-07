@@ -7,20 +7,20 @@
  */
 export const brand = {
   /** Displayed in the sidebar and browser tab */
-  name:    'CMS Admin',
-  tagline: 'Management Portal',
+  name:    'Tekstbureau Tulp',
+  tagline: 'Meer klanten door tekst en SEO',
 
   /** Client domain — used for SEO previews */
-  domain: 'example.com',
+  domain: 'tekstbureautulp.nl',
 
   /** Primary brand color family */
-  primary:    '#13677b',
-  primaryDim: '#005a6e',
-  onPrimary:  '#edfaff',
+  primary:    '#529237',
+  primaryDim: '#3d6e2a',
+  onPrimary:  '#ffffff',
 
   /** Typography — use exact Google Fonts family names */
-  fontHeadline: 'Manrope',
-  fontBody:     'Inter',
+  fontHeadline: 'Nokora',
+  fontBody:     'Nokora',
 
   /** Logo — path relative to /public (e.g. /logo.svg) */
   logo: '/logo.svg',
