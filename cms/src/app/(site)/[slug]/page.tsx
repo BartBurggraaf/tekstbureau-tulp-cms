@@ -2,8 +2,13 @@ import { notFound } from 'next/navigation'
 import { getPage } from '@/lib/site'
 import type { Metadata } from 'next'
 
-export async function generateMetadata(): Promise<Metadata> {
-  const page = await getPage('contact')
+interface Props {
+  params: Promise<{ slug: string }>
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params
+  const page = await getPage(slug)
   if (!page) return {}
   return {
     title: page.meta_title ?? page.title,
@@ -11,8 +16,9 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-export default async function ContactPage() {
-  const page = await getPage('contact')
+export default async function SlugPage({ params }: Props) {
+  const { slug } = await params
+  const page = await getPage(slug)
   if (!page) notFound()
 
   return (
@@ -22,6 +28,7 @@ export default async function ContactPage() {
       </h1>
       {page.content && (
         <div className="prose text-on-surface-variant">
+          {/* Render content blocks here — extend as needed */}
           <pre className="text-sm">{JSON.stringify(page.content, null, 2)}</pre>
         </div>
       )}
