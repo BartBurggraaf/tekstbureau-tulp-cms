@@ -13,6 +13,7 @@ const CMS_ROUTES = [
   '/style',
   '/users',
   '/activity',
+  '/preview',   // draft preview — auth required so anonymous users can't see unpublished content
 ]
 
 export async function proxy(request: NextRequest) {
