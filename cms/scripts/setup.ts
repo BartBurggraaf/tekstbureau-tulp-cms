@@ -1,15 +1,15 @@
 /**
- * Burgt CMS — setup script
+ * Veltra CMS — setup script
  * Run: npm run setup
  *
  * What it does:
  *  1. Reads SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY from .env.local
- *  2. Runs supabase/migrations/001_init.sql against the database
+ *  2. Runs all SQL files in supabase/migrations/ in order
  *  3. Creates the first admin user (prompts for email + password)
  */
 
 import { createClient } from '@supabase/supabase-js'
-import { readFileSync } from 'fs'
+import { readFileSync, readdirSync } from 'fs'
 import { resolve } from 'path'
 import * as readline from 'readline'
 
@@ -76,35 +76,41 @@ async function main() {
     auth: { autoRefreshToken: false, persistSession: false }
   })
 
-  // 1. Run migration SQL via Supabase Management API
-  console.log('\n📦  Running database migration…')
-  const sql = readFileSync(
-    resolve(process.cwd(), 'supabase/migrations/001_init.sql'),
-    'utf-8'
-  )
+  // 1. Run all SQL migrations via Supabase Management API
+  const migrationsDir = resolve(process.cwd(), 'supabase/migrations')
+  const migrationFiles = readdirSync(migrationsDir)
+    .filter(f => f.endsWith('.sql'))
+    .sort()
+
+  console.log(`\n📦  Running database migrations… (${migrationFiles.length} file(s))`)
 
   const accessToken = process.env.SUPABASE_ACCESS_TOKEN
   const projectRef  = supabaseUrl.match(/https:\/\/([^.]+)\.supabase\.co/)?.[1]
 
   if (!accessToken || !projectRef) {
     console.warn('   Note: SUPABASE_ACCESS_TOKEN not set — skipping automatic migration.')
-    console.warn('   Add it to .env.local or run the SQL manually in the Supabase dashboard.')
-    console.warn('   File: supabase/migrations/001_init.sql\n')
+    console.warn('   Add it to .env.local or run the SQL files manually in the Supabase dashboard:')
+    migrationFiles.forEach(f => console.warn(`     supabase/migrations/${f}`))
+    console.warn()
   } else {
-    const res = await fetch(`https://api.supabase.com/v1/projects/${projectRef}/database/query`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ query: sql }),
-    })
-    if (!res.ok) {
-      const body = await res.text()
-      console.warn('   ⚠️  Migration failed:', body)
-      console.warn('   You may need to run it manually in the Supabase SQL editor.\n')
-    } else {
-      console.log('   ✅  Migration complete.')
+    for (const file of migrationFiles) {
+      const sql = readFileSync(resolve(migrationsDir, file), 'utf-8')
+      process.stdout.write(`   Running ${file}… `)
+      const res = await fetch(`https://api.supabase.com/v1/projects/${projectRef}/database/query`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ query: sql }),
+      })
+      if (!res.ok) {
+        const body = await res.text()
+        console.warn(`⚠️  failed: ${body}`)
+        console.warn('   You may need to run it manually in the Supabase SQL editor.\n')
+      } else {
+        console.log('✅')
+      }
     }
   }
 

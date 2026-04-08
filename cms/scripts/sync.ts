@@ -81,7 +81,22 @@ async function main() {
   }
 
   if (behindCount === 0) {
-    console.log('\n  Already up to date with upstream. Nothing to do.')
+    console.log('\n  Already up to date with upstream.')
+
+    // Still run migrate — in case a previous sync merged code without running migrations
+    step('Running migrations')
+    const migrate = run('npm run migrate')
+    const migrateOutput = (migrate.stdout + (migrate.stderr ? '\n' + migrate.stderr : '')).trim()
+    if (migrateOutput) migrateOutput.split('\n').forEach(l => console.log(`  ${l}`))
+    if (!migrate.ok) {
+      fail(
+        'Migrations failed.',
+        'Fix the issue in the failing migration and run:\n  npm run migrate'
+      )
+    }
+
+    console.log('\n════════════════════════════════════════')
+    console.log('Done.')
     return
   }
 
