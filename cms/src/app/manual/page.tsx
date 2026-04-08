@@ -297,29 +297,46 @@ claude`}</Code>
                 <span className="ml-auto text-xs font-bold text-primary">AI: Claude Code</span>
               </div>
               <div className="p-5 space-y-3 text-sm text-on-surface-variant">
-                <p>Build the client-facing website (separate from the CMS) using Claude Code with the Stitch designs as reference. The website reads content from Supabase — the same database the CMS manages.</p>
+                <p>Public website pages live <strong>inside the CMS app</strong> under <code className="font-mono text-xs bg-surface-container px-1 rounded">src/app/(site)/</code>. The admin panel and the public website are deployed together as one Next.js app — no separate project needed.</p>
+                <div className="space-y-2 p-3 bg-surface-container rounded-lg text-xs font-mono">
+                  <p className="text-outline font-sans text-xs font-medium mb-1">Route structure</p>
+                  <p>src/app/(site)/page.tsx          → /</p>
+                  <p>src/app/(site)/diensten/page.tsx → /diensten</p>
+                  <p>src/app/(site)/over/page.tsx     → /over</p>
+                  <p>src/app/(site)/contact/page.tsx  → /contact</p>
+                  <p className="text-outline mt-1">src/app/(cms)/dashboard/…        → /dashboard (auth required)</p>
+                </div>
                 <div className="space-y-3">
-                  <Step n={1} title="Create a new Next.js frontend project">
-                    <Code>{`# In a new folder alongside the cms/
-npx create-next-app@latest website --typescript --tailwind --app`}</Code>
+                  <Step n={1} title="Each page fetches from the CMS — no static fallbacks">
+                    <p>Every page calls <code className="font-mono text-xs">getPage(slug)</code> from <code className="font-mono text-xs">src/lib/site.ts</code> and returns <code className="font-mono text-xs">notFound()</code> if no published content exists. The CMS is the single source of truth.</p>
+                    <Code>{`// src/app/(site)/page.tsx
+import { getPage } from '@/lib/site'
+import { notFound } from 'next/navigation'
+
+export default async function HomePage() {
+  const page = await getPage('home')
+  if (!page) notFound()
+  return <article>{/* render page.content */}</article>
+}`}</Code>
                   </Step>
                   <Step n={2} title="Give Claude Code the Stitch designs">
-                    <p>Point Claude Code at your <code className="font-mono text-xs bg-surface-container px-1 rounded">stitch_designs/</code> folder. It will read the HTML files as visual references and build matching components.</p>
+                    <p>Point Claude Code at your <code className="font-mono text-xs bg-surface-container px-1 rounded">stitch_designs/</code> folder. It will read the HTML files as visual references and build matching components inside <code className="font-mono text-xs">app/(site)/</code>.</p>
                     <Code>{`# Example prompt in Claude Code:
 Read the Stitch design in stitch_designs/home/code.html and
-build a matching Home page component in Next.js + Tailwind.
-Use the Supabase client to fetch pages from the database.`}</Code>
+build a matching Home page in src/app/(site)/page.tsx.
+Fetch content via getPage('home') from src/lib/site.ts.`}</Code>
                   </Step>
-                  <Step n={3} title="Connect to the CMS database">
-                    <p>The frontend reads from the same Supabase project. Use the same <code className="font-mono text-xs">NEXT_PUBLIC_SUPABASE_URL</code> and <code className="font-mono text-xs">NEXT_PUBLIC_SUPABASE_ANON_KEY</code>.</p>
+                  <Step n={3} title="Seed the database with starter content">
+                    <Code>{`cd cms && npm run seed`}</Code>
+                    <p>This inserts one draft page per standard slug (home, diensten, over, contact). Publish them in the CMS to make them visible on the site.</p>
                   </Step>
                   <Step n={4} title="Run tests">
                     <Code>{`cd cms && npm run test:e2e`}</Code>
-                    <p>Always run the CMS E2E tests after building frontend changes that touch shared database schemas.</p>
+                    <p>Always run E2E tests after building site pages that touch the database schema.</p>
                   </Step>
                 </div>
                 <Callout type="tip">
-                  Keep Claude Code&apos;s context focused: one component at a time, one Stitch design at a time. Large context leads to less precise output.
+                  Keep Claude Code&apos;s context focused: one page at a time, one Stitch design at a time. Large context leads to less precise output.
                 </Callout>
               </div>
             </div>

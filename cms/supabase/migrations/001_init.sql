@@ -186,6 +186,14 @@ create policy "admins can update any profile"
 alter table pages enable row level security;
 create policy "authenticated users can read pages"
   on pages for select using (auth.role() = 'authenticated');
+-- Public (anon) read access for published pages — required for the (site)/ route group.
+-- Without this policy the website silently receives no data even when pages are published.
+do $$ begin
+  create policy "public can read published pages"
+    on pages for select to anon
+    using (status = 'published');
+exception when duplicate_object then null;
+end $$;
 create policy "editors and admins can insert pages"
   on pages for insert with check (current_user_role() in ('admin', 'editor'));
 create policy "editors and admins can update pages"
