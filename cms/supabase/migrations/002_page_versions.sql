@@ -2,9 +2,11 @@
 -- Page version history
 -- A snapshot is saved on every explicit save/publish action.
 -- Editors and admins can browse and restore any previous version.
+--
+-- Idempotent: safe to run on a database that already has this table.
 -- ============================================================
 
-create table page_versions (
+create table if not exists page_versions (
   id       uuid primary key default gen_random_uuid(),
   page_id  uuid not null references pages(id) on delete cascade,
   title    text not null,
@@ -14,14 +16,21 @@ create table page_versions (
 );
 
 -- Fast lookup: all versions for a page, newest first
-create index page_versions_page_id_idx on page_versions(page_id, saved_at desc);
+create index if not exists page_versions_page_id_idx
+  on page_versions(page_id, saved_at desc);
 
 alter table page_versions enable row level security;
 
-create policy "editors and admins can read page versions"
-  on page_versions for select
-  using (current_user_role() in ('admin', 'editor'));
+do $$ begin
+  create policy "editors and admins can read page versions"
+    on page_versions for select
+    using (current_user_role() in ('admin', 'editor'));
+exception when duplicate_object then null;
+end $$;
 
-create policy "editors and admins can insert page versions"
-  on page_versions for insert
-  with check (current_user_role() in ('admin', 'editor'));
+do $$ begin
+  create policy "editors and admins can insert page versions"
+    on page_versions for insert
+    with check (current_user_role() in ('admin', 'editor'));
+exception when duplicate_object then null;
+end $$;
