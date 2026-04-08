@@ -1,13 +1,6 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect } from 'vitest'
 
 describe('config/theme.ts', () => {
-  beforeEach(() => {
-    // Clear any env overrides between tests
-    delete process.env.NEXT_PUBLIC_BRAND_PRIMARY
-    delete process.env.NEXT_PUBLIC_BRAND_FONT_HEADLINE
-    delete process.env.NEXT_PUBLIC_BRAND_FONT_BODY
-    delete process.env.NEXT_PUBLIC_BRAND_LOGO
-  })
 
   it('exports a theme object with required keys', async () => {
     const { theme } = await import('../../config/theme')
@@ -48,28 +41,30 @@ describe('config/theme.ts', () => {
     expect(theme.fonts.body.length).toBeGreaterThan(0)
   })
 
-  it('applies NEXT_PUBLIC_BRAND_PRIMARY env override', async () => {
-    process.env.NEXT_PUBLIC_BRAND_PRIMARY = '#ff0000'
-    // Re-import to pick up env change
-    const mod = await import('../../config/theme?override=' + Date.now())
-    expect(mod.theme.colors.primary).toBe('#ff0000')
+  it('primary color matches brand.ts', async () => {
+    const { theme } = await import('../../config/theme')
+    const { brand } = await import('../../config/brand')
+    expect(theme.colors.primary).toBe(brand.primary)
+    expect(theme.colors.primaryDim).toBe(brand.primaryDim)
+    expect(theme.colors.onPrimary).toBe(brand.onPrimary)
+    expect(theme.colors.surfaceTint).toBe(brand.primary)
   })
 
-  it('applies font env overrides', async () => {
-    process.env.NEXT_PUBLIC_BRAND_FONT_HEADLINE = 'Playfair Display'
-    process.env.NEXT_PUBLIC_BRAND_FONT_BODY = 'DM Sans'
-    const mod = await import('../../config/theme?font=' + Date.now())
-    expect(mod.theme.fonts.headline).toBe('Playfair Display')
-    expect(mod.theme.fonts.body).toBe('DM Sans')
+  it('fonts match brand.ts', async () => {
+    const { theme } = await import('../../config/theme')
+    const { brand } = await import('../../config/brand')
+    expect(theme.fonts.headline).toBe(brand.fontHeadline)
+    expect(theme.fonts.body).toBe(brand.fontBody)
+  })
+
+  it('logo matches brand.ts', async () => {
+    const { theme } = await import('../../config/theme')
+    const { brand } = await import('../../config/brand')
+    expect(theme.logo).toBe(brand.logo)
   })
 })
 
 describe('config/site.ts', () => {
-  beforeEach(() => {
-    delete process.env.NEXT_PUBLIC_CMS_NAME
-    delete process.env.NEXT_PUBLIC_CMS_TAGLINE
-    delete process.env.NEXT_PUBLIC_CMS_DOMAIN
-  })
 
   it('exports a site object with required keys', async () => {
     const { site } = await import('../../config/site')
@@ -106,9 +101,11 @@ describe('config/site.ts', () => {
     }
   })
 
-  it('applies NEXT_PUBLIC_CMS_NAME env override', async () => {
-    process.env.NEXT_PUBLIC_CMS_NAME = 'Acme Admin'
-    const mod = await import('../../config/site?name=' + Date.now())
-    expect(mod.site.name).toBe('Acme Admin')
+  it('name, tagline and domain match brand.ts', async () => {
+    const { site } = await import('../../config/site')
+    const { brand } = await import('../../config/brand')
+    expect(site.name).toBe(brand.name)
+    expect(site.tagline).toBe(brand.tagline)
+    expect(site.domain).toBe(brand.domain)
   })
 })
