@@ -1,6 +1,20 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
+// CMS admin routes — all require authentication.
+// Everything not listed here (public site pages, /manual, /login) is accessible without auth.
+const CMS_ROUTES = [
+  '/dashboard',
+  '/pages',
+  '/blog',
+  '/media',
+  '/forms',
+  '/seo',
+  '/style',
+  '/users',
+  '/activity',
+]
+
 export async function proxy(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request })
 
@@ -22,34 +36,21 @@ export async function proxy(request: NextRequest) {
   )
 
   const { data: { user } } = await supabase.auth.getUser()
-
   const { pathname } = request.nextUrl
 
-  // Manual — always accessible, regardless of auth
-  if (pathname.startsWith('/manual')) {
+  // /login — redirect already-authenticated users to the dashboard
+  if (pathname === '/login') {
+    if (user) return NextResponse.redirect(new URL('/dashboard', request.url))
     return supabaseResponse
   }
 
-  // Login — redirect to dashboard if already logged in
-  if (pathname.startsWith('/login')) {
-    if (user) {
-      return NextResponse.redirect(new URL('/dashboard', request.url))
-    }
-    return supabaseResponse
-  }
-
-  // Root redirect
-  if (pathname === '/') {
-    return NextResponse.redirect(
-      new URL(user ? '/dashboard' : '/login', request.url)
-    )
-  }
-
-  // All other routes require auth
-  if (!user) {
+  // CMS admin routes — require auth
+  const isCmsRoute = CMS_ROUTES.some(r => pathname === r || pathname.startsWith(r + '/'))
+  if (isCmsRoute && !user) {
     return NextResponse.redirect(new URL('/login', request.url))
   }
 
+  // Everything else — public (site pages, /manual, /)
   return supabaseResponse
 }
 

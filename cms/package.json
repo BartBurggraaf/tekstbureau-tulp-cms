@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "setup": "npx tsx scripts/setup.ts",
+    "seed": "npx tsx scripts/seed.ts",
     "migrate": "npx tsx scripts/migrate.ts",
     "sync": "npx tsx scripts/sync.ts",
     "test": "vitest run",

@@ -1,17 +1,19 @@
 /**
  * Veltra CMS — setup script
- * Run: npm run setup
+ * Run: npm run setup -- <email> <password> [display_name]
+ *
+ * Credentials can also be passed via environment variables:
+ *   ADMIN_EMAIL, ADMIN_PASSWORD, ADMIN_NAME
  *
  * What it does:
  *  1. Reads SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY from .env.local
  *  2. Runs all SQL files in supabase/migrations/ in order
- *  3. Creates the first admin user (prompts for email + password)
+ *  3. Creates the first admin user via the Supabase Admin API
  */
 
 import { createClient } from '@supabase/supabase-js'
 import { readFileSync, readdirSync } from 'fs'
 import { resolve } from 'path'
-import * as readline from 'readline'
 
 // ── Load env ──────────────────────────────────────────────────────────────────
 function loadEnv() {
@@ -28,34 +30,6 @@ function loadEnv() {
   }
 }
 
-function prompt(question: string, hidden = false): Promise<string> {
-  const rl = readline.createInterface({ input: process.stdin, output: process.stdout })
-  return new Promise(resolve => {
-    if (hidden && process.stdout.isTTY) {
-      process.stdout.write(question)
-      process.stdin.setRawMode(true)
-      let input = ''
-      process.stdin.on('data', (char) => {
-        const c = char.toString()
-        if (c === '\r' || c === '\n') {
-          process.stdin.setRawMode(false)
-          process.stdout.write('\n')
-          rl.close()
-          resolve(input)
-        } else if (c === '\u0003') {
-          process.exit()
-        } else if (c === '\u007f') {
-          input = input.slice(0, -1)
-        } else {
-          input += c
-        }
-      })
-    } else {
-      rl.question(question, (answer) => { rl.close(); resolve(answer) })
-    }
-  })
-}
-
 // ── Main ──────────────────────────────────────────────────────────────────────
 async function main() {
   loadEnv()
@@ -64,7 +38,7 @@ async function main() {
   const serviceKey  = process.env.SUPABASE_SERVICE_ROLE_KEY
 
   if (!supabaseUrl || !serviceKey) {
-    console.error('\n❌  Missing environment variables.\n')
+    console.error('\nMissing environment variables.\n')
     console.error('Make sure .env.local contains:')
     console.error('  NEXT_PUBLIC_SUPABASE_URL=...')
     console.error('  NEXT_PUBLIC_SUPABASE_ANON_KEY=...')
@@ -82,20 +56,20 @@ async function main() {
     .filter(f => f.endsWith('.sql'))
     .sort()
 
-  console.log(`\n📦  Running database migrations… (${migrationFiles.length} file(s))`)
+  console.log(`\nRunning database migrations… (${migrationFiles.length} file(s))`)
 
   const accessToken = process.env.SUPABASE_ACCESS_TOKEN
   const projectRef  = supabaseUrl.match(/https:\/\/([^.]+)\.supabase\.co/)?.[1]
 
   if (!accessToken || !projectRef) {
-    console.warn('   Note: SUPABASE_ACCESS_TOKEN not set — skipping automatic migration.')
-    console.warn('   Add it to .env.local or run the SQL files manually in the Supabase dashboard:')
-    migrationFiles.forEach(f => console.warn(`     supabase/migrations/${f}`))
+    console.warn('  Note: SUPABASE_ACCESS_TOKEN not set — skipping automatic migration.')
+    console.warn('  Add it to .env.local or run the SQL files manually in the Supabase dashboard:')
+    migrationFiles.forEach(f => console.warn(`    supabase/migrations/${f}`))
     console.warn()
   } else {
     for (const file of migrationFiles) {
       const sql = readFileSync(resolve(migrationsDir, file), 'utf-8')
-      process.stdout.write(`   Running ${file}… `)
+      process.stdout.write(`  Running ${file}… `)
       const res = await fetch(`https://api.supabase.com/v1/projects/${projectRef}/database/query`, {
         method: 'POST',
         headers: {
@@ -106,20 +80,32 @@ async function main() {
       })
       if (!res.ok) {
         const body = await res.text()
-        console.warn(`⚠️  failed: ${body}`)
-        console.warn('   You may need to run it manually in the Supabase SQL editor.\n')
+        console.warn(`failed: ${body}`)
+        console.warn('  You may need to run it manually in the Supabase SQL editor.\n')
       } else {
-        console.log('✅')
+        console.log('done')
       }
     }
   }
 
-  // 2. Create first admin user
-  console.log('\n👤  Create first admin user')
-  const email    = await prompt('   Email: ')
-  const password = await prompt('   Password: ', true)
-  const name     = await prompt('   Display name: ')
+  // 2. Resolve admin credentials — CLI args take priority, then env vars
+  // Usage: npm run setup -- email@example.com password "Display Name"
+  const [,, argEmail, argPassword, ...nameParts] = process.argv
+  const email    = argEmail    ?? process.env.ADMIN_EMAIL
+  const password = argPassword ?? process.env.ADMIN_PASSWORD
+  const name     = nameParts.join(' ') || process.env.ADMIN_NAME || 'Admin'
 
+  if (!email || !password) {
+    console.error('\nAdmin credentials required.\n')
+    console.error('Pass them as CLI arguments:')
+    console.error('  npm run setup -- admin@example.com P@ssw0rd "Display Name"\n')
+    console.error('Or set environment variables before running:')
+    console.error('  ADMIN_EMAIL=admin@example.com ADMIN_PASSWORD=P@ssw0rd npm run setup\n')
+    process.exit(1)
+  }
+
+  // 3. Create admin user via Supabase Admin API
+  console.log('\nCreating admin user…')
   const { data, error: signUpError } = await supabase.auth.admin.createUser({
     email,
     password,
@@ -128,24 +114,24 @@ async function main() {
   })
 
   if (signUpError) {
-    console.error('\n❌  Failed to create user:', signUpError.message)
+    console.error('\nFailed to create user:', signUpError.message)
     process.exit(1)
   }
 
-  // Promote to admin
+  // 4. Promote to admin role
   const { error: roleError } = await supabase
     .from('profiles')
     .update({ role: 'admin', display_name: name })
     .eq('id', data.user.id)
 
   if (roleError) {
-    console.warn('   ⚠️  User created but could not set admin role:', roleError.message)
-    console.warn('   Run manually: UPDATE profiles SET role=\'admin\' WHERE id=\'' + data.user.id + '\';')
+    console.warn('  User created but could not set admin role:', roleError.message)
+    console.warn(`  Run manually: UPDATE profiles SET role='admin' WHERE id='${data.user.id}';`)
   } else {
-    console.log('\n✅  Admin user created successfully!')
+    console.log(`  Admin user created: ${email}`)
   }
 
-  console.log('\n🚀  Setup complete. Run `npm run dev` to start the CMS.\n')
+  console.log('\nSetup complete. Run `npm run dev` to start the CMS.\n')
 }
 
 main().catch(err => { console.error(err); process.exit(1) })
