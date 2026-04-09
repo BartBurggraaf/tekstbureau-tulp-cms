@@ -67,9 +67,12 @@
   --color-inverse-primary:           var(--t-inversePrimary);
 
   /* Fonts */
-  --font-headline: var(--t-fontHeadline), sans-serif;
+  --font-headline: var(--t-fontHeadline), Georgia, serif;
   --font-body:     var(--t-fontBody), sans-serif;
-  --font-label:    var(--t-fontBody), sans-serif;
+  --font-label:    var(--t-fontLabel), sans-serif;
+
+  /* Brand radius — used by site pages */
+  --radius-brand: var(--t-radiusMd);
 
   /* Radii */
   --radius-sm:   var(--t-radiusSm);

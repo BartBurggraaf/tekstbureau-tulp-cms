@@ -14,13 +14,14 @@ export const brand = {
   domain: 'example.com',
 
   /** Primary brand color family */
-  primary:    '#529237',
-  primaryDim: '#3d6e2a',
+  primary:    '#2b6911',
+  primaryDim: '#185200',
   onPrimary:  '#ffffff',
 
   /** Typography — use exact Google Fonts family names */
-  fontHeadline: 'Nokora',
-  fontBody:     'Nokora',
+  fontHeadline: 'Newsreader',
+  fontBody:     'Plus Jakarta Sans',
+  fontLabel:    'Work Sans',
 
   /** Logo — path relative to /public (e.g. /logo.svg) */
   logo: '/logo.svg',

@@ -75,6 +75,7 @@ function buildThemeVars(t: typeof theme): string {
 
     --t-fontHeadline:${t.fonts.headline};
     --t-fontBody:${t.fonts.body};
+    --t-fontLabel:${t.fonts.label};
 
     --t-radiusSm:${t.radius.sm};
     --t-radiusMd:${t.radius.md};
@@ -87,7 +88,7 @@ function buildThemeVars(t: typeof theme): string {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const themeVars = buildThemeVars(theme)
-  const googleFonts = `https://fonts.googleapis.com/css2?family=${theme.fonts.headline.replace(/ /g, '+')}:wght@400;500;600;700;800&family=${theme.fonts.body.replace(/ /g, '+')}:wght@300;400;500;600&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap`
+  const googleFonts = `https://fonts.googleapis.com/css2?family=${theme.fonts.headline.replace(/ /g, '+')}:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=${theme.fonts.body.replace(/ /g, '+')}:wght@300;400;500;600&family=${theme.fonts.label.replace(/ /g, '+')}:wght@400;500;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap`
 
   return (
     <html lang="en" style={{ ['--theme' as string]: 'injected' }}>
