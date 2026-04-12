@@ -71,6 +71,7 @@ export const theme = {
   fonts: {
     headline: brand.fontHeadline,
     body:     brand.fontBody,
+    label:    brand.fontLabel,
   },
 
   radius: {

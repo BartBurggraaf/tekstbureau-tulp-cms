@@ -41,7 +41,7 @@ function renderBlock(block: Block) {
       ) : null
 
     case 'button': {
-      const base = 'inline-flex items-center px-5 py-2.5 rounded-lg text-sm font-bold transition-opacity hover:opacity-90 mb-4'
+      const base = 'inline-flex items-center px-5 py-2.5 rounded-lg text-sm font-label font-bold transition-opacity hover:opacity-90 mb-4'
       const variantCls = block.data.variant === 'primary'
         ? 'primary-gradient text-on-primary'
         : 'border border-primary text-primary'

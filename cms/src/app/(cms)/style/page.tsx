@@ -59,19 +59,32 @@ export default function StylePage() {
         {/* Font preview */}
         <div className="bg-surface-container-lowest rounded-xl p-8 space-y-6">
           <h2 className="text-sm font-label font-bold uppercase tracking-widest text-outline">Typography</h2>
-          <div className="space-y-4">
-            <div>
-              <p className="text-xs text-outline mb-1">Headline — {theme.fonts.headline}</p>
-              <p className="font-headline text-4xl font-bold text-on-surface">The quick brown fox</p>
+          <div className="space-y-6 divide-y divide-surface-container-high">
+            <div className="space-y-3">
+              <p className="text-xs font-label font-bold text-on-surface-variant uppercase tracking-widest">Headline — {theme.fonts.headline}</p>
+              <div className="space-y-2">
+                <div className="flex items-baseline gap-4">
+                  <span className="text-[10px] font-mono text-outline w-6 flex-shrink-0">h1</span>
+                  <p className="font-headline text-4xl font-extrabold text-on-surface" style={{ letterSpacing: '-0.025em' }}>The quick brown fox</p>
+                </div>
+                <div className="flex items-baseline gap-4">
+                  <span className="text-[10px] font-mono text-outline w-6 flex-shrink-0">h2</span>
+                  <p className="font-headline text-2xl font-bold text-on-surface" style={{ letterSpacing: '-0.02em' }}>The quick brown fox</p>
+                </div>
+                <div className="flex items-baseline gap-4">
+                  <span className="text-[10px] font-mono text-outline w-6 flex-shrink-0">h3</span>
+                  <p className="font-headline text-xl font-semibold text-on-surface">The quick brown fox</p>
+                </div>
+              </div>
             </div>
-            <div>
-              <p className="text-xs text-outline mb-1">Body — {theme.fonts.body}</p>
-              <p className="font-body text-base text-on-surface">
-                Consistent, purposeful typography communicates brand authority.
+            <div className="pt-5 space-y-2">
+              <p className="text-xs font-label font-bold text-on-surface-variant uppercase tracking-widest">Body — {theme.fonts.body}</p>
+              <p className="font-body text-base text-on-surface leading-relaxed">
+                Consistent, purposeful typography communicates brand authority. Good body copy is easy to scan, comfortable to read, and never competes with the headline.
               </p>
             </div>
-            <div>
-              <p className="text-xs text-outline mb-1">Label (uppercase)</p>
+            <div className="pt-5 space-y-2">
+              <p className="text-xs font-label font-bold text-on-surface-variant uppercase tracking-widest">Label — {theme.fonts.label}</p>
               <p className="font-label text-xs font-bold uppercase tracking-widest text-outline">
                 Category label &bull; Status tag &bull; Metadata
               </p>
@@ -108,16 +121,34 @@ export default function StylePage() {
           <h2 className="text-sm font-label font-bold uppercase tracking-widest text-outline">Components</h2>
 
           <div className="space-y-4">
-            <p className="text-xs font-bold text-on-surface-variant">Buttons</p>
-            <div className="flex flex-wrap gap-3">
-              <button className="primary-gradient text-on-primary px-5 py-2.5 rounded-lg text-sm font-bold">
-                Primary
+            <p className="text-xs font-label font-bold text-on-surface-variant">Buttons — Primary</p>
+            <div className="flex flex-wrap gap-3 items-center">
+              <button className="primary-gradient text-on-primary px-5 py-2.5 rounded-lg text-sm font-label font-bold">
+                Default
               </button>
-              <button className="bg-secondary-container text-on-secondary-container px-5 py-2.5 rounded-lg text-sm font-bold">
-                Secondary
+              <button className="primary-gradient text-on-primary px-5 py-2.5 rounded-lg text-sm font-label font-bold opacity-80">
+                Hover
               </button>
-              <button className="text-primary px-5 py-2.5 rounded-lg text-sm font-bold hover:bg-surface-container-high transition-colors">
-                Tertiary
+              <button className="primary-gradient text-on-primary px-5 py-2.5 rounded-lg text-sm font-label font-bold scale-[0.98]">
+                Active
+              </button>
+              <button disabled className="primary-gradient text-on-primary px-5 py-2.5 rounded-lg text-sm font-label font-bold opacity-40 cursor-not-allowed">
+                Disabled
+              </button>
+            </div>
+            <p className="text-xs font-label font-bold text-on-surface-variant mt-4">Buttons — Secondary</p>
+            <div className="flex flex-wrap gap-3 items-center">
+              <button className="border border-primary text-primary px-5 py-2.5 rounded-lg text-sm font-label font-bold">
+                Default
+              </button>
+              <button className="border border-primary text-primary px-5 py-2.5 rounded-lg text-sm font-label font-bold bg-primary/5">
+                Hover
+              </button>
+              <button className="border border-primary text-primary px-5 py-2.5 rounded-lg text-sm font-label font-bold scale-[0.98] bg-primary/10">
+                Active
+              </button>
+              <button disabled className="border border-outline text-outline px-5 py-2.5 rounded-lg text-sm font-label font-bold opacity-40 cursor-not-allowed">
+                Disabled
               </button>
             </div>
           </div>
@@ -148,7 +179,25 @@ export default function StylePage() {
           </div>
 
           <div className="space-y-4">
-            <p className="text-xs font-bold text-on-surface-variant">Border Radii</p>
+            <p className="text-xs font-label font-bold text-on-surface-variant">Tinted shadow token</p>
+            <div className="flex flex-wrap gap-6">
+              {[12, 20, 32].map(px => (
+                <div
+                  key={px}
+                  className="w-24 h-14 rounded-lg bg-surface-container-lowest flex items-center justify-center text-[10px] font-mono text-outline"
+                  style={{ boxShadow: `0 ${px}px ${px * 3}px color-mix(in srgb, var(--color-primary) 12%, transparent)` }}
+                >
+                  {px}px
+                </div>
+              ))}
+            </div>
+            <p className="text-xs text-outline">
+              Use: <code className="bg-surface-container px-1.5 py-0.5 rounded text-[10px]">shadow-[0_16px_48px_color-mix(in_srgb,var(--color-primary)_12%,transparent)]</code>
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            <p className="text-xs font-label font-bold text-on-surface-variant">Border Radii</p>
             <div className="flex gap-4 items-center">
               {Object.entries(theme.radius).map(([key, val]) => (
                 <div key={key} className="flex flex-col items-center gap-2">

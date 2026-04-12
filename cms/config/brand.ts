@@ -21,6 +21,7 @@ export const brand = {
   /** Typography — use exact Google Fonts family names */
   fontHeadline: 'Manrope',
   fontBody:     'Inter',
+  fontLabel:    'Inter',   // UI labels, uppercase captions, buttons
 
   /** Logo — path relative to /public (e.g. /logo.svg) */
   logo: '/logo.svg',

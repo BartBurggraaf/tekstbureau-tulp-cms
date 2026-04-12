@@ -68,15 +68,16 @@ function Callout({ type = 'info', children }: { type?: 'info' | 'warn' | 'tip'; 
 }
 
 const nav = [
-  { id: 'overview',     label: 'Overview' },
-  { id: 'workflow',     label: 'Full Workflow' },
-  { id: 'quickstart',   label: 'Quick Start' },
-  { id: 'configuration',label: 'Configuration' },
-  { id: 'theme',        label: 'Theme & Branding' },
-  { id: 'database',     label: 'Database' },
-  { id: 'deployment',   label: 'Deployment' },
-  { id: 'updates',      label: 'Updating Veltra' },
-  { id: 'ai-prompt',    label: 'AI Setup Prompt' },
+  { id: 'overview',      label: 'Overview' },
+  { id: 'workflow',      label: 'Full Workflow' },
+  { id: 'quickstart',    label: 'Quick Start' },
+  { id: 'configuration', label: 'Configuration' },
+  { id: 'theme',         label: 'Theme & Branding' },
+  { id: 'database',      label: 'Database' },
+  { id: 'deployment',    label: 'Deployment' },
+  { id: 'updates',       label: 'Updating Veltra' },
+  { id: 'design-system', label: 'Design System in Editor' },
+  { id: 'ai-prompt',     label: 'AI Setup Prompt' },
 ]
 
 export default function ManualPage() {
@@ -653,6 +654,74 @@ git push`}</Code>
                 <div className="flex gap-2"><span className="font-bold text-primary w-6 flex-shrink-0">1.</span><span>Make the change in <code className="font-mono text-xs">Veltra-CMS-Base</code></span></div>
                 <div className="flex gap-2"><span className="font-bold text-primary w-6 flex-shrink-0">2.</span><span>Push to <code className="font-mono text-xs">main</code> — CI runs and must pass</span></div>
                 <div className="flex gap-2"><span className="font-bold text-primary w-6 flex-shrink-0">3.</span><span>All client repos will pick it up automatically next Monday, or you can trigger the sync workflow manually from their GitHub Actions tab</span></div>
+              </div>
+            </div>
+          </Section>
+
+          {/* Design System in Editor */}
+          <Section id="design-system" icon="palette" title="Design System in Editor">
+            <p className="text-sm text-on-surface-variant leading-relaxed">
+              The brand tokens defined in <code className="font-mono text-xs bg-surface-container px-1 rounded">config/brand.ts</code> flow automatically into both the public site and the CMS editor — so what editors see while building is exactly what visitors will see.
+            </p>
+
+            <div className="space-y-6">
+              <div className="bg-surface-container-lowest border border-surface-container-high rounded-xl p-5 space-y-3">
+                <p className="font-semibold text-on-surface text-sm flex items-center gap-2">
+                  <span className="material-symbols-outlined text-primary text-[18px]">tune</span>
+                  How brand tokens flow
+                </p>
+                <div className="text-sm text-on-surface-variant space-y-2">
+                  <p>
+                    <strong>config/brand.ts</strong> → <strong>config/theme.ts</strong> → injected as CSS custom properties on <code className="font-mono text-xs bg-surface-container px-1 rounded">&lt;html&gt;</code> by the root layout → consumed as Tailwind utilities throughout every page and component.
+                  </p>
+                  <p>
+                    The three font slots (<code className="font-mono text-xs bg-surface-container px-1 rounded">fontHeadline</code>, <code className="font-mono text-xs bg-surface-container px-1 rounded">fontBody</code>, <code className="font-mono text-xs bg-surface-container px-1 rounded">fontLabel</code>) and the primary color family are the only values you ever need to change per client.
+                  </p>
+                </div>
+                <Callout type="tip">
+                  Changes to <code className="font-mono text-xs">config/brand.ts</code> are reflected immediately in both the editor and the public site — no rebuild, no cache clear needed in development.
+                </Callout>
+              </div>
+
+              <div className="bg-surface-container-lowest border border-surface-container-high rounded-xl p-5 space-y-3">
+                <p className="font-semibold text-on-surface text-sm flex items-center gap-2">
+                  <span className="material-symbols-outlined text-primary text-[18px]">style</span>
+                  Reviewing the live token set — /style
+                </p>
+                <p className="text-sm text-on-surface-variant">
+                  The <strong>/style</strong> page in the CMS admin reads directly from <code className="font-mono text-xs bg-surface-container px-1 rounded">config/theme.ts</code> and renders the actual computed tokens: typography specimens at real sizes, color swatches with hex values, radius previews, tinted shadow examples, and button states. It always stays in sync — no manual updating required.
+                </p>
+                <p className="text-sm text-on-surface-variant">
+                  Share the /style page with clients before launch so they can sign off on the visual identity.
+                </p>
+              </div>
+
+              <div className="bg-surface-container-lowest border border-surface-container-high rounded-xl p-5 space-y-3">
+                <p className="font-semibold text-on-surface text-sm flex items-center gap-2">
+                  <span className="material-symbols-outlined text-primary text-[18px]">preview</span>
+                  WYSIWYG preview — /preview/[slug]
+                </p>
+                <p className="text-sm text-on-surface-variant">
+                  The preview route renders the page inside the real public site layout — same nav, same footer, same fonts, same grain overlay. This gives editors a true before-publish view of what visitors will see.
+                </p>
+                <p className="text-sm text-on-surface-variant">
+                  The preview banner at the top shows the current publication status and links back to the editor. It is only visible to authenticated CMS users — anonymous visitors are redirected to /login.
+                </p>
+              </div>
+
+              <div className="bg-surface-container-lowest border border-surface-container-high rounded-xl p-5 space-y-3">
+                <p className="font-semibold text-on-surface text-sm flex items-center gap-2">
+                  <span className="material-symbols-outlined text-primary text-[18px]">text_fields</span>
+                  Font tokens in the page editor
+                </p>
+                <p className="text-sm text-on-surface-variant">
+                  Heading inputs render in the headline font. Paragraph inputs render in the body font. Block type labels and UI chrome use the label font. This keeps the editing experience visually consistent with the output — you are always editing <em>in context</em>.
+                </p>
+                <div className="mt-2 space-y-1 text-xs font-mono text-outline">
+                  <div><code className="bg-surface-container px-1 rounded">font-headline</code> — h1 / h2 / h3 inputs and previews</div>
+                  <div><code className="bg-surface-container px-1 rounded">font-body</code> — paragraph inputs and previews</div>
+                  <div><code className="bg-surface-container px-1 rounded">font-label</code> — block type labels, selects, meta fields</div>
+                </div>
               </div>
             </div>
           </Section>

@@ -69,13 +69,14 @@
   /* Fonts */
   --font-headline: var(--t-fontHeadline), sans-serif;
   --font-body:     var(--t-fontBody), sans-serif;
-  --font-label:    var(--t-fontBody), sans-serif;
+  --font-label:    var(--t-fontLabel, var(--t-fontBody)), sans-serif;
 
   /* Radii */
-  --radius-sm:   var(--t-radiusSm);
-  --radius-md:   var(--t-radiusMd);
-  --radius-lg:   var(--t-radiusLg);
-  --radius-full: var(--t-radiusFull);
+  --radius-sm:    var(--t-radiusSm);
+  --radius-md:    var(--t-radiusMd);
+  --radius-lg:    var(--t-radiusLg);
+  --radius-full:  var(--t-radiusFull);
+  --radius-brand: var(--t-radiusMd);
 }
 
 body {
@@ -99,4 +100,80 @@ body {
 
 .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* ─── Skip-to-content ──────────────────────────────────────────────── */
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.skip-link:focus {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  width: auto;
+  height: auto;
+  padding: 0.75rem 1.25rem;
+  background: var(--t-primary);
+  color: var(--t-onPrimary);
+  border-radius: var(--t-radiusLg);
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-size: 0.875rem;
+  z-index: 9999;
+  overflow: visible;
+  text-decoration: none;
+}
+
+/* ─── Paper grain overlay ──────────────────────────────────────────── */
+
+.site-grain {
+  position: relative;
+}
+.site-grain::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* ─── Global polish baseline ───────────────────────────────────────── */
+
+html { scroll-behavior: smooth; }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-headline);
+  text-wrap: balance;
+}
+h1 { letter-spacing: -0.025em; }
+h2 { letter-spacing: -0.02em; }
+
+p { max-width: 72ch; }
+
+/* ─── Button press feedback ────────────────────────────────────────── */
+
+button, a[class*="bg-"] {
+  transition: transform 150ms ease-out;
+}
+button:active, a[class*="bg-"]:active {
+  transform: scale(0.98);
+}
+
+/* ─── Reduced motion ───────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
