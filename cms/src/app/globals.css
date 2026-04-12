@@ -71,7 +71,7 @@
   --font-body:     var(--t-fontBody), sans-serif;
   --font-label:    var(--t-fontLabel), sans-serif;
 
-  /* Brand radius — used by site pages */
+  /* Brand radius */
   --radius-brand: var(--t-radiusMd);
 
   /* Radii */
@@ -81,15 +81,84 @@
   --radius-full: var(--t-radiusFull);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: var(--font-body);
   background-color: var(--t-background);
   color: var(--t-onSurface);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-.font-headline {
+/* Headlines always use the headline font and balance wrapping */
+h1, h2, h3, h4 {
   font-family: var(--font-headline);
+  text-wrap: balance;
 }
+
+/* Tighten tracking on large display text */
+h1 { letter-spacing: -0.025em; }
+h2 { letter-spacing: -0.02em; }
+
+/* Body text line length guard */
+p { max-width: 72ch; }
+
+/* Button press feedback — apply to all interactive elements */
+button, a[class*="bg-"] {
+  transition: transform 150ms ease-out, opacity 150ms ease-out;
+}
+button:active, a[class*="bg-"]:active {
+  transform: scale(0.98);
+}
+
+/* Skip to content — accessibility */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 100;
+  padding: 0.5rem 1rem;
+  background: var(--t-primary);
+  color: var(--t-onPrimary);
+  font-family: var(--font-label);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: var(--t-radiusMd);
+  text-decoration: none;
+}
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* Subtle paper-grain noise over all surfaces */
+.site-grain::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  mix-blend-mode: multiply;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* CMS-specific */
+.font-headline { font-family: var(--font-headline); }
 
 .primary-gradient {
   background: linear-gradient(135deg, var(--t-primary) 0%, var(--t-primaryDim) 100%);
@@ -98,6 +167,8 @@ body {
 .glass-effect {
   background-color: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.4);
 }
 
 .material-symbols-outlined {

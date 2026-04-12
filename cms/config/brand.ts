@@ -19,9 +19,9 @@ export const brand = {
   onPrimary:  '#ffffff',
 
   /** Typography — use exact Google Fonts family names */
-  fontHeadline: 'Newsreader',
-  fontBody:     'Plus Jakarta Sans',
-  fontLabel:    'Work Sans',
+  fontHeadline: 'Spectral',
+  fontBody:     'Figtree',
+  fontLabel:    'Bricolage Grotesque',
 
   /** Logo — path relative to /public (e.g. /logo.svg) */
   logo: '/logo.svg',
