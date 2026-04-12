@@ -71,19 +71,17 @@
   --font-body:     var(--t-fontBody), sans-serif;
   --font-label:    var(--t-fontLabel), sans-serif;
 
-  /* Brand radius */
-  --radius-brand: var(--t-radiusMd);
-
   /* Radii */
-  --radius-sm:   var(--t-radiusSm);
-  --radius-md:   var(--t-radiusMd);
-  --radius-lg:   var(--t-radiusLg);
-  --radius-full: var(--t-radiusFull);
+  --radius-sm:    var(--t-radiusSm);
+  --radius-md:    var(--t-radiusMd);
+  --radius-lg:    var(--t-radiusLg);
+  --radius-full:  var(--t-radiusFull);
+  --radius-brand: var(--t-radiusMd);
 }
 
-html {
-  scroll-behavior: smooth;
-}
+/* ─── Global polish baseline ───────────────────────────────────────── */
+
+html { scroll-behavior: smooth; }
 
 body {
   font-family: var(--font-body);
@@ -93,20 +91,17 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Headlines always use the headline font and balance wrapping */
 h1, h2, h3, h4 {
   font-family: var(--font-headline);
   text-wrap: balance;
 }
-
-/* Tighten tracking on large display text */
 h1 { letter-spacing: -0.025em; }
 h2 { letter-spacing: -0.02em; }
 
-/* Body text line length guard */
 p { max-width: 72ch; }
 
-/* Button press feedback — apply to all interactive elements */
+/* ─── Button press feedback ────────────────────────────────────────── */
+
 button, a[class*="bg-"] {
   transition: transform 150ms ease-out, opacity 150ms ease-out;
 }
@@ -114,41 +109,50 @@ button:active, a[class*="bg-"]:active {
   transform: scale(0.98);
 }
 
-/* Skip to content — accessibility */
+/* ─── Skip-to-content ──────────────────────────────────────────────── */
+
 .skip-link {
   position: absolute;
-  top: -100%;
-  left: 1rem;
-  z-index: 100;
-  padding: 0.5rem 1rem;
-  background: var(--t-primary);
-  color: var(--t-onPrimary);
-  font-family: var(--font-label);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  border-radius: var(--t-radiusMd);
-  text-decoration: none;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }
 .skip-link:focus {
+  position: fixed;
   top: 1rem;
+  left: 1rem;
+  width: auto;
+  height: auto;
+  padding: 0.75rem 1.25rem;
+  background: var(--t-primary);
+  color: var(--t-onPrimary);
+  border-radius: var(--t-radiusLg);
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-size: 0.875rem;
+  z-index: 9999;
+  overflow: visible;
+  text-decoration: none;
 }
 
-/* Subtle paper-grain noise over all surfaces */
+/* ─── Paper grain overlay ──────────────────────────────────────────── */
+
+.site-grain { position: relative; }
 .site-grain::after {
   content: '';
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 9999;
+  z-index: 9998;
   opacity: 0.025;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
   background-size: 200px 200px;
-  mix-blend-mode: multiply;
 }
 
-/* Reduced motion */
+/* ─── Reduced motion ───────────────────────────────────────────────── */
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {
@@ -157,7 +161,8 @@ button:active, a[class*="bg-"]:active {
   }
 }
 
-/* CMS-specific */
+/* ─── CMS-specific ─────────────────────────────────────────────────── */
+
 .font-headline { font-family: var(--font-headline); }
 
 .primary-gradient {

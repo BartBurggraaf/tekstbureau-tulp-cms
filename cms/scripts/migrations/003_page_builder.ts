@@ -67,7 +67,7 @@ export async function up(root: string): Promise<void> {
   } else {
     // Fallback: append inside the array before the closing bracket
     proxy = proxy.replace(
-      /const CMS_ROUTES = \[([^\]]*)\]/s,
+      /const CMS_ROUTES = \[([\s\S]*?)\]/,
       (match, inner) => `const CMS_ROUTES = [${inner.trimEnd()}\n  '/preview',   // draft preview — auth required so anonymous users can't see unpublished content\n]`,
     )
   }

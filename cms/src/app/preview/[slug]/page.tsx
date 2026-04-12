@@ -1,12 +1,12 @@
 /**
  * Preview route — shows any page (draft or published) for authenticated users.
  * Protected by the proxy (middleware). Never accessible to anonymous visitors.
+ * Wraps content in the real (site) layout for true WYSIWYG preview.
  */
 import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { BlockRenderer } from '@/components/editor/BlockRenderer'
-import { site } from '../../../../config/site'
-import { brand } from '../../../../config/brand'
+import SiteLayout from '../../(site)/layout'
 import type { PageContent } from '@/components/editor/types'
 import Link from 'next/link'
 
@@ -28,9 +28,9 @@ export default async function PreviewPage({ params }: Props) {
   if (!page) notFound()
 
   return (
-    <div className="min-h-screen flex flex-col bg-surface">
-      {/* Preview banner */}
-      <div className="bg-primary text-on-primary px-6 py-2.5 flex items-center justify-between text-sm">
+    <>
+      {/* Preview banner — sticky above the site layout */}
+      <div className="sticky top-0 z-50 bg-primary text-on-primary px-6 py-2.5 flex items-center justify-between text-sm font-label">
         <div className="flex items-center gap-2">
           <span className="material-symbols-outlined text-[16px]">visibility</span>
           <span className="font-medium">Preview mode</span>
@@ -63,22 +63,10 @@ export default async function PreviewPage({ params }: Props) {
         </div>
       </div>
 
-      {/* Site nav (mirrors public layout) */}
-      <header className="border-b border-outline-variant bg-surface-container-lowest">
-        <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-          <span className="font-headline font-bold text-lg text-on-surface">{site.name}</span>
-          <nav className="flex items-center gap-6 text-sm text-on-surface-variant">
-            <span className="opacity-50">Diensten</span>
-            <span className="opacity-50">Over</span>
-            <span className="opacity-50">Contact</span>
-          </nav>
-        </div>
-      </header>
-
-      {/* Page content */}
-      <main className="flex-1 max-w-5xl mx-auto w-full px-6 py-12">
+      {/* Real site layout — fonts, nav, footer, grain exactly as visitors see it */}
+      <SiteLayout>
         <article>
-          <BlockRenderer content={page.content as PageContent} />
+          <BlockRenderer content={page.content as unknown as PageContent} />
           {!page.content && (
             <div className="py-16 text-center border-2 border-dashed border-surface-container-high rounded-xl text-outline">
               <p className="text-sm">This page has no content yet.</p>
@@ -88,15 +76,7 @@ export default async function PreviewPage({ params }: Props) {
             </div>
           )}
         </article>
-      </main>
-
-      {/* Site footer */}
-      <footer className="border-t border-outline-variant">
-        <div className="max-w-5xl mx-auto px-6 py-8 flex items-center justify-between text-sm text-on-surface-variant">
-          <span>© {new Date().getFullYear()} {site.name}</span>
-          <span>{brand.domain}</span>
-        </div>
-      </footer>
-    </div>
+      </SiteLayout>
+    </>
   )
 }

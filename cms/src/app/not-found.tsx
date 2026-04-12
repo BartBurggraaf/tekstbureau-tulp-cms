@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function NotFound() {
   return (
     <div className="min-h-[100dvh] flex flex-col items-center justify-center bg-[var(--color-surface)] px-6 text-center">
-      <p className="font-[var(--font-headline)] text-[8rem] font-bold italic leading-none text-[var(--color-outline-variant)] select-none">
+      <p className="font-[var(--font-headline)] text-[clamp(6rem,20vw,10rem)] font-bold italic leading-none text-[var(--color-outline-variant)] select-none">
         404
       </p>
       <h1 className="font-[var(--font-headline)] text-3xl font-bold italic text-[var(--color-on-surface)] mt-4">

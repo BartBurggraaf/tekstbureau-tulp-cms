@@ -33,7 +33,7 @@ function BlockEditor({ block, onChange }: { block: Block; onChange: (b: Block) =
   }
 
   const inp = 'w-full border border-surface-container-high bg-surface-container-lowest rounded-md px-3 py-1.5 text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary'
-  const label = 'block text-xs text-outline mb-1'
+  const label = 'block text-xs text-outline mb-1 font-label'
 
   switch (block.type) {
     case 'heading':
@@ -41,7 +41,7 @@ function BlockEditor({ block, onChange }: { block: Block; onChange: (b: Block) =
         <div className="space-y-2 pt-3">
           <div>
             <span className={label}>Level</span>
-            <select className={inp} value={block.data.level} onChange={e => set({ level: Number(e.target.value) as 1|2|3 })}>
+            <select className={`${inp} font-label`} value={block.data.level} onChange={e => set({ level: Number(e.target.value) as 1|2|3 })}>
               <option value={1}>H1 — Page title</option>
               <option value={2}>H2 — Section title</option>
               <option value={3}>H3 — Sub-section</option>
@@ -49,7 +49,7 @@ function BlockEditor({ block, onChange }: { block: Block; onChange: (b: Block) =
           </div>
           <div>
             <span className={label}>Text</span>
-            <input className={inp} value={block.data.text} onChange={e => set({ text: e.target.value })} />
+            <input className={`${inp} font-headline`} value={block.data.text} onChange={e => set({ text: e.target.value })} />
           </div>
         </div>
       )
@@ -59,7 +59,7 @@ function BlockEditor({ block, onChange }: { block: Block; onChange: (b: Block) =
         <div className="pt-3">
           <span className={label}>Text</span>
           <textarea
-            className={`${inp} min-h-[80px] resize-y`}
+            className={`${inp} font-body min-h-[80px] resize-y`}
             value={block.data.text}
             onChange={e => set({ text: e.target.value })}
           />
@@ -125,8 +125,8 @@ function BlockEditor({ block, onChange }: { block: Block; onChange: (b: Block) =
 
 function BlockPreview({ block }: { block: Block }) {
   switch (block.type) {
-    case 'heading':   return <span className="font-semibold text-on-surface">H{block.data.level} — {block.data.text || '(empty)'}</span>
-    case 'paragraph': return <span className="text-outline truncate">{block.data.text?.slice(0, 60) || '(empty)'}…</span>
+    case 'heading':   return <span className="font-headline font-semibold text-on-surface">H{block.data.level} — {block.data.text || '(empty)'}</span>
+    case 'paragraph': return <span className="font-body text-outline truncate">{block.data.text?.slice(0, 60) || '(empty)'}…</span>
     case 'image':     return <span className="text-outline">{block.data.src ? `Image: ${block.data.src.slice(0, 40)}` : '(no URL set)'}</span>
     case 'button':    return <span className="text-outline">Button: &ldquo;{block.data.label}&rdquo; → {block.data.href}</span>
     case 'divider':   return <span className="text-outline">─────────────────────────</span>
@@ -248,7 +248,7 @@ export default function PageBuilder({ initialContent, onChange }: PageBuilderPro
           <button
             key={type}
             onClick={() => addBlock(create)}
-            className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors text-left"
+            className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-label text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors text-left"
           >
             <span className="material-symbols-outlined text-[18px]">{icon}</span>
             {label}
