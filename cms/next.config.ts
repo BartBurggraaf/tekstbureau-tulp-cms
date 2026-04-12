@@ -1,8 +1,6 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  // CMS is always server-rendered — no static pre-rendering needed
-  // (all pages require auth + live Supabase data)
   experimental: {
     ppr: false,
   },
@@ -11,7 +9,10 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'lh3.googleusercontent.com' },
       { protocol: 'https', hostname: 'images.unsplash.com' },
     ],
+    formats: ['image/avif', 'image/webp'],
   },
+  // Compress all responses
+  compress: true,
 }
 
 export default nextConfig

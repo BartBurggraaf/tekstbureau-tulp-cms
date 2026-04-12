@@ -67,7 +67,7 @@ export default async function HomePage() {
             <div className="aspect-[3/4] rounded-[var(--radius-brand)] overflow-hidden bg-[var(--color-surface-container)]">
               {c.hero_image && (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={c.hero_image} alt="Tekstbureau Tulp" className="w-full h-full object-cover" />
+                <img src={c.hero_image} alt="Tekstbureau Tulp" className="w-full h-full object-cover" fetchPriority="high" decoding="async" />
               )}
             </div>
             <div className="absolute -bottom-4 -left-8 bg-[var(--color-surface-container-lowest)] rounded-[var(--radius-brand)] px-5 py-4 shadow-[0_16px_48px_color-mix(in_srgb,var(--color-primary)_12%,transparent)]">
@@ -79,7 +79,7 @@ export default async function HomePage() {
       </section>
 
       {/* Why Tulp — editorial numbered list, not 3 equal cards */}
-      <section className="bg-[var(--color-surface-container-low)] py-28">
+      <section className="cv-auto bg-[var(--color-surface-container-low)] py-28">
         <div className="max-w-6xl mx-auto px-6">
           <div className="mb-16 space-y-3 max-w-xl">
             <p className="font-[var(--font-label)] text-xs font-semibold uppercase tracking-[0.25em] text-[var(--color-primary)]">Waarom Tulp</p>
@@ -109,7 +109,7 @@ export default async function HomePage() {
       </section>
 
       {/* Services overview */}
-      <section className="bg-[var(--color-surface)] py-28">
+      <section className="cv-auto bg-[var(--color-surface)] py-28">
         <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-20 items-start">
           <div className="space-y-6 md:sticky md:top-24">
             <p className="font-[var(--font-label)] text-xs font-semibold uppercase tracking-[0.25em] text-[var(--color-primary)]">Wat ik doe</p>
@@ -141,7 +141,7 @@ export default async function HomePage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-[var(--color-primary)] py-28">
+      <section className="cv-auto bg-[var(--color-primary)] py-28">
         <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-[3fr_2fr] gap-12 items-center">
           <div className="space-y-5">
             <p className="font-[var(--font-label)] text-xs font-semibold uppercase tracking-[0.25em] text-[var(--color-primary-fixed)]">Gratis aangeboden</p>

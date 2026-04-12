@@ -161,6 +161,13 @@ button:active, a[class*="bg-"]:active {
   }
 }
 
+/* ─── Below-fold paint optimisation ───────────────────────────────── */
+/* Browser skips rendering off-screen sections until needed            */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 600px;
+}
+
 /* ─── CMS-specific ─────────────────────────────────────────────────── */
 
 .font-headline { font-family: var(--font-headline); }

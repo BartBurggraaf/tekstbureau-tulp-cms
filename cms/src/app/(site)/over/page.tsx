@@ -53,7 +53,7 @@ export default async function OverPage() {
             <div className="aspect-[3/4] rounded-[var(--radius-brand)] overflow-hidden bg-[var(--color-surface-container)]">
               {c.founder_image && (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={c.founder_image} alt={c.founder_name} className="w-full h-full object-cover object-top" />
+                <img src={c.founder_image} alt={c.founder_name} className="w-full h-full object-cover object-top" loading="lazy" decoding="async" />
               )}
             </div>
             <div className="absolute -bottom-4 -right-4 bg-[var(--color-surface-container-lowest)] rounded-[var(--radius-brand)] px-5 py-4 shadow-[0_16px_48px_color-mix(in_srgb,var(--color-primary)_10%,transparent)]">

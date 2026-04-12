@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Spectral, Figtree, Bricolage_Grotesque } from 'next/font/google'
 import { theme } from '../../config/theme'
 import { site } from '../../config/site'
 import './globals.css'
@@ -8,10 +9,29 @@ export const metadata: Metadata = {
   description: `${site.name} — powered by Burgt CMS`,
 }
 
-/**
- * Converts the theme config into a CSS custom properties string
- * injected on <html> so every Tailwind utility class picks them up.
- */
+// Self-hosted via next/font — no render-blocking cross-origin request
+const spectral = Spectral({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  style: ['normal', 'italic'],
+  variable: '--font-spectral',
+  display: 'swap',
+})
+
+const figtree = Figtree({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600'],
+  variable: '--font-figtree',
+  display: 'swap',
+})
+
+const bricolage = Bricolage_Grotesque({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-bricolage',
+  display: 'swap',
+})
+
 function buildThemeVars(t: typeof theme): string {
   const c = t.colors
   return `
@@ -73,9 +93,9 @@ function buildThemeVars(t: typeof theme): string {
     --t-inverseOnSurface:${c.inverseOnSurface};
     --t-inversePrimary:${c.inversePrimary};
 
-    --t-fontHeadline:${t.fonts.headline};
-    --t-fontBody:${t.fonts.body};
-    --t-fontLabel:${t.fonts.label};
+    --t-fontHeadline:var(--font-spectral);
+    --t-fontBody:var(--font-figtree);
+    --t-fontLabel:var(--font-bricolage);
 
     --t-radiusSm:${t.radius.sm};
     --t-radiusMd:${t.radius.md};
@@ -88,17 +108,18 @@ function buildThemeVars(t: typeof theme): string {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const themeVars = buildThemeVars(theme)
-  const labelFont = theme.fonts.label !== theme.fonts.body
-    ? `&family=${theme.fonts.label.replace(/ /g, '+')}:wght@400;500;600;700`
-    : ''
-  const googleFonts = `https://fonts.googleapis.com/css2?family=${theme.fonts.headline.replace(/ /g, '+')}:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=${theme.fonts.body.replace(/ /g, '+')}:wght@300;400;500;600${labelFont}&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap`
+  const fontClasses = `${spectral.variable} ${figtree.variable} ${bricolage.variable}`
 
   return (
-    <html lang="en" style={{ ['--theme' as string]: 'injected' }}>
+    <html lang="nl" className={fontClasses}>
       <head>
+        {/* Material Symbols — icons only, not fonts */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href={googleFonts} rel="stylesheet" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block"
+          rel="stylesheet"
+        />
         <style>{`:root{${themeVars}}`}</style>
       </head>
       <body className="min-h-screen antialiased">
